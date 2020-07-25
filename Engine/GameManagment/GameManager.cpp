@@ -6,18 +6,9 @@
 #include <stdio.h>
 #include "../SceneManagment/SceneManager.h"
 
-void (*GameManager::init_project)()    = 0;
-void (*GameManager::update_project)()  = 0;
-void (*GameManager::destroy_project)() = 0;
-
-void GameManager::handleProject(void (*init)(), void (*update)(), void (*dest)()) {
-	GameManager::init_project = init;
-	GameManager::update_project = update;
-	GameManager::destroy_project = dest;
-}
 
 bool GameManager::is_exit;
-void GameManager::Launch()
+void GameManager::Launch(Scene* start_scene)
 {
 	is_exit = false;
 
@@ -26,7 +17,8 @@ void GameManager::Launch()
 	GraphicManager::Init();
 	TimeManager::Init();
 	InputManager::Init();
-	GameManager::init_project();
+
+	SceneManager::OpenScene(start_scene);
 	//------------------------------
 
 	int frames = 0;
@@ -36,7 +28,6 @@ void GameManager::Launch()
 		//------------------------------
 		TimeManager::Update();
 		InputManager::Update();
-		update_project();
 		//------------------------------
 
 		is_exit = is_exit || SceneManager::UpdateScenes();
@@ -52,9 +43,7 @@ void GameManager::Launch()
 
 	// DESTROY
 	//------------------------------
-	destroy_project();
 	SceneManager::Destroy();
 	GraphicManager::Exit();
-	//GlobalTimer::Destroy();
 	//------------------------------
 }

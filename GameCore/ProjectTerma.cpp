@@ -1,26 +1,20 @@
 #include <iostream>
-#include "../Engine/Gameplay/GameManager.h"
+#include "ProjectTerma.h"
+#include "../Engine/GameManagment/GameManager.h"
 #include "Scenes/MainMenuScene.h"
 #include "../Engine/SceneManagment/SceneManager.h"
 
-class ProjectTerma {
-public:
-	static void init() {
-		//GraphicManager::LoadPack("Menu");
-		SceneManager::CreateScene(new MainMenuScene);
-	}
+void ProjectTerma::Init()
+{
+	printf("Game started!\n");
+}
 
-	static void update() {
+void ProjectTerma::Update()
+{
+	SceneManager::CloseScene(this);
+}
 
-	}
-
-	static void destroy() {
-
-	}
-};
-
-int main() {
-	GameManager::handleProject(ProjectTerma::init, ProjectTerma::update, ProjectTerma::destroy);
-	GameManager::Launch();
-	return 0;
+void ProjectTerma::Destroy()
+{
+	printf("Game ended!\n");
 }

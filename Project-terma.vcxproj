@@ -106,8 +106,8 @@
   <ItemGroup>
     <ClCompile Include="engine\colliders\Collider.cpp" />
     <ClCompile Include="engine\control\InputManager.cpp" />
+    <ClCompile Include="Engine\GameManagment\GameManager.cpp" />
     <ClCompile Include="engine\gameplay\GameField.cpp" />
-    <ClCompile Include="engine\gameplay\GameManager.cpp" />
     <ClCompile Include="engine\gameplay\GameObject.cpp" />
     <ClCompile Include="engine\graphics\DrawData.cpp" />
     <ClCompile Include="engine\graphics\GraphicManager.cpp" />
@@ -120,12 +120,13 @@
     <ClCompile Include="gamecore\ProjectTerma.cpp" />
     <ClCompile Include="gamecore\scenes\GameplayScene.cpp" />
     <ClCompile Include="gamecore\scenes\MainMenuScene.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\colliders\Collider.h" />
     <ClInclude Include="engine\control\InputManager.h" />
+    <ClInclude Include="Engine\GameManagment\GameManager.h" />
     <ClInclude Include="engine\gameplay\GameField.h" />
-    <ClInclude Include="engine\gameplay\GameManager.h" />
     <ClInclude Include="engine\gameplay\GameObject.h" />
     <ClInclude Include="engine\gameplay\ObjectsArray.h" />
     <ClInclude Include="engine\graphics\DrawData.h" />

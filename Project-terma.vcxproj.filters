@@ -24,9 +24,6 @@
     <ClCompile Include="engine\gameplay\GameField.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\gameplay\GameManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\gameplay\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,6 +60,12 @@
     <ClCompile Include="gamecore\scenes\MainMenuScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameManagment\GameManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\colliders\Collider.h">
@@ -72,9 +75,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\gameplay\GameField.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\gameplay\GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\gameplay\GameObject.h">
@@ -114,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gamecore\scenes\MainMenuScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameManagment\GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
