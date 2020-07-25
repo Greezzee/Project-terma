@@ -14,7 +14,9 @@
 class GameManager
 {
 public:
-	static void Launch(Scene* start_scene); //! Инициализация всех менеджеров и главный цикл. Запуск первой сцены
+	static void Init(); //! Инициализация всех менеджеров
+
+	static void Launch(Scene* start_scene); //! Главный цикл. Запуск первой сцены
 
 
 private:

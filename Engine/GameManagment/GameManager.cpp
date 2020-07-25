@@ -8,16 +8,20 @@
 
 
 bool GameManager::is_exit;
+
+void GameManager::Init()
+{
+	GraphicManager::Init();
+	TimeManager::Init();
+	InputManager::Init();
+}
+
 void GameManager::Launch(Scene* start_scene)
 {
 	is_exit = false;
 
 	// INIT
 	//------------------------------
-	GraphicManager::Init();
-	TimeManager::Init();
-	InputManager::Init();
-
 	SceneManager::OpenScene(start_scene);
 	//------------------------------
 
