@@ -1,15 +1,18 @@
 #pragma once
-
+#include "../Engine/SceneManagment/Scene.h"
 /*
  * Этот файл является основным для текущего игрового проекта
+ * 
+ * 	Теперь это СЦЕНА, которая запускается первой. Запуск смотреть в Main.cpp
  */
 
-class ProjectTerma {
+class ProjectTerma :
+	public Scene{
 
-	static void init();
+	void Init();
 
-	static void update();
+	void Update();
 
-	static void destroy();
+	void Destroy();
 
 };

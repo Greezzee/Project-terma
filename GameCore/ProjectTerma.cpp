@@ -1,26 +1,37 @@
 #include <iostream>
-#include "../Engine/Gameplay/GameManager.h"
+#include "ProjectTerma.h"
+#include "../Engine/GameManagment/GameManager.h"
 #include "Scenes/MainMenuScene.h"
 #include "../Engine/SceneManagment/SceneManager.h"
+#include "../Engine/Graphics/GraphicManager.h"
+#include "../Engine/Graphics/DrawData.h"
 
-class ProjectTerma {
-public:
-	static void init() {
-		//GraphicManager::LoadPack("Menu");
-		SceneManager::CreateScene(new MainMenuScene);
+void ProjectTerma::Init()
+{
+	printf("Game started!\n");
+	GraphicManager::SetSpritesMaxCount(1);
+	if (GraphicManager::LoadSprite("basic square.png") == -1) {
+		printf("failed to load");
+		SceneManager::CloseScene(this);
 	}
+}
 
-	static void update() {
-
+void ProjectTerma::Update()
+{
+	DrawData new_sprite;
+	new_sprite.spriteID = 0;
+	new_sprite.scale = { 10, 10 };
+	new_sprite.layer = 0;
+	new_sprite.origin = { 0, 0 };
+	new_sprite.position = { 400, 400 };
+	new_sprite.rotation = 0;
+	if (!GraphicManager::Draw(new_sprite)) {
+		printf("NO\n");
+		SceneManager::CloseScene(this);
 	}
+}
 
-	static void destroy() {
-
-	}
-};
-
-int main() {
-	GameManager::handleProject(ProjectTerma::init, ProjectTerma::update, ProjectTerma::destroy);
-	GameManager::Launch();
-	return 0;
+void ProjectTerma::Destroy()
+{
+	printf("Game ended!\n");
 }

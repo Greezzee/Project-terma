@@ -39,10 +39,39 @@ public:
 
 	//static void LoadPack();
 	//! Нарисовать спрайт согласно DrawData, применив к нему View и view_id. data при этом необратимо портится!!!
-	static void Draw(DrawData& data, Views view_id = Views::BASIC);
+	//! Вернёт true, если нарисовано успешно, false если нет (id спрайта больше чем число загруженных спрайтов)
+	static bool Draw(DrawData& data, Views view_id = Views::BASIC);
 
 	//! Применяет к data соответствующий View. При этом data изменяется!
 	static void SetView(DrawData& data, Views view_id);
+
+	//! Устанавливает максимальное количество одновременно загруженных спрайтов
+	static void SetSpritesMaxCount(unsigned count);
+
+	//! Получить максимальное количество одновременно загруженных спрайтов
+	static unsigned GetSpritesMaxCount();
+
+	//! Получить количество загруженных спрайтов на данных момент
+	static unsigned GetSpritesCount();
+
+	//! Освобождает место для спрайтов, сохраняя их максимально возможное количество (не гарантирует мгновенного освобождения памяти) 
+	static void ClearSprites();
+
+	/*!
+	* Загружает спрайт по заданному пути и помещает его на следующий свободный id
+	* Вернёт id нового спрайта при успешной загрузке, вернёт -1 в другом случае (нет свободных id, не найден файл по пути) 
+	*/
+	static int LoadSprite(std::string path);
+
+	/*!
+	* Загружает спрайт по заданному пути и помещает его на заданный id.
+	* Спрайт, который находился ранее по этому id перезаписывается
+	* Вернёт true при успешной загрузке, иначе вернёт false (данный id больше максимальное возможного, не найден файл по пути)
+	* id <= GetSpritesMaxCount() ВСЕГДА
+	*/
+	static bool LoadSprite(std::string path, unsigned id);
+
+
 private:
 	static sf::RenderWindow window; //! Окно SFML, на котором происходит вся отрисовка
 
@@ -54,5 +83,7 @@ private:
 	static std::vector<View> views; //! Массив всех Views. На данный момент заполняется вручную
 
 	static const unsigned LAYER_COUNT; //! Число всех слоёв отрисовки. НЕ ПУТАТЬ СО СЛОЯМИ ОБЪЕКТОВ. Отвечает за то, какие спрайты перекроет данный спрайт, а какие нет
+
+	static unsigned _sprites_count;
 };
 
