@@ -33,7 +33,7 @@ public:
 	void Init(GameObject* obj, const Vector2F& pos, const Vector2F& size, float angle, float shape_angle);
 protected:
 
-	void SetPoints(); //! Расчёт и установка точек коллайдера
+	void SetPoints(); //! Расчёт и установка краевых точек коллайдера
 
 	GameObject* _my_obj; //! Объект, к которому привязан коллайдер
 

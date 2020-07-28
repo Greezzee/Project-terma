@@ -8,7 +8,7 @@
 #include "../../Engine/Graphics/GraphicManager.h"
 #include "../../Engine/SceneManagment/SceneManager.h"
 
-GameplayScene::GameplayScene(){}
+GameplayScene::GameplayScene() {}
 
 void GameplayScene::Init()
 {

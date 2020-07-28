@@ -24,24 +24,6 @@ void GameField::Init()
 
 void GameField::Update()
 {
-	/*
-	Gameobject* a, * b;
-	a = new Bullet;
-	b = new Bullet;
-	a->Init();
-	b->Init();
-	SpawnObject({ a, {true, false} });
-	SpawnObject({ b, {true, false} });
-
-	Collider A, B;
-	A.Init({ 1, 1 }, 0, { 2.4, 1 }, a);
-	B.Init({ 4, 2 }, 0, { 1, 2 }, b);
-	for (int i = 0; i < 5000; i++)
-		A.IsCollideWith(&B);
-	KillObject(a);
-	KillObject(b);
-	*/
-
 	for (int i = 0; i < _objects->top; i++)
 		_objects->obj[i].obj->Update();
 
