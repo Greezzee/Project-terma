@@ -1,4 +1,6 @@
 #pragma once
+
+#include "Textures.h"
 #include "../Engine/SceneManagment/Scene.h"
 /*
  * Этот файл является основным для текущего игрового проекта

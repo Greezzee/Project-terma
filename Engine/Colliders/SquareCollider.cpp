@@ -1,5 +1,7 @@
 #include "SquareCollider.h"
-#include "../Utility/Line.h"
+
+#include <cmath>
+
 
 //! Задаёт нулевой коллайдер, никому не принадлежащий
 void SquareCollider::Init()

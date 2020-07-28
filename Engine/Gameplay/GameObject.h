@@ -33,6 +33,9 @@ public:
 	//! Уничтожение объекта. Вызывается 1 раз, когда игровое поле уничтожает объект
 	virtual void Destroy() = 0;
 
+	//! Создание абсолютно нового объекта этого типа
+	virtual GameObject* clone() const = 0;
+
 	Vector2F GetPos();
 	Vector2F GetDirection();
 	float GetRotation();
