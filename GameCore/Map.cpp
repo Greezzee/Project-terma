@@ -12,15 +12,16 @@ Level* Map::getLevel() {
 	return this->level;
 }
 
+void Map::addBlock(int x, int y, Block*block) {
+	this->blocks[x][y] = block;
+}
+
 void Map::Init() {
-	GameField::Init();
 	this->level->generate(this);
 }
 
 void Map::Update() {
-	GameField::Update();
 }
 
 void Map::Destroy() {
-	GameField::Destroy();
 }

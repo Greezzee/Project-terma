@@ -6,6 +6,7 @@
 class DirtBlock : public Block {
 	DirtBlock() : Block() {
 		this->setSpriteId(Textures::DIRT_BLOCK_TEXTURE);
+		this->SetID(11);
 	}
 
 	GameObject* clone() const {
