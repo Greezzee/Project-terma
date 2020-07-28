@@ -21,8 +21,8 @@ void GraphicManager::Init()
 	to_draw.resize(LAYER_COUNT);
 
 	views.resize(VIEWS_COUNT);
-	views[Views::BASIC] = { {1600, 900}, {1600, 900}, {0, 0} };
-	views[Views::TEST] = { {1600, 900}, {800, 450}, {100, 100} };
+	views[Views::BASIC] = { {0, 0}, {1600, 900}, {0, 0}, {1600, 900}, {1, 1} };
+	views[Views::TEST] = { {200, 40}, {1600, 900}, {0, 0}, {1600, 900}, {1, -1} };
 }
 
 bool GraphicManager::Update()
@@ -68,9 +68,16 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 void GraphicManager::SetView(DrawData& data, Views view_id)
 {
 	View& view = views[view_id];
-	data.position = (view.position + data.position * view.real_size / view.virtual_size) * view.unit_vector;
-	data.position -= (view.position + view.real_size) * (view.unit_vector - Vector2F(1, 1)) / 2.f;
+	Vector2F obj_pos = data.position - view.virtual_position;
+	data.position = (obj_pos * view.real_size / view.virtual_size) * view.unit_vector;
+	data.position -= view.real_size * (view.unit_vector - Vector2F(1, 1)) / 2.f;
+	data.position += view.real_position;
 	data.scale = data.scale * view.real_size / view.virtual_size;
+}
+
+View* GraphicManager::GetView(Views view_id)
+{
+	return &(views[view_id]);
 }
 
 void GraphicManager::ClearSprites()

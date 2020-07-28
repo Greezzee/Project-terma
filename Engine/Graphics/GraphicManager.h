@@ -71,6 +71,12 @@ public:
 	*/
 	static bool LoadSprite(std::string path, unsigned id);
 
+	/*!
+	* Возвращает указатель на view, имеющий данное ID.
+	* View по данному указателю МОЖНО изменять, при том эти изменения отразятся на отображении всех объектов, использующих данный view
+	* Настоятельно не рекомендуется менять параметры real_size и 
+	*/
+	static View* GetView(Views view_id);
 
 private:
 	static sf::RenderWindow window; //! Окно SFML, на котором происходит вся отрисовка
