@@ -1,5 +1,7 @@
 #pragma once
 
+const double EPS = 1E-9;
+
 /*!
 * Полезные структуры: двумерные векторы различных типов.
 * 
@@ -43,6 +45,8 @@ struct Vector2F
 	const Vector2F& operator=(const Vector2F& that);
 	const Vector2F& operator+=(const Vector2F& that);
 	const Vector2F& operator-=(const Vector2F& that);
+
+	const bool operator< (const Vector2F& that);
 
 	friend const Vector2F& operator+(const Vector2F& that);
 	friend const Vector2F operator-(const Vector2F& that);
