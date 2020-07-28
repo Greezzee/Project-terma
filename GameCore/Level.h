@@ -1,5 +1,7 @@
 #pragma once
 
+#include <bits/types/FILE.h>
+
 class Map;
 
 //! Этот класс будет подгружать и содержать в себе всю информацию о текущем уровне игры
@@ -8,5 +10,5 @@ public:
 	virtual void generate(Map * map) = 0;
 
 protected:
-	void loadBlocksFromFile(Map * map);
+	void loadBlocksFromFile(Map * map, FILE * from);
 };
