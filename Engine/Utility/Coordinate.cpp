@@ -42,6 +42,11 @@ Vector2F Vector2F::Normalized()
 	return *this / len;
 }
 
+const bool Vector2F::operator<(const Vector2F& that)
+{
+	return x < that.x - EPS || abs(x - that.x) < EPS && y < that.y - EPS;
+}
+
 const Vector2F& Vector2F::operator=(const Vector2F& that)
 {
 	x = that.x;
