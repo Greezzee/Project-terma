@@ -37,8 +37,11 @@ public:
 	virtual GameObject* clone() const = 0;
 
 	Vector2F GetPos();
+	void SetPos(Vector2F pos);
 	Vector2F GetDirection();
+	void SetDirection(Vector2F dir);
 	float GetRotation();
+	void SetRotation(float angle);
 
 	//! Óבוהטעוכüםאÿ ןנמסüבא ÍÅ ÒÐÎÃÀÒÜ ÝÒÓ ÔÓÍÊÖÈÞ ÂÎÎÁÙÅ ÍÈÊÎÃÄÀ
 	void SetID(unsigned new_id);
