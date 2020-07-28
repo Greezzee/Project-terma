@@ -7,6 +7,7 @@
 #include "../Engine/Graphics/DrawData.h"
 #include "../Engine/Colliders/SquareCollider.h"
 #include "../Engine/Colliders/EllipseCollider.h"
+#include "../Engine/Colliders/Collider.h"
 #include "../Engine/Time/TimeManager.h"
 
 void ProjectTerma::Init()
@@ -22,7 +23,7 @@ void ProjectTerma::Init()
 	a.Init(nullptr, Vector2F(2.5, 2), Vector2F(1, sqrtf(5) / 2.f), 0, 0);
 	b.Init(nullptr, Vector2F(3, 3.6), Vector2F(sqrtf(2.f), 0.5f), -PI / 4, 3 * PI / 4);
 
-	if (SquareCollider::IsCollide(&a, &b))
+	if (Collider::IsCollide(&a, &b))
 		printf("YES\n");
 	else
 		printf("NO\n");
@@ -31,7 +32,7 @@ void ProjectTerma::Init()
 
 void ProjectTerma::Update()
 {
-	/*
+	
 	SquareCollider a, b;
 	for (int i = 0; i < 20000; i++) {
 		float x1, x2, x3, x4, y1, y2, y3, y4;
@@ -47,10 +48,10 @@ void ProjectTerma::Update()
 		a.Init(nullptr, Vector2F(x1, y1), Vector2F(x2, y2));
 		b.Init(nullptr, Vector2F(x3, y3), Vector2F(x4, y4));
 
-		SquareCollider::IsCollide(&a, &b);
+		Collider::IsCollide(&a, &b);
 	}
 	
-	Collider c, d;
+	EllipseCollider c, d;
 	for (int i = 0; i < 20000; i++)
 	{
 		float x1, x2, x3, x4, y1, y2, y3, y4;
@@ -67,7 +68,7 @@ void ProjectTerma::Update()
 
 		Collider::IsCollide(&c, &d);
 	}
-	*/
+	
 }
 
 void ProjectTerma::Destroy()
