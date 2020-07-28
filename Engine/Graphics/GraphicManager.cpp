@@ -68,7 +68,8 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 void GraphicManager::SetView(DrawData& data, Views view_id)
 {
 	View& view = views[view_id];
-	data.position = view.position + data.position * view.real_size / view.virtual_size;
+	data.position = (view.position + data.position * view.real_size / view.virtual_size) * view.unit_vector;
+	data.position -= (view.position + view.real_size) * (view.unit_vector - Vector2F(1, 1)) / 2.f;
 	data.scale = data.scale * view.real_size / view.virtual_size;
 }
 
