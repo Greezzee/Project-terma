@@ -4,6 +4,13 @@
 
 /.vs/Project-terma/v16/Preview/Browse.VC.opendb
 
+/SFML-2.5.1/
+/.vs/
+*.sln
+*.vcxproj
+*.filters
+*.user
+
 # User-specific files
 *.suo
 *.user
