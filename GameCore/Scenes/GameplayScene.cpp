@@ -7,7 +7,7 @@
 #include "../Map.h"
 #include "../testing/TestLevel.h"
 
-GameplayScene::GameplayScene(){}
+GameplayScene::GameplayScene() {}
 
 void GameplayScene::Init()
 {
