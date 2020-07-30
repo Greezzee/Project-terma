@@ -33,6 +33,7 @@ enum Views {
 * {1, -1} - стандартная Декартова система координат
 * Чтобы развернуть ось x или ось y, замените 1 на -1
 * Значения, отличные по модулю от 1, недопустимы
+* 
 */
 struct View
 {
@@ -40,7 +41,7 @@ struct View
 	Vector2F real_size;
 	Vector2F virtual_position;
 	Vector2F virtual_size;
-	Vector2F unit_vector = {1, 1};
+	Vector2F unit_vector = { 1, 1 };
 };
 
 /*!
@@ -54,13 +55,17 @@ struct DrawData
 	DrawData(unsigned id, unsigned lr, float x, float y);
 	DrawData(unsigned id, unsigned lr, Vector2F& pos, float rot);
 	DrawData(unsigned id, unsigned lr, float x, float y, float rot);
+	DrawData(unsigned id, unsigned lr, Vector2F& pos, unsigned fr);
+	DrawData(unsigned id, unsigned lr, float x, float y, unsigned fr);
+	DrawData(unsigned id, unsigned lr, Vector2F& pos, float rot, unsigned fr);
+	DrawData(unsigned id, unsigned lr, float x, float y, float rot, unsigned fr);
 
 	unsigned spriteID; //! ID спрайта, используйте enum Sprites
 	unsigned layer; //! Номер слоя. Чем больше значение, тем "выше" спрайт (перекроет всё что имеет меньший слой)
 
 	Vector2F position; //! Позиция центра спрайта в пространстве
-	Vector2F origin; //! Где находится центр спрайта относительно его левого верхнего угла В ПИКСЕЛЯХ
-	Vector2F scale; //! Степень сжатия/растяжения. (1, 1) - спрайт без изменений. Отрицательные значения приведут к отражению по оси
+	Vector2F origin; //! Где находится центр спрайта относительно его левого верхнего угла. Измеряется от 0 до 1. {0, 0} - верхний левый угол, (0.5, 0.5) - центр спрайта
+	Vector2F size; //! Размер спрайта в единицах длины игрового поля
 	float rotation; //! Угол поворота спрайта В ГРАДУСАХ, против часовой стрелки
 	int frame; //! Пока никак не используется. Кадр анимации
 };
