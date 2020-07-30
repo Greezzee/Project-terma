@@ -2,9 +2,8 @@
 #include "GraphicManager.h"
 #include "../Time/TimeManager.h"
 sf::RenderWindow GraphicManager::window;
-std::vector<sf::Sprite> GraphicManager::sprites;
+std::vector<GraphicPrefab> GraphicManager::sprites;
 std::vector<std::list<sf::Sprite>> GraphicManager::to_draw;
-std::vector<sf::Texture> GraphicManager::textures;
 unsigned GraphicManager::_sprites_count;
 
 std::vector<View> GraphicManager::views;
@@ -17,12 +16,11 @@ void GraphicManager::Init()
 
 	_sprites_count = 0;
 	sprites.resize(0);
-	textures.resize(0);
 	to_draw.resize(LAYER_COUNT);
 
 	views.resize(VIEWS_COUNT);
-	views[Views::BASIC] = { {1600, 900}, {1600, 900}, {0, 0} };
-	views[Views::TEST] = { {1600, 900}, {800, 450}, {100, 100} };
+	views[Views::BASIC] = { {0, 0}, {1600, 900}, {0, 0}, {1600, 900}, {1, 1} };
+	views[Views::TEST] = { {0, 0}, {1600, 900}, {0, 0}, {16, 9}, {1, -1}};
 }
 
 bool GraphicManager::Update()
@@ -57,19 +55,31 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 	if (data.spriteID >= _sprites_count)
 		return false;
 	SetView(data, view_id);
-	sprites[data.spriteID].setPosition(sf::Vector2f(data.position.x, data.position.y));
-	sprites[data.spriteID].setRotation(data.rotation);
-	sprites[data.spriteID].setOrigin(sf::Vector2f(data.origin.x, data.origin.y));
-	sprites[data.spriteID].setScale(sf::Vector2f(data.scale.x, data.scale.y));
-	to_draw[data.layer].push_back(sprites[data.spriteID]);
+
+	GraphicPrefab& spr = sprites[data.spriteID];
+
+	spr.sprite.setPosition(sf::Vector2f(data.position.x, data.position.y));
+	spr.sprite.setRotation(data.rotation);
+	spr.sprite.setOrigin(sf::Vector2f(data.origin.x * spr.size.x, data.origin.y * spr.size.y));
+	spr.sprite.setScale(sf::Vector2f(data.size.x / spr.size.x, data.size.y / spr.size.y));
+	spr.sprite.setTextureRect(sf::IntRect(spr.size.x * (data.frame % spr.frames_count), 0, (int)spr.size.x, (int)spr.size.y));
+	to_draw[data.layer].push_back(sprites[data.spriteID].sprite);
 	return true;
 }
 
 void GraphicManager::SetView(DrawData& data, Views view_id)
 {
 	View& view = views[view_id];
-	data.position = view.position + data.position * view.real_size / view.virtual_size;
-	data.scale = data.scale * view.real_size / view.virtual_size;
+	Vector2F obj_pos = data.position - view.virtual_position;
+	data.position = (obj_pos * view.real_size / view.virtual_size) * view.unit_vector;
+	data.position -= view.real_size * (view.unit_vector - Vector2F(1, 1)) / 2.f;
+	data.position += view.real_position;
+	data.size = data.size * view.real_size / view.virtual_size;
+}
+
+View* GraphicManager::GetView(Views view_id)
+{
+	return &(views[view_id]);
 }
 
 void GraphicManager::ClearSprites()
@@ -89,31 +99,36 @@ unsigned GraphicManager::GetSpritesMaxCount()
 
 void GraphicManager::SetSpritesMaxCount(unsigned count)
 {
-	textures.resize(count);
 	sprites.resize(count);
 	if (_sprites_count > count)
 		_sprites_count = count;
 }
 
-int GraphicManager::LoadSprite(std::string path)
+int GraphicManager::LoadSprite(GraphicPrefabData &data)
 {
 	if (_sprites_count >= GetSpritesMaxCount())
 		return -1;
-	bool text_success = textures[_sprites_count].loadFromFile(path);
+	bool text_success = sprites[_sprites_count].texture.loadFromFile(data.file);
 	if (!text_success)
 		return -1;
-	sprites[_sprites_count].setTexture(textures[_sprites_count]);
+	sprites[_sprites_count].sprite.setTexture(sprites[_sprites_count].texture);
+	sprites[_sprites_count].size = data.size;
+	sprites[_sprites_count].sprite.setTextureRect(sf::IntRect(0, 0, (int)data.size.x, (int)data.size.y));
+	sprites[_sprites_count].frames_count = data.frames_count;
 	_sprites_count++;
 	return _sprites_count - 1;
 }
 
-bool GraphicManager::LoadSprite(std::string path, unsigned id)
+bool GraphicManager::LoadSprite(GraphicPrefabData& data, unsigned id)
 {
-	if (id >= GetSpritesMaxCount())
+	if (id >= GetSpritesMaxCount()) 
 		return false;
-	bool text_success = textures[id].loadFromFile(path);
+	bool text_success = sprites[id].texture.loadFromFile(data.file);
 	if (!text_success)
 		return false;
-	sprites[id].setTexture(textures[id]);
+	sprites[id].sprite.setTexture(sprites[id].texture);
+	sprites[id].size = data.size;
+	sprites[_sprites_count].sprite.setTextureRect(sf::IntRect(0, 0, (int)data.size.x, (int)data.size.y));
+	sprites[_sprites_count].frames_count = data.frames_count;
 	return true;
 }
