@@ -16,7 +16,7 @@ public:
 		return new DirtBlock();
 	}
 
-	virtual void Update();
+	void Update();
 };
 
 void DirtBlock::Update() {

@@ -12,6 +12,7 @@ class Level;
 
 //! Максимальная длинна сетки блоков и блоков стен
 const int MAX_LEVEL_SIZE = 500;
+const int BLOCK_SIZE = 40;
 
 /*
  * Сей класс наследуется от GameField, тут будет вся инфа о текущих объектах в игре
@@ -29,6 +30,8 @@ public:
 	Block* getBlockFromMesh(Vector2I pos);
 	void removeEntity(Entity * entity);
 private:
+	void drawBlocks();
+
 	Block *blocks[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
 	std::vector<Entity*> entities;
 

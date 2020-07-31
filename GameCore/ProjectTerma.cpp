@@ -21,8 +21,10 @@ void ProjectTerma::Init()
 
 void ProjectTerma::Update()
 {
-	//SceneManager::CreateScene(new GameplayScene());
-	//SceneManager::CloseScene(this);
+	SceneManager::CreateScene(new GameplayScene());
+	SceneManager::CloseScene(this);
+
+	/*
 	DrawData new_data;
 	new_data.layer = 0;
 	new_data.frame = 0;
@@ -33,7 +35,7 @@ void ProjectTerma::Update()
 	new_data.spriteID = Textures::DIRT_BLOCK_TEXTURE;
 
 	GraphicManager::Draw(new_data, Views::TEST);
-
+*/
 }
 
 void ProjectTerma::Destroy()

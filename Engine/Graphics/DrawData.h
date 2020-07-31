@@ -1,11 +1,5 @@
 #pragma once
 #include "../Utility/Coordinate.h"
-/*
-const unsigned SPRITES_COUNT = 2;
-enum Sprites {
-	// TODO здесь будут спрайты всех объектов
-};
-*/
 
 const unsigned VIEWS_COUNT = 2;
 enum Views {

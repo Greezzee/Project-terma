@@ -2,10 +2,16 @@
 
 #include "../entities/Entity.h"
 
+struct View;
+
 class Player : public Entity {
 public:
 	Player();
-	virtual void Draw();
-	virtual GameObject* clone() const;
-	virtual void Update();
+	void Draw();
+	GameObject* clone() const;
+	void Update();
+	View* getCamera();
+
+private:
+	View* camera;
 };

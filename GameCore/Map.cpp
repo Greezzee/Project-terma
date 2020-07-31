@@ -1,7 +1,10 @@
 #include "Map.h"
 
+#include <iostream>
 #include <iterator>
 
+#include "../Engine/Graphics/DrawData.h"
+#include "../Engine/Graphics/GraphicManager.h"
 #include "../Engine/Utility/Coordinate.h"
 #include "Blocks/DirtBlock.h"
 #include "Level.h"
@@ -22,25 +25,36 @@ void Map::addBlock(Vector2I pos, Block *block) {
 void Map::Init() {
 	this->level->generate(this);
 	this->player = new Player();
-	this->addEntity({0, 0}, this->player);
-	this->addBlock({1, 1},  new DirtBlock());
+	this->addEntity( { 0, 0 }, this->player);
+
+	for (int x = 0; x < MAX_LEVEL_SIZE; x += 2) {
+		for (int y = 1; y < MAX_LEVEL_SIZE; y += 2) {
+			this->addBlock( { x, y }, new DirtBlock());
+		}
+	}
 }
 
 void Map::Update() {
-	// Entities
-	for (Entity *ent : entities) {
-		ent->Update();
-	}
-	for (Entity *ent : entities) {
-		ent->Draw();
-	}
-
 	// Blocks
 	for (int i = 0; i < MAX_LEVEL_SIZE; i++) {
 		for (int j = 0; j < MAX_LEVEL_SIZE; j++) {
 			if (blocks[i][j])
 				blocks[i][j]->Update();
 		}
+	}
+
+	// DRAW
+	drawBlocks();
+
+
+	// Entities
+	for (Entity *ent : entities) {
+		ent->Update();
+	}
+
+	// DRAW
+	for (Entity *ent : entities) {
+		ent->Draw();
 	}
 }
 
@@ -61,6 +75,58 @@ void Map::removeEntity(Entity *entity) {
 		if (entity == *it) {
 			entities.erase(it);
 			return;
+		}
+	}
+}
+
+/*
+
+ Y
+ ^
+ |
+ |
+ |		          +-----* (x1, y1)
+ |                |BLOCK|
+ |	     	      |     |
+y*       (x0, y0) *-----+
+ |
+ |
+ |
+ +----------------*-----------------> X
+ |		          x
+ |
+
+
+ */
+//! Рисует блоки, схема прорисовки в ИГРОВЫХ координатах выше.
+void Map::drawBlocks() {
+	View *camera = this->player->getCamera();
+
+	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
+		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
+
+			Block *currBlock = blocks[x][y];
+
+			if (!currBlock) {
+				continue;
+			}
+
+			float x0 = x * BLOCK_SIZE;
+			float y0 = y * BLOCK_SIZE;
+
+			float x1 = (x + 1) * BLOCK_SIZE;
+			float y1 = (y + 1) * BLOCK_SIZE;
+
+			DrawData info = { };
+			info.position.x = (x0 + x1) / 2;
+			info.position.y = (y0 + y1) / 2;
+
+			info.frame = 0;
+			info.layer = 0;
+			info.scale = { 5, 5 };
+
+			info.spriteID = currBlock->getSpriteId();
+			GraphicManager::Draw(info, Views::TEST);
 		}
 	}
 }
