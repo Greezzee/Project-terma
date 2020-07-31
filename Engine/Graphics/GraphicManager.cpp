@@ -70,7 +70,7 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 void GraphicManager::SetView(DrawData& data, Views view_id)
 {
 	View& view = views[view_id];
-	Vector2F obj_pos = data.position - view.virtual_position;
+	Vector2F obj_pos = data.position - view.virtual_position + view.virtual_size / 2.f;
 	data.position = (obj_pos * view.real_size / view.virtual_size) * view.unit_vector;
 	data.position -= view.real_size * (view.unit_vector - Vector2F(1, 1)) / 2.f;
 	data.position += view.real_position;
