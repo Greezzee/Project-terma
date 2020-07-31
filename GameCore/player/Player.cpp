@@ -1,11 +1,10 @@
 #include "Player.h"
 
-#include <iostream>
-
 #include "../../Engine/Control/InputManager.h"
 #include "../../Engine/Graphics/DrawData.h"
 #include "../../Engine/Graphics/GraphicManager.h"
 #include "../../Engine/Utility/Coordinate.h"
+#include "../Map.h"
 #include "../Textures.h"
 
 Player::Player() {
@@ -17,6 +16,20 @@ View* Player::getCamera() {
 }
 
 void Player::Draw() {
+	DrawData info = { };
+	info.position.x = GetPos().x;
+	info.position.y = GetPos().y;
+
+	info.size.x = 2 * BLOCK_SIZE;
+	info.size.y = 6 * BLOCK_SIZE;
+
+	info.origin = { 0.5, 0.5 };
+
+	info.frame = 0;
+	info.layer = 0;
+
+	info.spriteID = Textures::PLAYER_STAND_TEXTURE;
+	GraphicManager::Draw(info, Views::PLAYER_CAM);
 }
 
 GameObject* Player::clone() const {

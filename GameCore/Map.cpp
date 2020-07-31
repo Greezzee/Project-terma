@@ -71,7 +71,7 @@ void Map::removeEntity(Entity *entity) {
  |		          +-----* (x1, y1)
  |                |BLOCK|
  |	     	      |     |
- y*       (x0, y0) *-----+
+y*       (x0, y0) *-----+
  |
  |
  |
