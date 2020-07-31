@@ -8,7 +8,7 @@ class Textures {
 public:
 	// ALL IDs
 	// BLOCKS
-	static int DIRT_BLOCK_TEXTURE;
+	static int DIRT_BLOCK_TEXTURE, STONE_BLOCK_TEXTURE, ANIMATED_BLOCK_TEXTURE;
 
 	// ENTITIES
 	static int PLAYER_STAND_TEXTURE;

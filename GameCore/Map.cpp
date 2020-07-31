@@ -123,7 +123,6 @@ void Map::drawBlocks() {
 
 			info.frame = 0;
 			info.layer = 0;
-			info.scale = { 5, 5 };
 
 			info.spriteID = currBlock->getSpriteId();
 			GraphicManager::Draw(info, Views::TEST);

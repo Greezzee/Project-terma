@@ -5,6 +5,23 @@
 #include "DrawData.h"
 #include "../Utility/Coordinate.h"
 
+//! Структура для хранения информации об изображениях и анимации, используемый ТОЛЬКО в GraphicManager
+struct GraphicPrefab {
+	sf::Texture texture; //! sfml текстура префаба
+	sf::Sprite sprite; //! sfml спрайт для отрисовки
+	Vector2F size; //! размер спрайта в пикселях
+	unsigned frames_count = 1; //! Кол-во спрайтов в анимации. Для одиночного изображения 1
+};
+
+//! Структура для загрузки новых изображеней в GraphicManager
+struct GraphicPrefabData {
+	GraphicPrefabData(std::string f, Vector2F s, unsigned fc) :
+		file(f), size(s), frames_count(fc) {}
+	std::string file; //! файл, при необходимости путь к нему
+	Vector2F size; //! размер спрайта в пикселях
+	unsigned frames_count = 1; //! Кол-во спрайтов в анимации. Для одиночного изображения 1
+};
+
 /*!
 * Статичный класс, предназначенный для работы с графикой. 
 * 
@@ -61,7 +78,7 @@ public:
 	* Загружает спрайт по заданному пути и помещает его на следующий свободный id
 	* Вернёт id нового спрайта при успешной загрузке, вернёт -1 в другом случае (нет свободных id, не найден файл по пути) 
 	*/
-	static int LoadSprite(std::string path);
+	static int LoadSprite(GraphicPrefabData data);
 
 	/*!
 	* Загружает спрайт по заданному пути и помещает его на заданный id.
@@ -69,7 +86,7 @@ public:
 	* Вернёт true при успешной загрузке, иначе вернёт false (данный id больше максимальное возможного, не найден файл по пути)
 	* id <= GetSpritesMaxCount() ВСЕГДА
 	*/
-	static bool LoadSprite(std::string path, unsigned id);
+	static bool LoadSprite(GraphicPrefabData& data, unsigned id);
 
 	/*!
 	* Возвращает указатель на view, имеющий данное ID.
@@ -81,8 +98,7 @@ public:
 private:
 	static sf::RenderWindow window; //! Окно SFML, на котором происходит вся отрисовка
 
-	static std::vector<sf::Texture> textures; //! Массив всех текстур игры. Загружается при Init, требуется для хранения спрайтов
-	static std::vector<sf::Sprite> sprites; //! Массив всех спрайтов игры. Загружается при Init.
+	static std::vector<GraphicPrefab> sprites; //! Массив всех спрайтов игры
 
 	static std::vector<std::list<sf::Sprite>> to_draw; //! Массив всех спрайтов, которые нужно нарисовать в данный кадр
 
@@ -92,4 +108,3 @@ private:
 
 	static unsigned _sprites_count;
 };
-
