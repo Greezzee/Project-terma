@@ -17,6 +17,9 @@ public:
 	// Background
 	static int TEST_BACKGROUND;
 
+	// TEST BUTTON
+	static int MENU_BUTTON;
+
 	//! Texture loader. LOAD EVERY TEXTURE HERE!!! BUT FIRST DEFINE IT IN THIS CLASS!!!
 	static void LOAD_ALL_TEXTURES();
 };

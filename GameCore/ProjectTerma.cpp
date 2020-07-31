@@ -5,6 +5,7 @@
 #include "../Engine/SceneManagment/SceneManager.h"
 
 #include "Scenes/GameplayScene.h"
+#include "Scenes/MenuScene.h"
 #include "../Engine/Graphics/GraphicManager.h"
 #include "../Engine/Graphics/DrawData.h"
 #include "../Engine/Colliders/SquareCollider.h"
@@ -21,7 +22,7 @@ void ProjectTerma::Init()
 
 void ProjectTerma::Update()
 {
-	SceneManager::CreateScene(new GameplayScene());
+	SceneManager::CreateScene(new MenuScene());
 	SceneManager::CloseScene(this);
 }
 
