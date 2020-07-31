@@ -7,8 +7,10 @@
 #include "../Engine/Graphics/GraphicManager.h"
 #include "../Engine/Utility/Coordinate.h"
 #include "Blocks/DirtBlock.h"
+#include "Blocks/GrassBlock.h"
 #include "Level.h"
 #include "player/Player.h"
+#include "Textures.h"
 
 void Map::setLevel(Level *level) {
 	this->level = level;
@@ -27,35 +29,16 @@ void Map::Init() {
 	this->player = new Player();
 	this->addEntity( { 0, 0 }, this->player);
 
-	for (int x = 0; x < MAX_LEVEL_SIZE; x += 2) {
-		for (int y = 1; y < MAX_LEVEL_SIZE; y += 2) {
-			this->addBlock( { x, y }, new DirtBlock());
-		}
-	}
+	genTestGround();
 }
 
 void Map::Update() {
-	// Blocks
-	for (int i = 0; i < MAX_LEVEL_SIZE; i++) {
-		for (int j = 0; j < MAX_LEVEL_SIZE; j++) {
-			if (blocks[i][j])
-				blocks[i][j]->Update();
-		}
-	}
+	updateBlocks();
+	updateEntities();
 
-	// DRAW
+	drawBackground();
 	drawBlocks();
-
-
-	// Entities
-	for (Entity *ent : entities) {
-		ent->Update();
-	}
-
-	// DRAW
-	for (Entity *ent : entities) {
-		ent->Draw();
-	}
+	drawEntities();
 }
 
 void Map::Destroy() {
@@ -88,7 +71,7 @@ void Map::removeEntity(Entity *entity) {
  |		          +-----* (x1, y1)
  |                |BLOCK|
  |	     	      |     |
-y*       (x0, y0) *-----+
+ y*       (x0, y0) *-----+
  |
  |
  |
@@ -121,11 +104,67 @@ void Map::drawBlocks() {
 			info.position.x = (x0 + x1) / 2;
 			info.position.y = (y0 + y1) / 2;
 
+			info.size.x = BLOCK_SIZE;
+			info.size.y = BLOCK_SIZE;
+
+			info.origin = { 0.5, 0.5 };
+
 			info.frame = 0;
 			info.layer = 0;
 
 			info.spriteID = currBlock->getSpriteId();
-			GraphicManager::Draw(info, Views::TEST);
+			GraphicManager::Draw(info, Views::PLAYER_CAM);
 		}
+	}
+}
+
+void Map::drawEntities() {
+	for (Entity *ent : entities) {
+		ent->Draw();
+	}
+}
+
+void Map::drawBackground() {
+	DrawData info = { };
+	info.position.x = player->GetPos().x;
+	info.position.y = player->GetPos().y;
+
+	info.size.x = 2000;
+	info.size.y = 1000;
+
+	info.origin = { 0, 1 };
+
+	info.frame = 0;
+	info.layer = 0;
+
+	info.spriteID = Textures::TEST_BACKGROUND;
+	GraphicManager::Draw(info, Views::PLAYER_CAM);
+}
+
+void Map::updateBlocks() {
+	for (int i = 0; i < MAX_LEVEL_SIZE; i++) {
+		for (int j = 0; j < MAX_LEVEL_SIZE; j++) {
+			if (blocks[i][j])
+				blocks[i][j]->Update();
+		}
+	}
+}
+
+void Map::genTestGround() {
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
+			addBlock( { x, y }, new DirtBlock());
+		}
+	}
+	for (int y = 5; y < 8; y++) {
+		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
+			addBlock( { x, y }, new GrassBlock());
+		}
+	}
+}
+
+void Map::updateEntities() {
+	for (Entity *ent : entities) {
+		ent->Update();
 	}
 }

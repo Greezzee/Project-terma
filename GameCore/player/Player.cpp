@@ -9,7 +9,7 @@
 #include "../Textures.h"
 
 Player::Player() {
-	camera = GraphicManager::GetView(Views::TEST);
+	camera = GraphicManager::GetView(Views::PLAYER_CAM);
 }
 
 View* Player::getCamera() {
@@ -27,7 +27,16 @@ void Player::Update() {
 	if (InputManager::IsDown(KeyboardKey::R_Right)) {
 		_pos.x += 5;
 	}
+	if (InputManager::IsDown(KeyboardKey::R_Left)) {
+		_pos.x -= 5;
+	}
+	if (InputManager::IsDown(KeyboardKey::R_Up)) {
+		_pos.y += 5;
+	}
+	if (InputManager::IsDown(KeyboardKey::R_Down)) {
+		_pos.y -= 5;
+	}
 
-	camera->virtual_position.x = _pos.x - camera->virtual_size.x / 2;
-	camera->virtual_position.y = _pos.y - camera->virtual_size.y / 2;
+	camera->virtual_position.x = _pos.x;
+	camera->virtual_position.y = _pos.y;
 }

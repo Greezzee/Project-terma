@@ -21,6 +21,7 @@ void GraphicManager::Init()
 	views.resize(VIEWS_COUNT);
 	views[Views::BASIC] = { {0, 0}, {1600, 900}, {0, 0}, {1600, 900}, {1, 1} };
 	views[Views::TEST] = { {0, 0}, {1600, 900}, {0, 0}, {16, 9}, {1, -1}};
+	views[Views::PLAYER_CAM] = { {0, 0}, {1600, 900}, {0, 0}, {1600, 900}, {1, -1}};
 }
 
 bool GraphicManager::Update()
