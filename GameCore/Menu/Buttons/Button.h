@@ -1,16 +1,12 @@
 #pragma once
 
-#include "../../Engine/Gameplay/GameObject.h"
-#include "../../Engine/SceneManagment/Scene.h"
+#include "../../../Engine/Gameplay/GameObject.h"
+#include "../../../Engine/SceneManagment/Scene.h"
 
 class Button : public GameObject
 {
-protected:
-	//! The scene where this button is situated
-	Scene* scene;
-	unsigned sprite_id;
 public:
-	Button(Scene *_scene, unsigned _sprite_id);
+	Button();
 	//! Returns true if the mouse is on the button (doesn't work)
 	bool isFocused();
 	//! Returns true if the button was clicked

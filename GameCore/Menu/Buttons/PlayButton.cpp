@@ -1,14 +1,16 @@
 #include "PlayButton.h"
 
-#include "../../Engine/Control/InputManager.h"
-#include "../../Engine/SceneManagment/SceneManager.h"
-#include "../../Engine/Graphics/DrawData.h"
-#include "../../GameCore/Textures.h"
+#include "../../../Engine/Control/InputManager.h"
+#include "../../../Engine/SceneManagment/SceneManager.h"
+#include "../../../Engine/Graphics/DrawData.h"
+#include "../../../GameCore/Textures.h"
 
-#include "../../GameCore/Scenes/GameplayScene.h"
+#include "../../../GameCore/Scenes/GameplayScene.h"
 
-PlayButton::PlayButton(Scene *_scene, unsigned _sprite_id) :
-		Button(_scene, _sprite_id) {}
+PlayButton::PlayButton(MenuScene* _scene)
+{
+	menu_scene = _scene;
+}
 
 bool PlayButton::isClicked()
 {
@@ -18,7 +20,7 @@ bool PlayButton::isClicked()
 void PlayButton::clickReact()
 {
 	SceneManager::CreateScene(new GameplayScene());
-	SceneManager::CloseScene(scene);
+	SceneManager::CloseScene(menu_scene);
 }
 
 void PlayButton::focusReact()
@@ -48,7 +50,7 @@ void PlayButton::Draw()
 	info.frame = 0;
 	info.layer = 0;
 
-	info.spriteID = sprite_id;
+	info.spriteID = Textures::MENU_BUTTON;
 	GraphicManager::Draw(info, Views::BASIC);
 }
 
@@ -64,7 +66,7 @@ void PlayButton::Destroy()
 
 GameObject* PlayButton::clone() const
 {
-	PlayButton* clone = new PlayButton(scene, sprite_id);
+	PlayButton* clone = new PlayButton(menu_scene);
 
 	return clone;
 }
