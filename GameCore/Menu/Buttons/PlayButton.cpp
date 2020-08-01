@@ -7,10 +7,7 @@
 
 #include "../../../GameCore/Scenes/GameplayScene.h"
 
-PlayButton::PlayButton(MenuScene* _scene)
-{
-	menu_scene = _scene;
-}
+PlayButton::PlayButton() {}
 
 bool PlayButton::isClicked()
 {
@@ -20,7 +17,7 @@ bool PlayButton::isClicked()
 void PlayButton::clickReact()
 {
 	SceneManager::CreateScene(new GameplayScene());
-	SceneManager::CloseScene(menu_scene);
+	SceneManager::CloseScene(current_scene);
 }
 
 void PlayButton::focusReact()
@@ -66,7 +63,7 @@ void PlayButton::Destroy()
 
 GameObject* PlayButton::clone() const
 {
-	PlayButton* clone = new PlayButton(menu_scene);
+	PlayButton* clone = new PlayButton();
 
 	return clone;
 }

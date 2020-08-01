@@ -6,11 +6,8 @@
 
 class PlayButton : public Button
 {
-protected:
-	//! The menu scene where this button is situated
-	MenuScene* menu_scene;
 public:
-	PlayButton(MenuScene* _scene);
+	PlayButton();
 
 	virtual bool isClicked() override;
 	virtual void clickReact() override;

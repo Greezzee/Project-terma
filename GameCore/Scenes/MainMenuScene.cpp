@@ -9,28 +9,28 @@ MainMenuScene::MainMenuScene() {}
 void MainMenuScene::Init()
 {
 	//! Initializing a button that leads to the gameplay scene
-	PlayButton* play_button = new PlayButton(this);
+	PlayButton* play_button = new PlayButton();
 	play_button->Init(nullptr);
-	buttons.push_back(play_button);
+	widgets.push_back(play_button);
 }
 
 void MainMenuScene::Update()
 {
-	for (auto button : buttons) {
-		button->Update();
+	for (auto widget : widgets) {
+		widget->Update();
 	}
-	for (auto button : buttons) {
+	for (auto button : widgets) {
 		button->Draw();
 	}
 }
 
 void MainMenuScene::Destroy()
 {
-	for (auto button : buttons) {
-		button->Destroy();
-		delete button;
+	for (auto widget : widgets) {
+		widget->Destroy();
+		delete widget;
 	}
-	buttons.clear();
+	widgets.clear();
 
 	printf("MainMenuScene destroyed!");
 	std::cout.flush();

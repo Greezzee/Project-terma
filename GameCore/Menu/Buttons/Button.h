@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../../Engine/Gameplay/GameObject.h"
+#include "../MenuWidget.h"
 #include "../../../Engine/SceneManagment/Scene.h"
 
-class Button : public GameObject
+class Button : public MenuWidget
 {
 public:
 	Button();

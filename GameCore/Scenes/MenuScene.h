@@ -3,14 +3,14 @@
 #include <vector>
 
 #include "../../Engine/SceneManagment/Scene.h"
-#include "../Menu/Buttons/Button.h"
+#include "../Menu/MenuWidget.h"
 
+class MenuWidget;
 
 class MenuScene : public Scene {
 protected:
 	//! Vector that contains all buttons of this menu
-	std::vector<Button*> buttons;
-
+	std::vector<MenuWidget*> widgets;
 
 public:
 	MenuScene();

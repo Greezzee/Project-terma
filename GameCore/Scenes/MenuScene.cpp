@@ -4,8 +4,8 @@ MenuScene::MenuScene() {}
 
 void MenuScene::drawButtons()
 {
-	for (auto button : buttons) {
-		button->Draw();
+	for (auto widget : widgets) {
+		widget->Draw();
 	}
 }
 
