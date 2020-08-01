@@ -1,8 +1,9 @@
 #include "Map.h"
 
-#include <iostream>
 #include <iterator>
 
+#include "../Engine/Colliders/Collider.h"
+#include "../Engine/Colliders/SquareCollider.h"
 #include "../Engine/Graphics/DrawData.h"
 #include "../Engine/Graphics/GraphicManager.h"
 #include "../Engine/Utility/Coordinate.h"
@@ -27,7 +28,7 @@ void Map::addBlock(Vector2I pos, Block *block) {
 void Map::Init() {
 	this->level->generate(this);
 	this->player = new Player();
-	this->addEntity( { 0, 0 }, this->player);
+	this->addEntity( { 500, 500 }, this->player);
 
 	genTestGround();
 }
@@ -46,6 +47,7 @@ void Map::Destroy() {
 
 void Map::addEntity(Vector2F pos, Entity *entity) {
 	entity->SetPos( { pos.x, pos.y });
+	entity->setMap(this);
 	this->entities.push_back(entity);
 }
 
@@ -132,7 +134,7 @@ void Map::drawBackground() {
 	info.size.x = 2000;
 	info.size.y = 1000;
 
-	info.origin = { 0, 1 };
+	info.origin = { 0.5, 0.5 };
 
 	info.frame = 0;
 	info.layer = 0;
@@ -161,6 +163,23 @@ void Map::genTestGround() {
 			addBlock( { x, y }, new GrassBlock());
 		}
 	}
+}
+
+bool Map::testCollision(SquareCollider *col) {
+	SquareCollider bl = {};
+	Vector2F bl_sz = {BLOCK_SIZE, BLOCK_SIZE};
+	for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
+		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
+			Vector2F p0 = Vector2F{x, y} * BLOCK_SIZE;
+			bl.Init(blocks[x][y], p0, bl_sz);
+
+			if (Collider::IsCollide(&bl, col)) {
+				return 1;
+			}
+		}
+	}
+
+	return 0;
 }
 
 void Map::updateEntities() {

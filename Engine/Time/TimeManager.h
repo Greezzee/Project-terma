@@ -25,6 +25,9 @@ public:
 	//! Возвращает время с последнего рестарта или инициализации В МИКРОСЕКУНДАХ
 	static unsigned long long GetTimeFromLastRestart();
 
+	//! Vozvraschaet kollichestvo vremeny s momenta poslednego obnovleniya v SECUNDAH!
+	static float GetDeltaTimeF();
+
 	//! Возвращает время, прошедшее с предыдущего кадра (время на данный кадр) В МИКРОСЕКУНДАХ
 	static unsigned long long GetDeltaTime();
 private:
