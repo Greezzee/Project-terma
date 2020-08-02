@@ -9,19 +9,17 @@ class MenuWidget;
 
 class MenuScene : public Scene {
 protected:
+	//! Shows whether the scene is active (for correct switching scenes with buttons)
+	bool is_active;
 	//! Vector that contains all buttons of this menu
 	std::vector<MenuWidget*> widgets;
-
 public:
 	MenuScene();
 
 	//! These functions draw certain widgets of the menu
-	void drawButtons();
-	/*
-	void drawTextWidgets();
-	void drawImageWidgets();
-	*/
-
+	void drawWidgets();
+	//! Sets the 'is_active' variable to false
+	void disableScene();
 	//! The Init() method should include creating all widgets and putting them into the suitable vector
 	virtual void Init() = 0;
 	virtual void Update() = 0;

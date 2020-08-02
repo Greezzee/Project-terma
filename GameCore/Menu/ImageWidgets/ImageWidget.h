@@ -1,12 +1,12 @@
-#include "../../../Engine/Gameplay/GameObject.h"
+#include "../MenuWidget.h"
 
-class ImageWidget : public GameObject
+class ImageWidget : public MenuWidget
 {
-
 public:
-	virtual void Init(GameObject* owner) override;
-	virtual void Update() override;
-	virtual void Draw() override;
-	virtual void Destroy() override;
-	virtual GameObject* clone() override;
+	ImageWidget();
+
+	virtual void Init(GameObject* owner) = 0;
+	virtual void Update() = 0;
+	virtual void Draw() = 0;
+	virtual void Destroy() = 0;
 };

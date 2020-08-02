@@ -17,7 +17,7 @@ bool PlayButton::isClicked()
 void PlayButton::clickReact()
 {
 	SceneManager::CreateScene(new GameplayScene());
-	SceneManager::CloseScene(current_scene);
+	current_scene->disableScene();
 }
 
 void PlayButton::focusReact()
@@ -45,9 +45,9 @@ void PlayButton::Draw()
 	info.origin = { 0.5, 0.5 };
 
 	info.frame = 0;
-	info.layer = 0;
+	info.layer = 1;
 
-	info.spriteID = Textures::MENU_BUTTON;
+	info.spriteID = this->sprite_id;
 	GraphicManager::Draw(info, Views::BASIC);
 }
 
@@ -59,13 +59,6 @@ void PlayButton::Init(GameObject* owner)
 void PlayButton::Destroy()
 {
 	printf("PlayButton destroyed!\n");
-}
-
-GameObject* PlayButton::clone() const
-{
-	PlayButton* clone = new PlayButton();
-
-	return clone;
 }
 
 

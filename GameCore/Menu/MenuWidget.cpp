@@ -6,7 +6,7 @@ MenuWidget::MenuWidget()
 	sprite_id = -1;
 }
 
-void MenuWidget::setScene(Scene* _scene)
+void MenuWidget::setScene(MenuScene* _scene)
 {
 	current_scene = _scene;
 }
@@ -14,4 +14,11 @@ void MenuWidget::setScene(Scene* _scene)
 void MenuWidget::setSpriteID(unsigned _id)
 {
 	sprite_id = _id;
+}
+
+GameObject* MenuWidget::clone() const
+{
+	printf("Error! Cloning MenuWidget isn't supported\n");
+
+	return nullptr;
 }

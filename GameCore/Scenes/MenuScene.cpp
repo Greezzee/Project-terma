@@ -1,25 +1,17 @@
 #include "MenuScene.h"
 
-MenuScene::MenuScene() {}
+MenuScene::MenuScene()
+{
+	is_active = true;
+}
 
-void MenuScene::drawButtons()
+void MenuScene::drawWidgets()
 {
 	for (auto widget : widgets) {
 		widget->Draw();
 	}
 }
 
-/*
-void MenuScene::drawTextWidgets()
-{
-	for (auto text_widget : text_widgets) {
-		text_widget.Draw();
-	}
+void MenuScene::disableScene() {
+	is_active = false;
 }
-void MenuScene::drawImageWidgets()
-{
-	for (auto image_widget : image_widgets) {
-			image_widget.Draw();
-		}
-}
-*/
