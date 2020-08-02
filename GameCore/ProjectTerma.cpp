@@ -4,12 +4,11 @@
 
 #include "../Engine/SceneManagment/SceneManager.h"
 
-#include "Scenes/GameplayScene.h"
+#include "Scenes/MainMenuScene.h"
 #include "../Engine/Graphics/GraphicManager.h"
 #include "../Engine/Graphics/DrawData.h"
-#include "../Engine/Colliders/SquareCollider.h"
-#include "../Engine/Colliders/EllipseCollider.h"
-#include "../Engine/Time/TimeManager.h"
+
+class MainMenuScene;
 
 void ProjectTerma::Init()
 {
@@ -21,7 +20,7 @@ void ProjectTerma::Init()
 
 void ProjectTerma::Update()
 {
-	SceneManager::CreateScene(new GameplayScene());
+	SceneManager::CreateScene(new MainMenuScene());
 	SceneManager::CloseScene(this);
 }
 

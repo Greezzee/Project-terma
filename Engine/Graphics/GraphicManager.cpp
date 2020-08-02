@@ -1,4 +1,3 @@
-#pragma once
 #include "GraphicManager.h"
 #include "../Time/TimeManager.h"
 sf::RenderWindow GraphicManager::window;
@@ -22,6 +21,7 @@ void GraphicManager::Init()
 	views[Views::BASIC] = { {0, 0}, {1024, 576}, {0, 0}, {1024, 576}, {1, 1} };
 	views[Views::TEST] = { {0, 0}, {1024, 576}, {0, 0}, {16, 9}, {1, -1}};
 	views[Views::PLAYER_CAM] = { {0, 0}, {1024, 576}, {0, 0}, {1600, 900}, {1, -1}};
+	views[Views::MAIN_MENU] = { {0, 0}, {1024, 576}, {800, 450}, {1600, 900}, {1, -1}};
 }
 
 bool GraphicManager::Update()
