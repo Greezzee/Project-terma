@@ -25,6 +25,10 @@ struct KeyData {
 	bool is_down;
 };
 
+struct MouseData {
+	Vector2F pos;
+	KeyData l_button, r_button;
+};
 
 /*!
 * Менеджер, который перехватывает данные с клавиатуры (в будущем и с мыши) и предоставляет их другим объектам в более удобном виде
@@ -58,7 +62,11 @@ struct InputManager
 	//! Вернёт true если key не нажата, иначе false
 	static bool IsDown(KeyboardKey key);
 
+	//! Вернёт координаты курсора в системе окна SFML
+	static Vector2F GetMousePos();
+
 private:
 	static KeyData _key_info[KeysCount]; //! Массив информации о всех виртуальных клавишах
+	static MouseData _mouse_info; //! Информация о положении мыши
 	static sf::Keyboard::Key _control_keys[KeysCount]; //! Хранит связь между реальными и виртуальными клавишами
 };

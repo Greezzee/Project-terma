@@ -1,5 +1,17 @@
 #include "GraphicManager.h"
 #include "../Time/TimeManager.h"
+
+Vector2F GraphicManager::ConvertRealToView(Vector2F pos, Views view_id)
+{
+	View& view = views[view_id];
+	pos -= view.real_position;
+	pos += view.real_size * (view.unit_vector - Vector2F(1, 1));
+	pos = pos / view.real_size * view.virtual_size / view.unit_vector;
+	pos = pos + view.virtual_position - view.virtual_size / 2.f;
+	return pos;
+}
+
+
 sf::RenderWindow GraphicManager::window;
 std::vector<GraphicPrefab> GraphicManager::sprites;
 std::vector<std::list<sf::Sprite>> GraphicManager::to_draw;
@@ -19,7 +31,7 @@ void GraphicManager::Init()
 
 	views.resize(VIEWS_COUNT);
 	views[Views::BASIC] = { {0, 0}, {1024, 576}, {0, 0}, {1024, 576}, {1, 1} };
-	views[Views::TEST] = { {0, 0}, {1024, 576}, {0, 0}, {16, 9}, {1, -1}};
+	views[Views::TEST] = { {0, 0}, {1024, 576}, {0, 0}, {16, 9}, {1, 1}};
 	views[Views::PLAYER_CAM] = { {0, 0}, {1024, 576}, {0, 0}, {1600, 900}, {1, -1}};
 	views[Views::MAIN_MENU] = { {0, 0}, {1024, 576}, {800, 450}, {1600, 900}, {1, -1}};
 }
@@ -142,4 +154,9 @@ bool GraphicManager::LoadSprite(GraphicPrefabData& data, unsigned id)
 	sprites[_sprites_count].sprite.setTextureRect(sf::IntRect(0, 0, (int)data.size.x, (int)data.size.y));
 	sprites[_sprites_count].frames_count = data.frames_count;
 	return true;
+}
+
+sf::RenderWindow* GraphicManager::GetWindow()
+{
+	return &window;
 }

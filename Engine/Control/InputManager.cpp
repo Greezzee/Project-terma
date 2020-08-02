@@ -1,11 +1,12 @@
 #pragma once
 #include "InputManager.h"
-
+#include "../Graphics/GraphicManager.h"
 int max(int a, int b) {
 	return a > b ? a : b;
 }
 
 KeyData InputManager::_key_info[KeysCount];
+MouseData InputManager::_mouse_info;
 sf::Keyboard::Key InputManager::_control_keys[KeysCount];
 
 void InputManager::Init()
@@ -13,6 +14,9 @@ void InputManager::Init()
 	for (int i = 0; i < KeysCount; i++) {
 		_key_info[i] = { false, false, false };
 	}
+
+	_mouse_info = { {0, 0}, {false, false, false}, {false, false, false} };
+
 	_control_keys[KeyboardKey::L_Left] = sf::Keyboard::A;
 	_control_keys[KeyboardKey::L_Right] = sf::Keyboard::D;
 	_control_keys[KeyboardKey::L_Up] = sf::Keyboard::W;
@@ -49,6 +53,41 @@ void InputManager::Update()
 			_key_info[i].is_down = false;
 		}
 	}
+
+	_mouse_info.pos = { (float)sf::Mouse::getPosition(*GraphicManager::GetWindow()).x, (float)sf::Mouse::getPosition(*GraphicManager::GetWindow()).y };
+	_mouse_info.pos += Vector2F((float)GraphicManager::GetWindow()->getSize().x, (float)GraphicManager::GetWindow()->getSize().y) / 2;
+
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+		if (!_mouse_info.l_button.is_down)
+			_mouse_info.l_button.is_pressed = true;
+		else
+			_mouse_info.l_button.is_pressed = false;
+		_mouse_info.l_button.is_down = true;
+	}
+	else {
+		if (_mouse_info.l_button.is_down)
+			_mouse_info.l_button.is_realesed = true;
+		else
+			_mouse_info.l_button.is_realesed = false;
+		_mouse_info.l_button.is_down = false;
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
+		if (!_mouse_info.r_button.is_down)
+			_mouse_info.r_button.is_pressed = true;
+		else
+			_mouse_info.r_button.is_pressed = false;
+		_mouse_info.r_button.is_down = true;
+	}
+	else {
+		if (_mouse_info.r_button.is_down)
+			_mouse_info.r_button.is_realesed = true;
+		else
+			_mouse_info.r_button.is_realesed = false;
+		_mouse_info.r_button.is_down = false;
+	}
+
 }
 
 bool InputManager::IsDown(KeyboardKey key)
@@ -69,4 +108,9 @@ bool InputManager::IsPressed(KeyboardKey key)
 bool InputManager::IsRealesed(KeyboardKey key)
 {
 	return _key_info[key].is_realesed;
+}
+
+Vector2F InputManager::GetMousePos()
+{
+	return _mouse_info.pos;
 }

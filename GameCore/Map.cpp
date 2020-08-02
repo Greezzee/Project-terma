@@ -167,10 +167,10 @@ void Map::genTestGround() {
 
 bool Map::testCollision(SquareCollider *col) {
 	SquareCollider bl = {};
-	Vector2F bl_sz = {BLOCK_SIZE, BLOCK_SIZE};
+	Vector2F bl_sz = {BLOCK_SIZE / 2, BLOCK_SIZE / 2};
 	for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-			Vector2F p0 = Vector2F{(float)x, (float)y} * (float)BLOCK_SIZE / 2 + Vector2F(1, 1) * BLOCK_SIZE / 2;
+			Vector2F p0 = Vector2F{(float)x, (float)y} * (float)BLOCK_SIZE + Vector2F(1, 1) * BLOCK_SIZE / 2;
 			if (blocks[x][y] == nullptr)
 				continue;
 			bl.Init(blocks[x][y], p0, bl_sz);
