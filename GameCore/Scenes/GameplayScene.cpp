@@ -1,5 +1,3 @@
-#pragma once
-
 #include "GameplayScene.h"
 
 #include <cstdio>
