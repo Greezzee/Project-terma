@@ -4,38 +4,49 @@
 
 const float PI = 3.1415926f;
 
-class SquareCollider
-{
+class SquareCollider {
 public:
 	//! Задаёт нулевой коллайдер, никому не принадлежащий
 	void Init();
 
 	//! Задаёт нулевой коллайдер, принадлежащий obj
-	void Init(GameObject* obj);
+	void Init(GameObject *obj);
 
 	//! Задаёт прямоугольный коллайдер, принадлежащий obj
 	//! Размер сторон size, положение в пространстве pos
 	//! Прямоугольник со сторонами, паралелльными осям координат
 	//! ЦЕНТР - ВСЕГДА ТОЧКА ПЕРЕСЕЧЕНИЯ ДИАГОНАЛЕЙ
-	void Init(GameObject* obj, const Vector2F& pos, const Vector2F& size);
+	void Init(GameObject *obj, const Vector2F &pos, const Vector2F &size);
 
 	//! Задаёт прямоугольный коллайдер, принадлежащий obj
 	//! Размер сторон size, положение в пространстве pos
 	//! Прямоугольник. Нижняя сторона наклонена под углом angle (В РАДИАНАХ) к оси x, против часовой
 	//! ЦЕНТР (относительно центра происходит определение координаты и вращение) - ВСЕГДА ТОЧКА ПЕРЕСЕЧЕНИЯ ДИАГОНАЛЕЙ
-	void Init(GameObject* obj, const Vector2F& pos, const Vector2F& size, float angle);
+	void Init(GameObject *obj, const Vector2F &pos, const Vector2F &size,
+			float angle);
 
 	//! Задаёт прямоугольный коллайдер, принадлежащий obj
 	//! Размер сторон size, положение в пространстве pos
 	//! Параллелепипед. Нижний левый угол (до прочих поворотов) - shape_angle (в радианах). shape_angle = PI/2 - задаёт прямоугольник
 	//! Нижняя сторона наклонена под углом angle (В РАДИАНАХ) к оси x, против часовой
 	//! ЦЕНТР (относительно центра происходит определение координаты и вращение) - ВСЕГДА ТОЧКА ПЕРЕСЕЧЕНИЯ ДИАГОНАЛЕЙ
-	void Init(GameObject* obj, const Vector2F& pos, const Vector2F& size, float angle, float shape_angle);
+	void Init(GameObject *obj, const Vector2F &pos, const Vector2F &size,
+			float angle, float shape_angle);
+
+	float getAngle() const;
+	void setAngle(float angle);
+	GameObject* getMyObj() const;
+	void setMyObj(GameObject *myObj);
+	Vector2F getPos() const;
+	void setPos(Vector2F pos);
+	Vector2F getSize() const;
+	void setSize(Vector2F size);
+
 protected:
 
 	void SetPoints(); //! Расчёт и установка краевых точек коллайдера
 
-	GameObject* _my_obj; //! Объект, к которому привязан коллайдер
+	GameObject *_my_obj; //! Объект, к которому привязан коллайдер
 
 	Vector2F _size; //! ПОЛОВИНЫ Длин сторон
 	Vector2F _pos; //! Позиция центра в пространстве (центр - точка пересечения диагоналей)

@@ -8,7 +8,7 @@
 void SolidEntity::Update() {
 	Entity::Update();
 
-	collider->Init(this, this->_pos, this->size);
+	collider->Init(this, this->_pos, this->size * 0.5);
 	acceleration = { 0, -30 };
 
 	if (this->getMap()->testCollision(collider)) {
