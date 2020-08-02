@@ -1,11 +1,12 @@
 #pragma once
 #include "../Utility/Coordinate.h"
 
-const unsigned VIEWS_COUNT = 3;
+const unsigned VIEWS_COUNT = 4;
 enum Views {
 	BASIC,
 	TEST,
-	PLAYER_CAM
+	PLAYER_CAM,
+	MAIN_MENU
 };
 
 /*!

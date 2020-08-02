@@ -1,8 +1,7 @@
-#pragma once
-
 #include "GameplayScene.h"
 
 #include <cstdio>
+#include <iostream>
 
 #include "../Map.h"
 #include "../testing/TestLevel.h"
@@ -31,4 +30,5 @@ void GameplayScene::Destroy()
 	gamefield->Destroy();
 	delete gamefield;
 	printf("GameplayScene Destroyed\n");
+	std::cout.flush();
 }

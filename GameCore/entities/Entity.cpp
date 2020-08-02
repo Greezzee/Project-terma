@@ -21,7 +21,7 @@ void Entity::setSize( Vector2F size) {
 }
 
 Map* Entity::getMap() {
-	return (Map*) gamefield;
+	return this->map;
 }
 
 void Entity::Update() {

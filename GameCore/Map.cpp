@@ -170,7 +170,9 @@ bool Map::testCollision(SquareCollider *col) {
 	Vector2F bl_sz = {BLOCK_SIZE, BLOCK_SIZE};
 	for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-			Vector2F p0 = Vector2F{x, y} * BLOCK_SIZE;
+			Vector2F p0 = Vector2F{(float)x, (float)y} * (float)BLOCK_SIZE / 2 + Vector2F(1, 1) * BLOCK_SIZE / 2;
+			if (blocks[x][y] == nullptr)
+				continue;
 			bl.Init(blocks[x][y], p0, bl_sz);
 
 			if (Collider::IsCollide(&bl, col)) {
