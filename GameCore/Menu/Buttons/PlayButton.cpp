@@ -35,7 +35,7 @@ void PlayButton::Draw()
 
 	// std::cout << "Resolution: x " << resolution.x << ", y " << resolution.y << std::endl;
 
-	info.position = {800, 450};
+	info.position = {800, 600};
 
 	// std::cout << "Position: x " << info.position.x << ", y " << info.position.y << std::endl;
 
