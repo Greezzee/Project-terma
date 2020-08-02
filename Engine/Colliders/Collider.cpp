@@ -1,6 +1,9 @@
 #include "Collider.h"
-#include "../Utility/Line.h"
+
 #include <cmath>
+
+#include "../Utility/Coordinate.h"
+#include "../Utility/Line.h"
 
 float sqr(float x) {
 	return x * x;
@@ -95,7 +98,6 @@ bool Collider::IsCollide(EllipseCollider* a, EllipseCollider* b) {
 //! ѕровер€ет, пересекаютс€ ли 2 данных коллайдера
 bool Collider::IsCollide(SquareCollider* a, SquareCollider* b)
 {
-
 	float sqrdist = Vector2F(a->_pos - b->_pos).SqrMagnitude();
 	float rad = a->_size.Magnitude() + b->_size.Magnitude();
 

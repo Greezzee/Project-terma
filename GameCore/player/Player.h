@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../entities/Entity.h"
+#include "../entities/SolidEntity.h"
 
 struct View;
 
-class Player : public Entity {
+class Player : public SolidEntity {
 public:
 	Player();
 	void Draw();

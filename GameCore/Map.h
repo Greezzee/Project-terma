@@ -4,6 +4,8 @@
 
 #include "entities/Entity.h"
 
+class SquareCollider;
+
 class Player;
 
 class Block;
@@ -43,6 +45,11 @@ public:
 	// TEST
 	//------------------------
 	void genTestGround();
+	//------------------------
+
+	// COLLISIONS
+	//------------------------
+	bool testCollision(SquareCollider * col);
 	//------------------------
 
 private:
