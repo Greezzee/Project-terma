@@ -9,7 +9,7 @@
 
 Player::Player() {
 	camera = GraphicManager::GetView(Views::PLAYER_CAM);
-	size = { 3 * BLOCK_SIZE, 6 * BLOCK_SIZE };
+	size = { 5 * BLOCK_SIZE, 5 * BLOCK_SIZE };
 	lookingRight = 1;
 }
 
@@ -24,7 +24,7 @@ void Player::Draw() {
 	//----------------------------
 	info.position = this->_pos;
 	info.size = this->size;
-	info.size.x *= (lookingRight ? -1.0f : 1.0f);
+	info.size.x *= (lookingRight ? 1.0f : -1.0f);
 	info.rotation = _angle;
 	//----------------------------
 
