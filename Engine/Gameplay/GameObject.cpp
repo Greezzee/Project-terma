@@ -45,3 +45,15 @@ Vector2F GameObject::GetDirection()
 {
 	return _basic_direction;
 }
+
+void GameObject::SetPos(Vector2F pos) {
+	this->_pos = pos;
+}
+
+void GameObject::SetDirection(Vector2F dir) {
+	this->_basic_direction = dir;
+}
+
+void GameObject::SetRotation(float angle) {
+	this->_angle = angle;
+}
