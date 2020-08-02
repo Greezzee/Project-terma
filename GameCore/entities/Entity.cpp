@@ -25,9 +25,10 @@ Map* Entity::getMap() {
 }
 
 void Entity::Update() {
-
 	float dt = TimeManager::GetDeltaTimeF();
 
 	_pos += dt * speed;
 	speed += dt * acceleration;
+
+	acceleration = {0, 0};
 }

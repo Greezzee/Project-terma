@@ -10,6 +10,7 @@
 Player::Player() {
 	camera = GraphicManager::GetView(Views::PLAYER_CAM);
 	size = { 3 * BLOCK_SIZE, 6 * BLOCK_SIZE };
+	lookingRight = 1;
 }
 
 View* Player::getCamera() {
@@ -23,6 +24,7 @@ void Player::Draw() {
 	//----------------------------
 	info.position = this->_pos;
 	info.size = this->size;
+	info.size.x *= (lookingRight ? -1.0f : 1.0f);
 	info.rotation = _angle;
 	//----------------------------
 
@@ -51,13 +53,15 @@ void Player::Update() {
 	SolidEntity::Update();
 
 	if (InputManager::IsDown(KeyboardKey::R_Right)) {
-		speed.x = 50;
+		speed.x = 350;
+		lookingRight = 1;
 	} else if (InputManager::IsDown(KeyboardKey::R_Left)) {
-		speed.x = -50;
+		speed.x = -350;
+		lookingRight = 0;
 	} else
 		speed.x = 0;
-	if (InputManager::IsDown(KeyboardKey::R_Up)) {
-		_pos.y += 1;
+	if (InputManager::IsDown(KeyboardKey::R_Up) && isInBlocks) {
+		speed.y = 1000;
 	}
 
 	camera->virtual_position.x = _pos.x;
