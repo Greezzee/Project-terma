@@ -11,7 +11,7 @@ const unsigned GraphicManager::LAYER_COUNT = 20;
 
 void GraphicManager::Init()
 {
-	window.create(sf::VideoMode(1600, 900), "Test");
+	window.create(sf::VideoMode(1024, 576), "Test");
 	//window.setFramerateLimit(65);
 
 	_sprites_count = 0;
@@ -19,9 +19,9 @@ void GraphicManager::Init()
 	to_draw.resize(LAYER_COUNT);
 
 	views.resize(VIEWS_COUNT);
-	views[Views::BASIC] = { {0, 0}, {1600, 900}, {0, 0}, {1600, 900}, {1, 1} };
-	views[Views::TEST] = { {0, 0}, {1600, 900}, {0, 0}, {16, 9}, {1, -1}};
-	views[Views::PLAYER_CAM] = { {0, 0}, {1600, 900}, {0, 0}, {1600, 900}, {1, -1}};
+	views[Views::BASIC] = { {0, 0}, {1024, 576}, {0, 0}, {1024, 576}, {1, 1} };
+	views[Views::TEST] = { {0, 0}, {1024, 576}, {0, 0}, {16, 9}, {1, -1}};
+	views[Views::PLAYER_CAM] = { {0, 0}, {1024, 576}, {0, 0}, {1600, 900}, {1, -1}};
 }
 
 bool GraphicManager::Update()
@@ -57,6 +57,9 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 		return false;
 	SetView(data, view_id);
 
+	if (data.spriteID == -1)
+		return false;
+
 	GraphicPrefab& spr = sprites[data.spriteID];
 
 	spr.sprite.setPosition(sf::Vector2f(data.position.x, data.position.y));
@@ -71,11 +74,18 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 void GraphicManager::SetView(DrawData& data, Views view_id)
 {
 	View& view = views[view_id];
-	Vector2F obj_pos = data.position - view.virtual_position;
+	Vector2F obj_pos = data.position - view.virtual_position + view.virtual_size / 2.f;
 	data.position = (obj_pos * view.real_size / view.virtual_size) * view.unit_vector;
 	data.position -= view.real_size * (view.unit_vector - Vector2F(1, 1)) / 2.f;
 	data.position += view.real_position;
 	data.size = data.size * view.real_size / view.virtual_size;
+
+	if (data.position.x + data.size.x < 0 ||
+		data.position.y + data.size.y < 0 ||
+		data.position.x - data.size.x > view.real_position.x + view.real_size.x - 0 ||
+		data.position.y - data.size.y > view.real_position.y + view.real_size.y - 0)
+		data.spriteID = -1;
+
 }
 
 View* GraphicManager::GetView(Views view_id)
