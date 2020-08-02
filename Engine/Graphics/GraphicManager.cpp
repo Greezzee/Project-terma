@@ -20,7 +20,7 @@ void GraphicManager::Init()
 
 	views.resize(VIEWS_COUNT);
 	views[Views::BASIC] = { {0, 0}, {1600, 900}, {0, 0}, {1600, 900}, {1, 1} };
-	views[Views::TEST] = { {0, 0}, {1600, 900}, {0, 0}, {16, 9}, {1, -1}};
+	views[Views::TEST] = { {0, 0}, {1600, 900}, {0, 0}, {16, 9}, {1, -1} };
 }
 
 bool GraphicManager::Update()
@@ -33,14 +33,14 @@ bool GraphicManager::Update()
 	}
 
 	window.clear();
-	
+
 	for (int i = 0; i < LAYER_COUNT; i++) {
 		for (auto obj = to_draw[i].begin(); obj != to_draw[i].end(); obj++) {
 			window.draw(*obj);
 		}
 		to_draw[i].clear();
 	}
-	
+
 	window.display();
 	return false;
 }
@@ -55,7 +55,8 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 	if (data.spriteID >= _sprites_count)
 		return false;
 	SetView(data, view_id);
-
+	if (data.spriteID == -1)
+		return false;
 	GraphicPrefab& spr = sprites[data.spriteID];
 
 	spr.sprite.setPosition(sf::Vector2f(data.position.x, data.position.y));
@@ -70,11 +71,18 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 void GraphicManager::SetView(DrawData& data, Views view_id)
 {
 	View& view = views[view_id];
-	Vector2F obj_pos = data.position - view.virtual_position + view.virtual_size / 2.f;
+	Vector2F obj_pos = data.position - view.virtual_position + view.virtual_size / 2;
 	data.position = (obj_pos * view.real_size / view.virtual_size) * view.unit_vector;
 	data.position -= view.real_size * (view.unit_vector - Vector2F(1, 1)) / 2.f;
 	data.position += view.real_position;
 	data.size = data.size * view.real_size / view.virtual_size;
+
+	if (data.position.x + data.size.x < 0 ||
+		data.position.y + data.size.y < 0 ||
+		data.position.x - data.size.x > view.real_position.x + view.real_size.x ||
+		data.position.y - data.size.y > view.real_position.y + view.real_size.y)
+		data.spriteID = -1;
+
 }
 
 View* GraphicManager::GetView(Views view_id)
@@ -104,7 +112,7 @@ void GraphicManager::SetSpritesMaxCount(unsigned count)
 		_sprites_count = count;
 }
 
-int GraphicManager::LoadSprite(GraphicPrefabData &data)
+int GraphicManager::LoadSprite(GraphicPrefabData& data)
 {
 	if (_sprites_count >= GetSpritesMaxCount())
 		return -1;
@@ -121,7 +129,7 @@ int GraphicManager::LoadSprite(GraphicPrefabData &data)
 
 bool GraphicManager::LoadSprite(GraphicPrefabData& data, unsigned id)
 {
-	if (id >= GetSpritesMaxCount()) 
+	if (id >= GetSpritesMaxCount())
 		return false;
 	bool text_success = sprites[id].texture.loadFromFile(data.file);
 	if (!text_success)
