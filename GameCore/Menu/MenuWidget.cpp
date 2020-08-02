@@ -22,3 +22,8 @@ GameObject* MenuWidget::clone() const
 
 	return nullptr;
 }
+
+void MenuWidget::setScalPos(Vector2F pos) {
+	scal_position = pos;
+}
+

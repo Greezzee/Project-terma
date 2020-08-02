@@ -13,9 +13,15 @@ protected:
 
 	//! A sprite ID that is meant to be put in the DrawData
 	unsigned sprite_id;
+
+	//! Scalar position (pos = resolution.x * scal_position.x)
+	//! Must be initialized for drawing properly
+	Vector2F scal_position;
 public:
 	MenuWidget();
 
+	//! Sets the scalar position
+	void setScalPos(Vector2F pos);
 	void setScene(MenuScene* _scene);
 	void setSpriteID(unsigned _id);
 

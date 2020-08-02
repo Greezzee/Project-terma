@@ -1,13 +1,9 @@
-#pragma once
-
 #include "Button.h"
 
-#include "../../Scenes/MenuScene.h"
-
-class PlayButton : public Button
+class QuitButton : public Button
 {
 public:
-	PlayButton();
+	QuitButton();
 
 	bool isClicked() override;
 	void clickReact() override;

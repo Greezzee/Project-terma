@@ -1,11 +1,15 @@
 #include "PlayButton.h"
 
-#include "../../../Engine/Control/InputManager.h"
-#include "../../../Engine/SceneManagment/SceneManager.h"
-#include "../../../Engine/Graphics/DrawData.h"
-#include "../../../GameCore/Textures.h"
+#include <SFML/System/Vector2.hpp>
+#include <cstdio>
+#include <iostream>
 
-#include "../../../GameCore/Scenes/GameplayScene.h"
+#include "../../../Engine/Control/InputManager.h"
+#include "../../../Engine/Graphics/DrawData.h"
+#include "../../../Engine/Graphics/GraphicManager.h"
+#include "../../../Engine/SceneManagment/SceneManager.h"
+#include "../../../Engine/Utility/Coordinate.h"
+#include "../../Scenes/GameplayScene.h"
 
 PlayButton::PlayButton() {}
 
@@ -25,19 +29,15 @@ void PlayButton::focusReact()
 	//! Nothing for now
 }
 
-void PlayButton::Update()
-{
-	if (isClicked()) {
-		clickReact();
-	}
-}
-
 void PlayButton::Draw()
 {
 	DrawData info = { };
-	//! Later need to write something to support any resolution
-	info.position.x = 650;
-	info.position.y = 250;
+
+	// std::cout << "Resolution: x " << resolution.x << ", y " << resolution.y << std::endl;
+
+	info.position = {800, 450};
+
+	// std::cout << "Position: x " << info.position.x << ", y " << info.position.y << std::endl;
 
 	info.size.x = 410;
 	info.size.y = 240;
@@ -48,7 +48,8 @@ void PlayButton::Draw()
 	info.layer = 1;
 
 	info.spriteID = this->sprite_id;
-	GraphicManager::Draw(info, Views::BASIC);
+
+	GraphicManager::Draw(info, Views::MAIN_MENU);
 }
 
 void PlayButton::Init(GameObject* owner)
