@@ -62,6 +62,6 @@ const std::string& GameObject::getName() const {
 	return name;
 }
 
-void GameObject::setName(const std::string &name = "unnamed block") {
+void GameObject::setName(const std::string &name) {
 	this->name = name;
 }
