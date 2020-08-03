@@ -114,3 +114,57 @@ Vector2F InputManager::GetMousePos()
 {
 	return _mouse_info.pos;
 }
+
+
+bool InputManager::IsPressed(MouseKey key)
+{
+	switch (key)
+	{
+	case Mouse_Left:
+		return _mouse_info.l_button.is_pressed;
+		break;
+	case Mouse_Right:
+		return _mouse_info.r_button.is_pressed;
+		break;
+	default:
+		return false;
+		break;
+	}
+}
+
+bool InputManager::IsRealesed(MouseKey key)
+{
+	switch (key)
+	{
+	case Mouse_Left:
+		return _mouse_info.l_button.is_realesed;
+		break;
+	case Mouse_Right:
+		return _mouse_info.r_button.is_realesed;
+		break;
+	default:
+		return false;
+		break;
+	}
+}
+
+bool InputManager::IsUp(MouseKey key)
+{
+	return !IsDown(key);
+}
+
+bool InputManager::IsDown(MouseKey key)
+{
+	switch (key)
+	{
+	case Mouse_Left:
+		return _mouse_info.l_button.is_down;
+		break;
+	case Mouse_Right:
+		return _mouse_info.r_button.is_down;
+		break;
+	default:
+		return false;
+		break;
+	}
+}

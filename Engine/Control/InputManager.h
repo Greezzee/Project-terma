@@ -12,6 +12,11 @@ enum KeyboardKey {
 	M_Play, M_Sett, M_Quit
 };
 
+const unsigned MouseKeysCount = 2;
+enum MouseKey {
+	Mouse_Left, Mouse_Right
+};
+
 //! Временное дополнение, WIP, лучше не трогать
 const unsigned PlayerKeysCount = 6;
 enum PlayerKey {
@@ -61,6 +66,18 @@ struct InputManager
 
 	//! Вернёт true если key не нажата, иначе false
 	static bool IsDown(KeyboardKey key);
+
+	//! Вернёт true в кадр, в который клавиша мыши key нажимается, иначе false
+	static bool IsPressed(MouseKey key);
+
+	//! Вернёт true в кадр, в который виртуальная клавиша key отжимается, иначе false
+	static bool IsRealesed(MouseKey key);
+
+	//! Вернёт true если key нажата, иначе false
+	static bool IsUp(MouseKey key);
+
+	//! Вернёт true если key не нажата, иначе false
+	static bool IsDown(MouseKey key);
 
 	//! Вернёт координаты курсора в системе окна SFML
 	static Vector2F GetMousePos();
