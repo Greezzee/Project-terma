@@ -13,10 +13,16 @@ int Textures::MAIN_MENU_QUIT_BUTTON = -1;
 int Textures::MAIN_MENU_OPTIONS_BUTTON = -1;
 int Textures::MAIN_OPTIONS_MENU_BACK_BUTTON = -1;
 int Textures::TREE = -1;
+int Textures::RED_STONE_BOTTOM = -1;
+int Textures::RED_STONE_MIDDLE = -1;
+int Textures::RED_STONE_TOP = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
-	GraphicManager::SetSpritesMaxCount(12);
+	GraphicManager::SetSpritesMaxCount(15);
 
+	Textures::RED_STONE_BOTTOM = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneBottom.png"), Vector2F(64, 64), 1));
+	Textures::RED_STONE_MIDDLE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneMiddle.png"), Vector2F(64, 64), 1));
+	Textures::RED_STONE_TOP = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneTop.png"), Vector2F(64, 64), 1));
 	Textures::TREE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/Tree.png"), Vector2F(432, 450), 1));
 	Textures::DIRT_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/DirtBlock.png"), Vector2F(8 ,8), 1));
 	Textures::STONE_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/StoneBlock.png"), Vector2F(32, 32), 1));
@@ -26,7 +32,7 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::GRASS_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/GrassBlock.png", Vector2F(16, 16), 1));
 	Textures::MAIN_MENU_PLAY_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/play_button.png", Vector2F(410, 240), 1));
 	Textures::MAIN_MENU_QUIT_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/quit_button.png", Vector2F(490, 190), 1));
-	Textures::RED_STAR = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/RedStar.png", Vector2F(2000, 1904), 1));
+	Textures::RED_STAR = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/RedStar.png", Vector2F(20, 19), 1));
 	Textures::MAIN_MENU_OPTIONS_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/options_button.png", Vector2F(760, 230), 1));
 	Textures::MAIN_OPTIONS_MENU_BACK_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/back_button.png", Vector2F(280, 280), 1));
 }

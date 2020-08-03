@@ -34,6 +34,15 @@ void Map::addBlock(Vector2I pos, Block *block) {
 	this->blocks[pos.x][pos.y] = block;
 }
 
+template<typename T>
+void Map::collectEntities(void inv(T *ent)) {
+	for (int i = 0; i < this->entities.size(); i++) {
+		if (dynamic_cast<T>(entities[i]) != NULL) {
+			inv(entities[i]);
+		}
+	}
+}
+
 void Map::Init() {
 	this->level->generate(this);
 	this->player = new Player();
@@ -206,7 +215,7 @@ void Map::genTestStuff() {
 		if (x % 15 == 1)
 			addMultiblock( { x, 14 }, new Tree());
 	}
-	addEntity( { 600, 500 }, new RedStar());
+	//addEntity( { 600, 500 }, new RedStar());
 }
 
 bool Map::testCollision(SquareCollider *col) {
@@ -247,13 +256,14 @@ void Map::drawMultiblocks() {
 			/ BLOCK_SIZE - 1 - MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS;
 			x
 					< (camera->virtual_position.x + camera->virtual_size.x / 2)
-							/ BLOCK_SIZE + 1 + MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS; x++) {
+							/ BLOCK_SIZE + 1
+							+ MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS; x++) {
 		for (int y = (camera->virtual_position.y - camera->virtual_size.y / 2)
 				/ BLOCK_SIZE - 1 - MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS;
 				y
 						< (camera->virtual_position.y
-								+ camera->virtual_size.y / 2) / BLOCK_SIZE + 1 + MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS;
-				y++) {
+								+ camera->virtual_size.y / 2) / BLOCK_SIZE + 1
+								+ MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS; y++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}

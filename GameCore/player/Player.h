@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../entities/Damageable.h"
 #include "../entities/SolidEntity.h"
 #include "Inventory.h"
 
@@ -7,7 +8,7 @@ class Inventory;
 
 struct View;
 
-class Player : public SolidEntity {
+class Player : public SolidEntity, public Damageable {
 public:
 	Player();
 	void Draw();
@@ -20,4 +21,10 @@ private:
 	View* camera;
 	bool lookingRight;
 	Inventory inventory;
+
+	// DRAW
+	//---------------------------
+	void drawHealthBar();
+	void drawPlayer();
+	//---------------------------
 };

@@ -36,7 +36,10 @@ public:
 	//------------------------
 	void setLevel(Level *level);
 	Level* getLevel();
-	Block* getBlockFromMesh(Vector2I pos);//! Возвращает блок по координатам В СЕТКЕ!!!
+	//! Возвращает блок по координатам В СЕТКЕ!!!
+	Block* getBlockFromMesh(Vector2I pos);
+	//! This function may invoke given function with every entity on map that is unasledovana from T
+	template<typename T> void collectEntities(void inv(T * ent));
 	//------------------------
 
 	// MAP EDITOR

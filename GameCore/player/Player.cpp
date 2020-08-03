@@ -1,11 +1,13 @@
 #include "Player.h"
 
+#include <iostream>
+
 #include "../../Engine/Control/InputManager.h"
 #include "../../Engine/Graphics/DrawData.h"
 #include "../../Engine/Graphics/GraphicManager.h"
+#include "../../Engine/Utility/Coordinate.h"
 #include "../Map.h"
 #include "../Textures.h"
-#include "Inventory.h"
 
 Player::Player() {
 	camera = GraphicManager::GetView(Views::PLAYER_CAM);
@@ -13,6 +15,8 @@ Player::Player() {
 	size = { 5 * BLOCK_SIZE, 5 * BLOCK_SIZE };
 
 	lookingRight = 1;
+
+	this->setCurrentHealth(50);
 }
 
 View* Player::getCamera() {
@@ -20,31 +24,8 @@ View* Player::getCamera() {
 }
 
 void Player::Draw() {
-	DrawData info = { };
-
-	// BASE DATA
-	//----------------------------
-	info.position = this->_pos;
-	info.size = this->size;
-	info.size.x *= (lookingRight ? 1.0f : -1.0f);
-	info.rotation = _angle;
-	//----------------------------
-
-	//----------------------------
-	info.origin = { 0.5, 0.5 };
-	info.frame = 0;
-	info.layer = 0;
-	//----------------------------
-
-	// SET TEXTURE
-	//----------------------------
-	info.spriteID = Textures::PLAYER_STAND_TEXTURE;
-	//----------------------------
-
-	// DRAW
-	//----------------------------
-	GraphicManager::Draw(info, Views::PLAYER_CAM);
-	//----------------------------
+	drawPlayer();
+	drawHealthBar();
 }
 
 GameObject* Player::clone() const {
@@ -73,4 +54,67 @@ void Player::Update() {
 void Player::Init(GameObject *owner) {
 	Entity::Init(owner);
 	inventory.init(this);
+}
+
+void Player::drawHealthBar() {
+	int total = this->getCurrentHealth() / 10;
+	float bar_width = BLOCK_SIZE * 4;
+	for (int i = 0; i < total; i++) {
+		DrawData info = { };
+
+		// BASE DATA
+		//----------------------------
+		info.position = this->_pos;
+		info.position.x -= bar_width / 2;
+
+		info.position.x += ((float)(i) * bar_width / (float)(total));
+		info.position.y += (size.y / 2.0f + BLOCK_SIZE);
+		info.size = Vector2F(1, 1) * BLOCK_SIZE;
+		//----------------------------
+
+		//----------------------------
+		info.origin = { 0, 0 };
+		info.frame = 0;
+		info.layer = 0;
+		//----------------------------
+
+		// SET TEXTURE
+		//----------------------------
+		info.spriteID = Textures::RED_STAR;
+		//----------------------------
+
+		// DRAW
+		//----------------------------
+		GraphicManager::Draw(info, Views::PLAYER_CAM);
+		//----------------------------
+	}
+}
+
+void Player::drawPlayer() {
+	DrawData info = { };
+
+	// BASE DATA
+	//----------------------------
+	info.position = this->_pos;
+	info.size = this->size;
+	info.size.x *= (lookingRight ? 1.0f : -1.0f);
+	info.rotation = _angle;
+	//----------------------------
+
+	//----------------------------
+	info.origin = { 0.5, 0.5 };
+	info.frame = 0;
+	info.layer = 0;
+	//----------------------------
+
+	// SET TEXTURE
+	//----------------------------
+	info.spriteID = Textures::PLAYER_STAND_TEXTURE;
+	//----------------------------
+
+	// DRAW
+	//----------------------------
+	GraphicManager::Draw(info, Views::PLAYER_CAM);
+	//----------------------------
+
 }
