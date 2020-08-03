@@ -53,6 +53,8 @@ public:
 
 	void SetTag(const std::string& new_tag);
 	const std::string& GetTag();
+	const std::string& getName() const;
+	void setName(const std::string &name = "unnamed block");
 
 protected:
 	unsigned _ID; //! Динамический номер объекта в массиве всех объектов. НЕ ТРОГАТЬ ЕГО И НЕ МЕНЯТЬ ЕГО
@@ -63,6 +65,8 @@ protected:
 	float _angle = 0; //! Угол поворота объекта в радианах против часовой стрелки
 
 	GameField* gamefield; //! Указатель на игровое поле, в котором живёт данный игровой объект
+
+	std::string name = "unnamed block";
 
 	friend class Collider;
 };

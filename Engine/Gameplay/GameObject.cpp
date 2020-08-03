@@ -57,3 +57,11 @@ void GameObject::SetDirection(Vector2F dir) {
 void GameObject::SetRotation(float angle) {
 	this->_angle = angle;
 }
+
+const std::string& GameObject::getName() const {
+	return name;
+}
+
+void GameObject::setName(const std::string &name = "unnamed block") {
+	this->name = name;
+}
