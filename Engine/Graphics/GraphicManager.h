@@ -95,6 +95,11 @@ public:
 	*/
 	static View* GetView(Views view_id);
 
+	//! Переводит позицию чего-либо в системе экрана монитора в систему данного view
+	static Vector2F ConvertRealToView(Vector2F pos, Views view_id);
+
+	static sf::RenderWindow* GetWindow();
+
 private:
 	static sf::RenderWindow window; //! Окно SFML, на котором происходит вся отрисовка
 

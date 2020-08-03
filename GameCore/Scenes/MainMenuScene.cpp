@@ -7,6 +7,7 @@
 
 #include "../Textures.h"
 #include "../../Engine/SceneManagment/SceneManager.h"
+#include "../../Engine/Control/InputManager.h"
 
 #include <iostream>
 
@@ -51,6 +52,10 @@ void MainMenuScene::Update()
 	for (auto widget : widgets) {
 		widget->Draw();
 	}
+
+	Vector2F pos = GraphicManager::ConvertRealToView(InputManager::GetMousePos(), Views::TEST);
+
+	printf("%g; %g\n", pos.x, pos.y);
 
 	// It is in the end of this function for gentle change of scene
 	if (!is_active){
