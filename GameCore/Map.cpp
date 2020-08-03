@@ -1,6 +1,6 @@
 #include "Map.h"
 
-#include <iostream>
+#include <stddef.h>
 #include <iterator>
 
 #include "../Engine/Colliders/Collider.h"
@@ -10,6 +10,7 @@
 #include "../Engine/Utility/Coordinate.h"
 #include "Blocks/DirtBlock.h"
 #include "Blocks/GrassBlock.h"
+#include "entities/mobs/RedStar.h"
 #include "Level.h"
 #include "player/Player.h"
 #include "Textures.h"
@@ -31,7 +32,7 @@ void Map::Init() {
 	this->player = new Player();
 	this->addEntity( { 500, 500 }, this->player);
 
-	genTestGround();
+	genTestStuff();
 }
 
 void Map::Update() {
@@ -167,7 +168,7 @@ void Map::updateBlocks() {
 	}
 }
 
-void Map::genTestGround() {
+void Map::genTestStuff() {
 	for (int y = 0; y < 5; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 			addBlock( { x, y }, new DirtBlock());
@@ -178,6 +179,8 @@ void Map::genTestGround() {
 			addBlock( { x, y }, new GrassBlock());
 		}
 	}
+
+	addEntity({600, 500}, new RedStar());
 }
 
 bool Map::testCollision(SquareCollider *col) {

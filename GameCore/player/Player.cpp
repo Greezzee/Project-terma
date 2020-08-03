@@ -9,7 +9,7 @@
 
 Player::Player() {
 	camera = GraphicManager::GetView(Views::PLAYER_CAM);
-	size = { 3 * BLOCK_SIZE, 6 * BLOCK_SIZE };
+	size = { 1.9f * (float)BLOCK_SIZE, 3 * BLOCK_SIZE };
 	lookingRight = 1;
 }
 

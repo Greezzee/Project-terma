@@ -14,6 +14,9 @@ public:
 	// ENTITIES
 	static int PLAYER_STAND_TEXTURE;
 
+	// MOBS
+	static int RED_STAR;
+
 	// Background
 	static int TEST_BACKGROUND;
 
