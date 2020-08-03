@@ -31,7 +31,7 @@ void Map::addBlock(Vector2I pos, Block *block) {
 void Map::Init() {
 	this->level->generate(this);
 	this->player = new Player();
-	this->addEntity( { 500, 500 }, this->player);
+	this->addEntity( { 1500, 500 }, this->player);
 
 	genTestStuff();
 }
@@ -134,7 +134,6 @@ void Map::drawBlocks() {
 			GraphicManager::Draw(info, Views::PLAYER_CAM);
 		}
 	}
-	//std::cout << "rendered: " << total << "\n";
 }
 
 void Map::drawEntities() {
@@ -170,18 +169,25 @@ void Map::updateBlocks() {
 }
 
 void Map::genTestStuff() {
-	for (int y = 0; y < 5; y++) {
+	for (int y = 0; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 			addBlock( { x, y }, new DirtBlock());
 		}
 	}
-	for (int y = 5; y < 8; y++) {
+	for (int y = 10; y < 14; y++) {
+		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
+			int token = random() % 3;
+			if (token == 1 || token == 2)
+				addBlock( { x, y }, new GrassBlock());
+		}
+	}
+	for (int y = 13; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 			addBlock( { x, y }, new GrassBlock());
 		}
 	}
 
-	addEntity({600, 500}, new RedStar());
+	addEntity( { 600, 500 }, new RedStar());
 }
 
 bool Map::testCollision(SquareCollider *col) {
