@@ -5,11 +5,11 @@
 #include "../Utility/Coordinate.h"
 
 //! Содержит названия виртуальных клавиш.
-const unsigned KeysCount = 15;
+const unsigned KeysCount = 16;
 enum KeyboardKey {
 	L_Left, L_Right, L_Up, L_Down, L_ShootA, L_ShootB,
 	R_Left, R_Right, R_Up, R_Down, R_ShootA, R_ShootB,
-	M_Play, M_Sett, M_Quit
+	M_Play, M_Sett, M_Quit, M_S_Back
 };
 
 const unsigned MouseKeysCount = 2;

@@ -20,6 +20,5 @@ public:
 
 	void Update();
 	virtual void Draw() = 0;
-	virtual void Init(GameObject* owner) = 0;
 	virtual void Destroy() = 0;
 };

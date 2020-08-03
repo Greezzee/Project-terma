@@ -8,10 +8,14 @@
 void SolidEntity::Update() {
 	Entity::Update();
 
-	collider->Init(this, this->_pos, this->size);
-	acceleration = { 0, -30 };
+	// UPDATE COLLIDER
+	collider->Init(this, this->_pos, this->size * 0.5);
 
-	if (this->getMap()->testCollision(collider)) {
+	// SET ACCELERATION TO g
+	acceleration += { 0, -5000 };
+
+	// STOP OBJECT IF IT IS FALLING IN TO THE GROUND
+	if (this->isInBlocks = this->getMap()->testCollision(collider)) {
 		speed.y = 0;
 	}
 }
@@ -19,4 +23,5 @@ void SolidEntity::Update() {
 SolidEntity::SolidEntity() {
 	collider = new SquareCollider();
 	collider->Init(this);
+	this->isInBlocks = 0;
 }

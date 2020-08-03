@@ -14,4 +14,5 @@ public:
 
 private:
 	View* camera;
+	bool lookingRight;
 };

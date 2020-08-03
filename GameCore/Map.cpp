@@ -1,5 +1,6 @@
 #include "Map.h"
 
+#include <stddef.h>
 #include <iterator>
 
 #include "../Engine/Colliders/Collider.h"
@@ -7,8 +8,10 @@
 #include "../Engine/Graphics/DrawData.h"
 #include "../Engine/Graphics/GraphicManager.h"
 #include "../Engine/Utility/Coordinate.h"
+
 #include "Blocks/DirtBlock.h"
 #include "Blocks/GrassBlock.h"
+#include "entities/mobs/RedStar.h"
 #include "Level.h"
 #include "player/Player.h"
 #include "Textures.h"
@@ -30,7 +33,7 @@ void Map::Init() {
 	this->player = new Player();
 	this->addEntity( { 500, 500 }, this->player);
 
-	genTestGround();
+	genTestStuff();
 }
 
 void Map::Update() {
@@ -73,7 +76,7 @@ void Map::removeEntity(Entity *entity) {
  |		          +-----* (x1, y1)
  |                |BLOCK|
  |	     	      |     |
-y*       (x0, y0) *-----+
+ y*       (x0, y0) *-----+
  |
  |
  |
@@ -86,15 +89,28 @@ y*       (x0, y0) *-----+
 //! Рисует блоки, схема прорисовки в ИГРОВЫХ координатах выше.
 void Map::drawBlocks() {
 	View *camera = this->player->getCamera();
-
-	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
+	int total = 0;
+	for (int x = (camera->virtual_position.x - camera->virtual_size.x / 2)
+			/ BLOCK_SIZE - 1;
+			x
+					< (camera->virtual_position.x + camera->virtual_size.x / 2)
+							/ BLOCK_SIZE + 1; x++) {
+		for (int y = (camera->virtual_position.y - camera->virtual_size.y / 2)
+				/ BLOCK_SIZE - 1;
+				y
+						< (camera->virtual_position.y
+								+ camera->virtual_size.y / 2) / BLOCK_SIZE + 1;
+				y++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
 
 			Block *currBlock = blocks[x][y];
 
 			if (!currBlock) {
 				continue;
 			}
+			total++;
 
 			float x0 = x * BLOCK_SIZE;
 			float y0 = y * BLOCK_SIZE;
@@ -118,6 +134,7 @@ void Map::drawBlocks() {
 			GraphicManager::Draw(info, Views::PLAYER_CAM);
 		}
 	}
+	//std::cout << "rendered: " << total << "\n";
 }
 
 void Map::drawEntities() {
@@ -152,7 +169,7 @@ void Map::updateBlocks() {
 	}
 }
 
-void Map::genTestGround() {
+void Map::genTestStuff() {
 	for (int y = 0; y < 5; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 			addBlock( { x, y }, new DirtBlock());
@@ -163,16 +180,28 @@ void Map::genTestGround() {
 			addBlock( { x, y }, new GrassBlock());
 		}
 	}
+
+	addEntity({600, 500}, new RedStar());
 }
 
 bool Map::testCollision(SquareCollider *col) {
-	SquareCollider bl = {};
-	Vector2F bl_sz = {BLOCK_SIZE / 2, BLOCK_SIZE / 2};
-	for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
-		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-			Vector2F p0 = Vector2F{(float)x, (float)y} * (float)BLOCK_SIZE + Vector2F(1, 1) * BLOCK_SIZE / 2;
-			if (blocks[x][y] == nullptr)
+	SquareCollider bl = { };
+	Vector2F bl_sz = { BLOCK_SIZE / 2, BLOCK_SIZE / 2 };
+
+	for (int y = (col->getPos().y - 3 * col->getSize().y) / BLOCK_SIZE - 1;
+			y < (col->getPos().y + 3 * col->getSize().y) / BLOCK_SIZE + 1;
+			y++) {
+		for (int x = (col->getPos().x - 3 * col->getSize().x) / BLOCK_SIZE - 1;
+				x < (col->getPos().x + 3 * col->getSize().x) / BLOCK_SIZE + 1;
+				x++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
+			}
+			Vector2F p0 = Vector2F { (float) x, (float) y } * (float) BLOCK_SIZE
+					+ Vector2F(0.5, 0.5) * (float) BLOCK_SIZE;
+			if (blocks[x][y] == NULL) {
+				continue;
+			}
 			bl.Init(blocks[x][y], p0, bl_sz);
 
 			if (Collider::IsCollide(&bl, col)) {

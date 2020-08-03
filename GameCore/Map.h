@@ -44,7 +44,7 @@ public:
 
 	// TEST
 	//------------------------
-	void genTestGround();
+	void genTestStuff();
 	//------------------------
 
 	// COLLISIONS

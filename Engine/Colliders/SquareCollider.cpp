@@ -68,6 +68,38 @@ void SquareCollider::Init(GameObject* obj, const Vector2F& pos, const Vector2F& 
 	SetPoints();
 }
 
+float SquareCollider::getAngle() const {
+	return _angle;
+}
+
+void SquareCollider::setAngle(float angle) {
+	_angle = angle;
+}
+
+GameObject* SquareCollider::getMyObj() const {
+	return _my_obj;
+}
+
+void SquareCollider::setMyObj(GameObject *myObj) {
+	_my_obj = myObj;
+}
+
+Vector2F SquareCollider::getPos() const {
+	return _pos;
+}
+
+void SquareCollider::setPos(Vector2F pos) {
+	_pos = pos;
+}
+
+Vector2F SquareCollider::getSize() const {
+	return _size;
+}
+
+void SquareCollider::setSize(const Vector2F size) {
+	_size = size;
+}
+
 void SquareCollider::SetPoints()
 {
 	float sum_angle = _angle + _shape_angle;

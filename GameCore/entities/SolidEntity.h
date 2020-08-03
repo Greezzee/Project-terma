@@ -13,4 +13,5 @@ public:
 
 protected:
 	SquareCollider * collider;
+	bool isInBlocks;
 };
