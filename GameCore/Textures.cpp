@@ -14,7 +14,7 @@ int Textures::MAIN_MENU_OPTIONS_BUTTON = -1;
 int Textures::MAIN_OPTIONS_MENU_BACK_BUTTON = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
-	GraphicManager::SetSpritesMaxCount(10);
+	GraphicManager::SetSpritesMaxCount(11);
 
 	Textures::DIRT_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/DirtBlock.png"), Vector2F(8 ,8), 1));
 	Textures::STONE_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/StoneBlock.png"), Vector2F(32, 32), 1));
