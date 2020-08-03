@@ -12,10 +12,12 @@ int Textures::MAIN_MENU_PLAY_BUTTON = -1;
 int Textures::MAIN_MENU_QUIT_BUTTON = -1;
 int Textures::MAIN_MENU_OPTIONS_BUTTON = -1;
 int Textures::MAIN_OPTIONS_MENU_BACK_BUTTON = -1;
+int Textures::TREE = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
-	GraphicManager::SetSpritesMaxCount(11);
+	GraphicManager::SetSpritesMaxCount(12);
 
+	Textures::TREE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/Tree.png"), Vector2F(432, 450), 1));
 	Textures::DIRT_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/DirtBlock.png"), Vector2F(8 ,8), 1));
 	Textures::STONE_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/StoneBlock.png"), Vector2F(32, 32), 1));
 	Textures::ANIMATED_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/AnimatedBlock.png"), Vector2F(32, 32), 5));

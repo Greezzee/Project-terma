@@ -418,3 +418,7 @@ const bool operator!=(const Vector2U& a, const Vector2U& b)
 {
 	return !(a == b);
 }
+
+Vector2F Vector2I::to2F() const {
+	return Vector2F(this->x, this->y);
+}

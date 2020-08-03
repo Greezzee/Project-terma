@@ -4,11 +4,11 @@
 
 class Multiblock;
 
-class StructureBlock : Block {
+class StructureBlock : public Block {
 public:
 	StructureBlock(Multiblock * parent);
 	void update();
-	GameObject * clone();
+	GameObject * clone() const;
 private:
 	Multiblock * parent;
 };

@@ -4,6 +4,8 @@
 
 #include "entities/Entity.h"
 
+class Multiblock;
+
 class SquareCollider;
 
 class Player;
@@ -15,6 +17,8 @@ class Level;
 //! Максимальная длинна сетки блоков и блоков стен
 const int MAX_LEVEL_SIZE = 500;
 const int BLOCK_SIZE = 40;
+//! размер экрана как бы увеличивается на это число во время прорисовки мультиблоков
+const int MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
 
 /*
  * Сей класс наследуется от GameField, тут будет вся инфа о текущих объектах в игре
@@ -37,6 +41,7 @@ public:
 
 	// MAP EDITOR
 	//------------------------
+	void addMultiblock(Vector2I pos, Multiblock * block);
 	void addBlock(Vector2I pos, Block * block);
 	void addEntity(Vector2F pos, Entity * entity);
 	void removeEntity(Entity * entity);
@@ -53,11 +58,17 @@ public:
 	//------------------------
 
 private:
+	// UTILS
+	//------------------------
+	template<typename Base, typename T> inline bool instanceof(const T*);
+	//------------------------
+
 	// DRAW
 	//------------------------
 	void drawBlocks();
 	void drawEntities();
 	void drawBackground();
+	void drawMultiblocks();
 	//------------------------
 
 	// UPDATE
