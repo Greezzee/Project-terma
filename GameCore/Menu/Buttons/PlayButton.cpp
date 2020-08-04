@@ -1,15 +1,10 @@
 #include "PlayButton.h"
 
-#include <SFML/System/Vector2.hpp>
 #include <cstdio>
-#include <iostream>
 
-#include "../../../Engine/Control/InputManager.h"
-#include "../../../Engine/Graphics/DrawData.h"
-#include "../../../Engine/Graphics/GraphicManager.h"
 #include "../../../Engine/SceneManagment/SceneManager.h"
-#include "../../../Engine/Utility/Coordinate.h"
 #include "../../Scenes/GameplayScene.h"
+#include "../../Textures.h"
 
 PlayButton::PlayButton() {}
 
@@ -21,12 +16,17 @@ void PlayButton::clickReact()
 
 void PlayButton::focusReact()
 {
-	//! Nothing for now
+	sprite_id = Textures::SHREK;
 }
 
 void PlayButton::Init(GameObject* owner)
 {
 	printf("PlayButton created!\n");
+}
+
+void PlayButton::disfocusReact()
+{
+	sprite_id = Textures::MAIN_MENU_PLAY_BUTTON;
 }
 
 void PlayButton::Destroy()

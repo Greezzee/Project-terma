@@ -24,6 +24,11 @@ void OptionsButton::Init(GameObject *owner)
 	printf("OptionsButton created!\n");
 }
 
+void OptionsButton::disfocusReact()
+{
+	// Nothing for now
+}
+
 void OptionsButton::Destroy()
 {
 	printf("OptionsButton destroyed!\n");

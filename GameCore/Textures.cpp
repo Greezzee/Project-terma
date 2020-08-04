@@ -16,9 +16,10 @@ int Textures::TREE = -1;
 int Textures::RED_STONE_BOTTOM = -1;
 int Textures::RED_STONE_MIDDLE = -1;
 int Textures::RED_STONE_TOP = -1;
+int Textures::SHREK = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
-	GraphicManager::SetSpritesMaxCount(15);
+	GraphicManager::SetSpritesMaxCount(16);
 
 	Textures::RED_STONE_BOTTOM = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneBottom.png"), Vector2F(64, 64), 1));
 	Textures::RED_STONE_MIDDLE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneMiddle.png"), Vector2F(64, 64), 1));
@@ -35,4 +36,5 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::RED_STAR = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/RedStar.png", Vector2F(20, 19), 1));
 	Textures::MAIN_MENU_OPTIONS_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/options_button.png", Vector2F(760, 230), 1));
 	Textures::MAIN_OPTIONS_MENU_BACK_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/back_button.png", Vector2F(280, 280), 1));
+	Textures::SHREK = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/shrek.png", Vector2F(750, 650), 1));
 }

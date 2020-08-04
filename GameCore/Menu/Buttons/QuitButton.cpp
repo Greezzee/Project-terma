@@ -23,6 +23,11 @@ void QuitButton::Init(GameObject *owner) {
 	printf("QuitButton created!\n");
 }
 
+void QuitButton::disfocusReact()
+{
+	// Nothing for now
+}
+
 void QuitButton::Destroy() {
 	printf("QuitButton destroyed!\n");
 	std::cout.flush();

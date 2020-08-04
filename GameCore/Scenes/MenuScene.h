@@ -7,6 +7,9 @@
 
 class MenuWidget;
 
+//! Все сцены меню должны наслдоваться от этого класса. Все виджеты
+//! должны при инициализации класться в вектор widgets. Доступные
+//! виджеты: Button и ImageWidget.
 class MenuScene : public Scene {
 protected:
 	//! Shows whether the scene is active (for correct switching scenes with buttons)

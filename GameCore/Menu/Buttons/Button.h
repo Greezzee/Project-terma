@@ -3,6 +3,10 @@
 #include "../MenuWidget.h"
 #include "../../../Engine/SceneManagment/Scene.h"
 
+//! Все кнопки должны наследоваться от этого класса. При инициализации в
+//! сцене обязательно задать размер, позицию и gap.
+//! Так же обязательно переопределить disfocusReact()
+//!	clickReact(), focusReact(), Destroy().
 class Button : public MenuWidget
 {
 protected:
@@ -21,11 +25,15 @@ public:
 	//! Sets the button's gap
 	void SetGap(Vector2F __gap);
 
+	//! A virtual method that determines what is meant to happen when the button is out of focus
+	//! Paired with focusReact()
+	virtual void disfocusReact() = 0;
 	//! A virtual method that determines what is meant to happen when the button is clicked
 	virtual void clickReact() = 0;
 	//! A virtual method that determines what is meant to happen when the button is focused
 	virtual void focusReact() = 0;
 
+	//! Set and get size of the button
 	void SetSize(Vector2F __size);
 	Vector2F GetSize();
 

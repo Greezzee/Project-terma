@@ -26,6 +26,11 @@ void BackOptionsButton::Init(GameObject *owner)
 	printf("BackOptionsButton created!\n");
 }
 
+void BackOptionsButton::disfocusReact()
+{
+	// Nothing for now
+}
+
 void BackOptionsButton::Destroy() {
 	printf("BackOptionsButton destroyed!\n");
 }
