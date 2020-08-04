@@ -13,11 +13,6 @@
 
 PlayButton::PlayButton() {}
 
-bool PlayButton::isClicked()
-{
-	return InputManager::IsPressed(KeyboardKey::M_Play);
-}
-
 void PlayButton::clickReact()
 {
 	SceneManager::CreateScene(new GameplayScene());
@@ -27,29 +22,6 @@ void PlayButton::clickReact()
 void PlayButton::focusReact()
 {
 	//! Nothing for now
-}
-
-void PlayButton::Draw()
-{
-	DrawData info = { };
-
-	// std::cout << "Resolution: x " << resolution.x << ", y " << resolution.y << std::endl;
-
-	info.position = {800, 600};
-
-	// std::cout << "Position: x " << info.position.x << ", y " << info.position.y << std::endl;
-
-	info.size.x = 410;
-	info.size.y = 240;
-
-	info.origin = { 0.5, 0.5 };
-
-	info.frame = 0;
-	info.layer = 1;
-
-	info.spriteID = this->sprite_id;
-
-	GraphicManager::Draw(info, Views::MAIN_MENU);
 }
 
 void PlayButton::Init(GameObject* owner)

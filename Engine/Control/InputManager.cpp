@@ -29,6 +29,7 @@ void InputManager::Init()
 	_control_keys[KeyboardKey::R_Down] = sf::Keyboard::Down;
 	_control_keys[KeyboardKey::R_ShootA] = sf::Keyboard::Slash;
 	_control_keys[KeyboardKey::R_ShootB] = sf::Keyboard::Period;
+	_control_keys[KeyboardKey::BACK] = sf::Keyboard::Escape;
 	//! Temporary buttons for main menu
 	_control_keys[KeyboardKey::M_Play] = sf::Keyboard::Num1;
 	_control_keys[KeyboardKey::M_Sett] = sf::Keyboard::Num2;
