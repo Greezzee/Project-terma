@@ -22,7 +22,7 @@ const unsigned GraphicManager::LAYER_COUNT = 20;
 
 void GraphicManager::Init()
 {
-	window.create(sf::VideoMode(1024, 576), "Test");
+	window.create(sf::VideoMode(1024, 576), "Test", sf::Style::Titlebar | sf::Style::Close);
 	//window.setFramerateLimit(65);
 
 	_sprites_count = 0;

@@ -112,3 +112,28 @@ bool Collider::IsCollide(SquareCollider* a, SquareCollider* b)
 
 	return false;
 }
+
+float Collider::DistanceBetween(SquareCollider* a, SquareCollider* b, Vector2F direction)
+{
+	direction = direction.Normalized();
+	float dir_angle = atan2f(direction.y, direction.x);
+	Vector2F pos_a = { 0, 0 };
+	Vector2F pos_b = b->getPos() - a->getPos();
+	Vector2F points_b[4];
+	float max_dist = 0;
+	for (int i = 0; i < 4; i++) {
+		points_b[i] = b->_points[i] - a->getPos();
+		float dist = points_b[i].x * cosf(dir_angle) + points_b[i].y * sinf(dir_angle);
+		if (fabsf(dist) > fabsf(max_dist))
+			max_dist = dist;
+	}
+
+	if (max_dist > 0)
+		max_dist += a->getSize().Magnitude();
+	else
+		max_dist -= a->getSize().Magnitude();
+
+	Vector2F point_a = a->getPos();
+	Vector2F point_b = point_a + direction * max_dist;
+	return 0;
+}
