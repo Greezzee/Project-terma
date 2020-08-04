@@ -1,6 +1,12 @@
 #pragma once
 #include "Coordinate.h"
 #include <cmath>
+
+float Vector2F::ScalarMult(const Vector2F& a, const Vector2F& b)
+{
+	return a.x * b.x + a.y * b.y;
+}
+
 Vector2F::Vector2F()
 {
 	x = 0;
@@ -311,7 +317,7 @@ const Vector2I operator*(int a, const Vector2I& b)
 	return Vector2I(a * b.x, a * b.y);
 }
 
-const Vector2I operator*(const Vector2I& a, double b)
+const Vector2I operator*(const Vector2I& a, int b)
 {
 	return Vector2I(a.x * b, a.y * b);
 }

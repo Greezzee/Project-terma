@@ -22,5 +22,14 @@ public:
 	//! Определяет, сколько должен пройти коллайдер a в направлении данного вектора, чтобы столкнуться в b
 	//! Вернёт искомое расстояние в тех же единицах, в которых заданы коллайдеры
 	//! Вернёт NAN, если при движении в данном направлении, a никогда не встретит b
-	static float DistanceBetween(SquareCollider* a, SquareCollider* b, Vector2F direction);
+	static float DistanceBetween(SquareCollider* a, SquareCollider* b, const Vector2F& direction);
+	
+
+private:
+	
+	//! Проверяет пересечение двух коллайдеров по оси norm
+	static bool AxisIntersect(SquareCollider* a, SquareCollider* b, const Vector2F& norm);
+
+	//! Лучше не спрашивайте... И НИКОГДА НЕ ТРОГАЙТЕ
+	static Vector2F AxisDistance(SquareCollider* a, SquareCollider* b, const Vector2F& norm, const Vector2F& dir);
 };
