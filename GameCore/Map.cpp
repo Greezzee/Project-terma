@@ -200,7 +200,7 @@ void Map::genTestStuff() {
 	}
 	for (int y = 10; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-			int token = random() % 3;
+			int token = rand() % 3;
 			if (token == 1 || token == 2)
 				addBlock( { x, y }, new GrassBlock());
 		}
