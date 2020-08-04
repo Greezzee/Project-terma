@@ -53,7 +53,7 @@ void MainMenuScene::Update()
 		widget->Draw();
 	}
 
-	Vector2F pos = GraphicManager::ConvertRealToView(InputManager::GetMousePos(), Views::TEST);
+	Vector2F pos = GraphicManager::ConvertRealToView(InputManager::GetMousePos(), Views::MAIN_MENU);
 
 	printf("%g; %g\n", pos.x, pos.y);
 

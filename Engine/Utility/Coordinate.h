@@ -10,41 +10,6 @@ const double EPS = 1E-9;
 * ¬ведЄн вместо встроенные в SFML векторов, чтобы избежать по€вление зависимого от sfml кода там, где он не необходим
 */
 
-struct Vector2I
-{
-	//!  онструктор по умолчанию, вектор (0, 0)
-	Vector2I();
-
-	//!  онструктор вектора (a, b)
-	Vector2I(int a, int b);
-
-	//!  онструктор копировани€
-	Vector2I(const Vector2I& that);
-	int x, y;
-
-	//! ќперации сложени€ векторов и умножени€ на число совпадают с классическими векторными операци€ми
-	/*!
-	* ¬ведены операции умножени€ и делени€ вектора на вектор
-	* (a, b) * (c, d) = (a * c, b * d)
-	* (a, b) / (c, d) = (a / c, b / d)
-	*/
-	const Vector2I& operator=(const Vector2I& that);
-	const Vector2I& operator+=(const Vector2I& that);
-	const Vector2I& operator-=(const Vector2I& that);
-
-	friend const Vector2I& operator+(const Vector2I& that);
-	friend const Vector2I operator-(const Vector2I& that);
-	friend const Vector2I operator+(const Vector2I& a, const Vector2I& b);
-	friend const Vector2I operator*(const Vector2I& a, const Vector2I& b);
-	friend const Vector2I operator/(const Vector2I& a, const Vector2I& b);
-	friend const Vector2I operator-(const Vector2I& a, const Vector2I& b);
-	friend const Vector2I operator*(int a, const Vector2I& b);
-	friend const Vector2I operator*(const Vector2I& a, int b);
-	friend const Vector2I operator/(const Vector2I& a, int b);
-	friend const bool operator==(const Vector2I& a, const Vector2I& b);
-	friend const bool operator!=(const Vector2I& a, const Vector2I& b);
-};
-
 struct Vector2F
 {
 	//!  онструктор по умолчанию, вектор (0, 0)
@@ -171,3 +136,42 @@ struct Vector2D
 	friend const bool operator==(const Vector2D& a, const Vector2D& b);
 	friend const bool operator!=(const Vector2D& a, const Vector2D& b);
 };
+
+
+struct Vector2I
+{
+	//!  онструктор по умолчанию, вектор (0, 0)
+	Vector2I();
+
+	//!  онструктор вектора (a, b)
+	Vector2I(int a, int b);
+
+	//!  онструктор копировани€
+	Vector2I(const Vector2I& that);
+	int x, y;
+
+	//! ќперации сложени€ векторов и умножени€ на число совпадают с классическими векторными операци€ми
+	/*!
+	* ¬ведены операции умножени€ и делени€ вектора на вектор
+	* (a, b) * (c, d) = (a * c, b * d)
+	* (a, b) / (c, d) = (a / c, b / d)
+	*/
+	const Vector2I& operator=(const Vector2I& that);
+	const Vector2I& operator+=(const Vector2I& that);
+	const Vector2I& operator-=(const Vector2I& that);
+
+	Vector2F to2F() const;
+
+	friend const Vector2I& operator+(const Vector2I& that);
+	friend const Vector2I operator-(const Vector2I& that);
+	friend const Vector2I operator+(const Vector2I& a, const Vector2I& b);
+	friend const Vector2I operator*(const Vector2I& a, const Vector2I& b);
+	friend const Vector2I operator/(const Vector2I& a, const Vector2I& b);
+	friend const Vector2I operator-(const Vector2I& a, const Vector2I& b);
+	friend const Vector2I operator*(int a, const Vector2I& b);
+	friend const Vector2I operator*(const Vector2I& a, int b);
+	friend const Vector2I operator/(const Vector2I& a, int b);
+	friend const bool operator==(const Vector2I& a, const Vector2I& b);
+	friend const bool operator!=(const Vector2I& a, const Vector2I& b);
+};
+

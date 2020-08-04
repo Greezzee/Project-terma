@@ -23,3 +23,11 @@ void Block::Init(GameObject *owner) {
 
 void Block::Update() {
 }
+
+bool Block::isPassable() const {
+	return passable;
+}
+
+void Block::setPassable(bool passable) {
+	this->passable = passable;
+}

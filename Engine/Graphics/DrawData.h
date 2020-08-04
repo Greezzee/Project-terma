@@ -35,8 +35,10 @@ struct View
 {
 	Vector2F real_position;
 	Vector2F real_size;
+	Vector2F real_origin;
 	Vector2F virtual_position;
 	Vector2F virtual_size;
+	Vector2F virtual_origin;
 	Vector2F unit_vector = { 1, 1 };
 };
 
