@@ -45,15 +45,6 @@ void MainMenuScene::Init()
 	options_button->setScene(this);
 	options_button->setSpriteID(Textures::MAIN_MENU_OPTIONS_BUTTON);
 	widgets.push_back(options_button);
-
-
-	SquareCollider a, b;
-	
-	a.Init(nullptr, { 1, -1 }, { 1, 1 });
-	b.Init(nullptr, { -1, 3 }, Vector2F(1, 1) * sqrtf(2), PI/4);
-
-	printf("Distance = %g\n", Collider::DistanceBetween(&a, &b, Vector2F(1, -1).Normalized()));
-
 }
 
 void MainMenuScene::Update()
