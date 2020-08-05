@@ -4,6 +4,7 @@ MenuWidget::MenuWidget()
 {
 	current_scene = nullptr;
 	sprite_id = -1;
+	_size = {0, 0};
 }
 
 void MenuWidget::setScene(MenuScene* _scene)
@@ -23,7 +24,13 @@ GameObject* MenuWidget::clone() const
 	return nullptr;
 }
 
-void MenuWidget::setScalPos(Vector2F pos) {
-	scal_position = pos;
+void MenuWidget::SetSize(Vector2F __size) {
+	_size = __size;
 }
+
+Vector2F MenuWidget::GetSize() {
+	return _size;
+}
+
+
 

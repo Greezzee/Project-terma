@@ -8,6 +8,7 @@
 #include "../Map.h"
 #include "../testing/TestLevel.h"
 #include "MainMenuScene.h"
+#include "InventoryScene.h"
 
 GameplayScene::GameplayScene() {
 }
@@ -24,10 +25,17 @@ void GameplayScene::Init() {
 }
 
 void GameplayScene::Update() {
-	if (InputManager::IsPressed(KeyboardKey::BACK)) {
-		SceneManager::CreateScene(new MainMenuScene());
-		SceneManager::CloseScene(this);
-		return;
+	if (!gamefield->isPaused()) {
+		if (InputManager::IsPressed(KeyboardKey::BACK)) {
+			SceneManager::CreateScene(new MainMenuScene());
+			SceneManager::CloseScene(this);
+			return;
+		}
+
+		if (InputManager::IsPressed(KeyboardKey::OPEN_INV)) {
+			gamefield->pauseGame();
+			SceneManager::CreateScene(new InventoryScene(gamefield));
+		}
 	}
 
 	gamefield->Update();
@@ -39,3 +47,4 @@ void GameplayScene::Destroy() {
 	printf("GameplayScene Destroyed\n");
 	std::cout.flush();
 }
+

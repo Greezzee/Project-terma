@@ -12,6 +12,7 @@ void MenuScene::drawWidgets()
 	}
 }
 
-void MenuScene::disableScene() {
+void MenuScene::disableScene()
+{
 	is_active = false;
 }

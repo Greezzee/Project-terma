@@ -1,12 +1,17 @@
+#include "../../../Engine/Graphics/DrawData.h"
 #include "ImageWidget.h"
 
 class Background : public ImageWidget
 {
+	Views view;
 public:
 	Background();
 
-	virtual void Init(GameObject* owner) override;
-	virtual void Update() override;
-	virtual void Draw() override;
-	virtual void Destroy() override;
+	void SetView(Views _view);
+	Views GetView();
+
+	void Init(GameObject* owner) override;
+	void Update() override;
+	void Draw() override;
+	void Destroy() override;
 };

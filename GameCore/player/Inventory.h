@@ -1,12 +1,3 @@
-/*
- * Inventory.h
- *
- *  Created on: Aug 3, 2020
- *      Author: timattt
- */
-
-#ifndef GAMECORE_PLAYER_INVENTORY_H_
-#define GAMECORE_PLAYER_INVENTORY_H_
 class Player;
 
 class Inventory {
@@ -18,5 +9,3 @@ public:
 private:
 	Player * player;
 };
-
-#endif /* GAMECORE_PLAYER_INVENTORY_H_ */

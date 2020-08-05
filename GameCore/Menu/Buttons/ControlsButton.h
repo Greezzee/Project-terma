@@ -2,13 +2,14 @@
 
 #include "Button.h"
 
-class OptionsButton: public Button {
+class ControlsButton: public Button {
 public:
-	OptionsButton();
+	ControlsButton();
 
 	void clickReact() override;
 	void focusReact() override;
 	void disfocusReact() override;
 	void Destroy() override;
 	void Init(GameObject *owner) override;
+
 };

@@ -20,6 +20,9 @@ void MainMenuScene::Init() {
 	background->Init(nullptr);
 	background->setScene(this);
 	background->setSpriteID(Textures::TEST_BACKGROUND);
+	background->SetSize({2000, 1000});
+	background->SetPos({1000, 500});
+	background->SetView(Views::MAIN_MENU);
 	widgets.push_back(background);
 
 	//! Initializing the button that leads to the gameplay scene

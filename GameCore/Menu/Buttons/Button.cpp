@@ -8,7 +8,6 @@
 Button::Button()
 {
 	_gap = {0, 0};
-	_size = {0, 0};
 }
 
 bool Button::isClicked() {
@@ -57,14 +56,6 @@ void Button::Update() {
 		disfocusReact();
 	if (isClicked())
 		clickReact();
-}
-
-void Button::SetSize(Vector2F __size) {
-	_size = __size;
-}
-
-Vector2F Button::GetSize() {
-	return _size;
 }
 
 void Button::SetGap(Vector2F __gap)

@@ -14,8 +14,6 @@ protected:
 	// If the zone is too big, INcrease the gap
 	// If the zone is too small, DEcrease the gap
 	Vector2F _gap;
-	// Size of the sprite
-	Vector2F _size;
 public:
 	Button();
 	//! Returns true if the mouse is on the button (doesn't work)
@@ -33,11 +31,8 @@ public:
 	//! A virtual method that determines what is meant to happen when the button is focused
 	virtual void focusReact() = 0;
 
-	//! Set and get size of the button
-	void SetSize(Vector2F __size);
-	Vector2F GetSize();
-
 	void Update();
 	void Draw();
+	virtual void Init(GameObject *owner) = 0;
 	virtual void Destroy() = 0;
 };

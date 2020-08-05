@@ -52,8 +52,10 @@ void Map::Init() {
 }
 
 void Map::Update() {
-	updateBlocks();
-	updateEntities();
+	if (!is_paused) {
+		updateBlocks();
+		updateEntities();
+	}
 
 	drawBackground();
 	drawBlocks();
@@ -307,6 +309,21 @@ void Map::addMultiblock(Vector2I pos, Multiblock *block) {
 			addBlock( { pos.x + x, pos.y + y }, new StructureBlock(block));
 		}
 	}
+}
+
+void Map::pauseGame()
+{
+	is_paused = true;
+}
+
+void Map::unpauseGame()
+{
+	is_paused = false;
+}
+
+bool Map::isPaused()
+{
+	return is_paused;
 }
 
 void Map::updateEntities() {

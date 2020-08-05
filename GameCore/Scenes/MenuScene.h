@@ -23,6 +23,7 @@ public:
 	void drawWidgets();
 	//! Sets the 'is_active' variable to false
 	void disableScene();
+
 	//! The Init() method should include creating all widgets and putting them into the suitable vector
 	virtual void Init() = 0;
 	virtual void Update() = 0;
