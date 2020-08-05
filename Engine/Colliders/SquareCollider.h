@@ -41,6 +41,7 @@ public:
 	void setPos(Vector2F pos);
 	Vector2F getSize() const;
 	void setSize(Vector2F size);
+	Vector2F getPoint(unsigned i) const;
 
 protected:
 
