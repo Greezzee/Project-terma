@@ -22,7 +22,7 @@ const unsigned GraphicManager::LAYER_COUNT = 20;
 
 void GraphicManager::Init()
 {
-	window.create(sf::VideoMode(1024, 576), "Test");
+	window.create(sf::VideoMode(1024, 576), "Test", sf::Style::Titlebar | sf::Style::Close);
 	//window.setFramerateLimit(65);
 
 	_sprites_count = 0;
@@ -30,10 +30,10 @@ void GraphicManager::Init()
 	to_draw.resize(LAYER_COUNT);
 
 	views.resize(VIEWS_COUNT);
-	views[Views::BASIC] = { {0, 0}, {1024, 576}, {0, 0}, {1024, 576}, {1, 1} };
-	views[Views::TEST] = { {0, 0}, {1024, 576}, {0, 0}, {16, 9}, {1, 1}};
-	views[Views::PLAYER_CAM] = { {0, 0}, {1024, 576}, {0, 0}, {1600, 900}, {1, -1}};
-	views[Views::MAIN_MENU] = { {0, 0}, {1024, 576}, {800, 450}, {1600, 900}, {1, -1}};
+	views[Views::BASIC] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {1024, 576}, {0, 0}, {1, 1} };
+	views[Views::TEST] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {16, 9}, {0, 0}, {1, 1}};
+	views[Views::PLAYER_CAM] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {1600, 900}, {0.5, 0.5}, {1, -1}};
+	views[Views::MAIN_MENU] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {1600, 900}, {0, 0}, {1, -1}};
 }
 
 bool GraphicManager::Update()
@@ -86,10 +86,10 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 void GraphicManager::SetView(DrawData& data, Views view_id)
 {
 	View& view = views[view_id];
-	Vector2F obj_pos = data.position - view.virtual_position + view.virtual_size / 2.f;
+	Vector2F obj_pos = data.position - view.virtual_position + view.virtual_size * view.virtual_origin;
 	data.position = (obj_pos * view.real_size / view.virtual_size) * view.unit_vector;
 	data.position -= view.real_size * (view.unit_vector - Vector2F(1, 1)) / 2.f;
-	data.position += view.real_position;
+	data.position += view.real_position + view.real_size * view.real_origin;
 	data.size = data.size * view.real_size / view.virtual_size;
 
 	if (data.position.x + data.size.x < 0 ||

@@ -7,12 +7,7 @@
 
 #include "../../../GameCore/Scenes/MainOptionsScene.h"
 
-OptionsButton::OptionsButton() {
-}
-
-bool OptionsButton::isClicked() {
-	return InputManager::IsPressed(KeyboardKey::M_Sett);
-}
+OptionsButton::OptionsButton() {}
 
 void OptionsButton::clickReact() {
 	SceneManager::CreateScene(new MainOptionsScene());
@@ -24,29 +19,14 @@ void OptionsButton::focusReact()
 	//! Nothing for now
 }
 
-void OptionsButton::Draw()
-{
-	DrawData info = { };
-
-	info.position.x = 800;
-	info.position.y = 400;
-
-	info.size.x = 760;
-	info.size.y = 230;
-
-	info.origin = { 0.5, 0.5 };
-
-	info.frame = 0;
-	info.layer = 1;
-
-	info.spriteID = this->sprite_id;
-	GraphicManager::Draw(info, Views::MAIN_MENU);
-
-}
-
 void OptionsButton::Init(GameObject *owner)
 {
 	printf("OptionsButton created!\n");
+}
+
+void OptionsButton::disfocusReact()
+{
+	// Nothing for now
 }
 
 void OptionsButton::Destroy()

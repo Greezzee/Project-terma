@@ -11,10 +11,6 @@
 
 QuitButton::QuitButton() {}
 
-bool QuitButton::isClicked() {
-	return InputManager::IsPressed(KeyboardKey::M_Quit);
-}
-
 void QuitButton::clickReact() {
 	current_scene->disableScene();
 }
@@ -27,22 +23,9 @@ void QuitButton::Init(GameObject *owner) {
 	printf("QuitButton created!\n");
 }
 
-void QuitButton::Draw() {
-	DrawData info = { };
-
-	info.position.x = 800;
-	info.position.y = 200;
-
-	info.size.x = 490;
-	info.size.y = 190;
-
-	info.origin = { 0.5, 0.5 };
-
-	info.frame = 0;
-	info.layer = 1;
-
-	info.spriteID = this->sprite_id;
-	GraphicManager::Draw(info, Views::MAIN_MENU);
+void QuitButton::disfocusReact()
+{
+	// Nothing for now
 }
 
 void QuitButton::Destroy() {

@@ -17,11 +17,9 @@ void Background::Update() {
 void Background::Draw() {
 	DrawData info = { };
 
-	info.position.x = 1000;
-	info.position.y = 500;
+	info.position = _pos;
 
-	info.size.x = 2000;
-	info.size.y = 1000;
+	info.size = _size;
 
 	info.origin = { 0.5, 0.5 };
 
@@ -29,7 +27,17 @@ void Background::Draw() {
 	info.layer = 0;
 
 	info.spriteID = this->sprite_id;
-	GraphicManager::Draw(info, Views::MAIN_MENU);
+	GraphicManager::Draw(info, view);
+}
+
+void Background::SetView(Views _view)
+{
+	view = _view;
+}
+
+Views Background::GetView()
+{
+	return view;
 }
 
 void Background::Destroy() {

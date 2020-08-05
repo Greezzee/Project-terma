@@ -43,5 +43,5 @@ GameObject* RedStar::clone() const {
 }
 
 void RedStar::Update() {
-	_angle += (float)(random() % 100 - 50) / 100;
+	_angle += (float)(rand() % 100 - 50) / 100;
 }

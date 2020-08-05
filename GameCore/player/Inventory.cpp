@@ -1,10 +1,3 @@
-/*
- * Inventory.cpp
- *
- *  Created on: Aug 3, 2020
- *      Author: timattt
- */
-
 #include "Inventory.h"
 
 Inventory::Inventory() {

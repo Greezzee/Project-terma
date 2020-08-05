@@ -2,16 +2,14 @@
 
 #include "Button.h"
 
-#include "../../Scenes/MenuScene.h"
-
-class PlayButton : public Button
-{
+class ControlsButton: public Button {
 public:
-	PlayButton();
+	ControlsButton();
 
 	void clickReact() override;
 	void focusReact() override;
 	void disfocusReact() override;
-	void Init(GameObject* owner) override;
 	void Destroy() override;
+	void Init(GameObject *owner) override;
+
 };

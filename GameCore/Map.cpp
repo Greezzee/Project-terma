@@ -52,8 +52,10 @@ void Map::Init() {
 }
 
 void Map::Update() {
-	updateBlocks();
-	updateEntities();
+	if (!is_paused) {
+		updateBlocks();
+		updateEntities();
+	}
 
 	drawBackground();
 	drawBlocks();
@@ -200,7 +202,7 @@ void Map::genTestStuff() {
 	}
 	for (int y = 10; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-			int token = random() % 3;
+			int token = rand() % 3;
 			if (token == 1 || token == 2)
 				addBlock( { x, y }, new GrassBlock());
 		}
@@ -307,6 +309,21 @@ void Map::addMultiblock(Vector2I pos, Multiblock *block) {
 			addBlock( { pos.x + x, pos.y + y }, new StructureBlock(block));
 		}
 	}
+}
+
+void Map::pauseGame()
+{
+	is_paused = true;
+}
+
+void Map::unpauseGame()
+{
+	is_paused = false;
+}
+
+bool Map::isPaused()
+{
+	return is_paused;
 }
 
 void Map::updateEntities() {

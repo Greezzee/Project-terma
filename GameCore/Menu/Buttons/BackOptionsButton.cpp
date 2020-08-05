@@ -10,11 +10,6 @@
 
 BackOptionsButton::BackOptionsButton() {}
 
-bool BackOptionsButton::isClicked()
-{
-	return InputManager::IsPressed(KeyboardKey::M_S_Back);
-}
-
 void BackOptionsButton::clickReact()
 {
 	SceneManager::CreateScene(new MainMenuScene());
@@ -31,23 +26,9 @@ void BackOptionsButton::Init(GameObject *owner)
 	printf("BackOptionsButton created!\n");
 }
 
-void BackOptionsButton::Draw()
+void BackOptionsButton::disfocusReact()
 {
-	DrawData info = { };
-
-	info.position.x = 200;
-	info.position.y = 750;
-
-	info.size.x = 280;
-	info.size.y = 280;
-
-	info.origin = { 0.5, 0.5 };
-
-	info.frame = 0;
-	info.layer = 1;
-
-	info.spriteID = this->sprite_id;
-	GraphicManager::Draw(info, Views::MAIN_MENU);
+	// Nothing for now
 }
 
 void BackOptionsButton::Destroy() {
