@@ -11,7 +11,7 @@ void SolidEntity::Update() {
 
 	// UPDATE COLLIDER
 	collider->Init(this, this->_pos, this->size * 0.5);
-	Debugger::DrawSquareCollider(*collider, 10, 0, Views::PLAYER_CAM);
+	//Debugger::DrawSquareCollider(*collider, 10, 0, Views::PLAYER_CAM);
 
 	// SET ACCELERATION TO g
 	acceleration += { 0, -5000 };
