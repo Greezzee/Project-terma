@@ -15,8 +15,12 @@
 #include "../Menu/ImageWidgets/Background.h"
 #include "../Textures.h"
 
-MainMenuScene::MainMenuScene()
-{
+#include "../../Engine/Colliders/Collider.h"
+#include "../../Engine/Colliders/SquareCollider.h"
+
+#include <iostream>
+
+MainMenuScene::MainMenuScene() {
 	_delay = 0;
 }
 
@@ -26,8 +30,8 @@ void MainMenuScene::Init() {
 	background->Init(nullptr);
 	background->setScene(this);
 	background->setSpriteID(Textures::TEST_BACKGROUND);
-	background->SetSize({2000, 1000});
-	background->SetPos({1000, 500});
+	background->SetSize( { 2000, 1000 });
+	background->SetPos( { 1000, 500 });
 	background->SetView(Views::MAIN_MENU);
 	widgets.push_back(background);
 
@@ -71,7 +75,6 @@ void MainMenuScene::Update() {
 	for (auto widget : widgets) {
 		widget->Draw();
 	}
-
 
 	if (InputManager::IsPressed(KeyboardKey::BACK) && _delay > 1000000) {
 		SceneManager::CloseScene(this);

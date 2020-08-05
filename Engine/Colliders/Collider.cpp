@@ -3,7 +3,7 @@
 #include <cmath>
 
 #include "../Utility/Coordinate.h"
-#include "../Utility/Line.h"
+#include "math.h"
 
 float sqr(float x) {
 	return x * x;
@@ -98,17 +98,135 @@ bool Collider::IsCollide(EllipseCollider* a, EllipseCollider* b) {
 //! ѕровер€ет, пересекаютс€ ли 2 данных коллайдера
 bool Collider::IsCollide(SquareCollider* a, SquareCollider* b)
 {
-	float sqrdist = Vector2F(a->_pos - b->_pos).SqrMagnitude();
-	float rad = a->_size.Magnitude() + b->_size.Magnitude();
+	for (unsigned i = 0; i < 2; i++) {
+		Vector2F side = a->_points[i] - a->_points[i + 1];
+		Vector2F norm;
+		if (fabsf(side.y) < EPS)
+			norm = { 0, 1 };
+		else
+			norm = { 1, -side.x / side.y };
 
-	if (sqrdist > rad * rad)
-		return false;
+		if (!AxisIntersect(a, b, norm))
+			return false;
+	}
 
-	for (int i = 0; i < 4; i++)
-		for (int j = 0; j < 4; j++) {
-			if (Intersect(a->_points[i], a->_points[(i + 1) % 4], b->_points[j], b->_points[(j + 1) % 4]))
-				return true;
-		}
+	for (unsigned i = 0; i < 2; i++) {
+		Vector2F side = b->_points[i] - b->_points[i + 1];
+		Vector2F norm;
+		if (fabsf(side.y) < EPS)
+			norm = { 0, 1 };
+		else
+			norm = { 1, -side.x / side.y };
 
-	return false;
+		if (!AxisIntersect(a, b, norm))
+			return false;
+	}
+	
+	return true;
+}
+
+bool Collider::AxisIntersect(SquareCollider* a, SquareCollider* b, const Vector2F& norm)
+{
+	float min_a, min_b, max_a, max_b;
+	min_a = max_a = Vector2F::ScalarMult(a->_points[0], norm);
+	min_b = max_b = Vector2F::ScalarMult(b->_points[0], norm);
+	for (unsigned j = 1; j < 4; j++)
+	{
+		float len_a = Vector2F::ScalarMult(a->_points[j], norm);
+		float len_b = Vector2F::ScalarMult(b->_points[j], norm);
+		if (len_a < min_a)
+			min_a = len_a;
+		if (len_b < min_b)
+			min_b = len_b;
+		if (len_a > max_a)
+			max_a = len_a;
+		if (len_b > max_b)
+			max_b = len_b;
+	}
+
+	return (min_b <= min_a && min_a <= max_b) || (min_b <= max_a && max_a <= max_b);
+}
+
+Vector2F Collider::AxisDistance(SquareCollider* a, SquareCollider* b, const Vector2F& norm, const Vector2F& dir)
+{
+	float k = Vector2F::ScalarMult(dir, norm);
+	float min_a, min_b, max_a, max_b;
+	min_a = max_a = Vector2F::ScalarMult(a->_points[0], norm);
+	min_b = max_b = Vector2F::ScalarMult(b->_points[0], norm);
+	for (unsigned j = 1; j < 4; j++)
+	{
+		float len_a = Vector2F::ScalarMult(a->_points[j], norm);
+		float len_b = Vector2F::ScalarMult(b->_points[j], norm);
+		if (len_a < min_a)
+			min_a = len_a;
+		if (len_b < min_b)
+			min_b = len_b;
+		if (len_a > max_a)
+			max_a = len_a;
+		if (len_b > max_b)
+			max_b = len_b;
+	}
+
+	Vector2F out;
+
+	if (k == 0 && ((min_b <= min_a && min_a <= max_b) || (min_b <= max_a && max_a <= max_b)))
+		return { -INFINITY, INFINITY };
+	if (k == 0)
+		return { NAN, NAN };
+
+	out.x = (min_b - max_a) / k;
+	out.y = (max_b - min_a) / k;
+
+	return { fminf(out.x, out.y) , fmaxf(out.x, out.y) };
+}
+
+float Collider::DistanceBetween(SquareCollider* a, SquareCollider* b, const Vector2F& direction)
+{
+	float out = 0;
+	Vector2F possible_distance = { -INFINITY, INFINITY };
+	for (unsigned i = 0; i < 2; i++) {
+		Vector2F side = a->_points[i] - a->_points[i + 1];
+		Vector2F norm;
+		if (fabsf(side.y) < EPS)
+			norm = { 0, 1 };
+		else
+			norm = { 1, -side.x / side.y };
+
+		Vector2F axis_pos_dist = AxisDistance(a, b, norm, direction);
+
+		if (isnan(axis_pos_dist.x) || isnan(axis_pos_dist.y))
+			return NAN;
+		
+		possible_distance.x = fmaxf(possible_distance.x, axis_pos_dist.x);
+		possible_distance.y = fminf(possible_distance.y, axis_pos_dist.y);
+	}
+
+	for (unsigned i = 0; i < 2; i++) {
+		Vector2F side = b->_points[i] - b->_points[i + 1];
+		Vector2F norm;
+		if (fabsf(side.y) < EPS)
+			norm = { 0, 1 };
+		else
+			norm = { 1, -side.x / side.y };
+
+		Vector2F axis_pos_dist = AxisDistance(a, b, norm, direction);
+		if (isnan(axis_pos_dist.x) || isnan(axis_pos_dist.y))
+			return NAN;
+		possible_distance.x = fmaxf(possible_distance.x, axis_pos_dist.x);
+		possible_distance.y = fminf(possible_distance.y, axis_pos_dist.y);
+	}
+
+	if (possible_distance.x > possible_distance.y)
+		return NAN;
+
+	if (possible_distance.x <= 0 && possible_distance.y >= 0)
+		return 0;
+
+	if (possible_distance.x <= 0 && possible_distance.y <= 0)
+		return possible_distance.y;
+
+	if (possible_distance.x >= 0 && possible_distance.y >= 0)
+		return possible_distance.x;
+
+	return NAN;
 }

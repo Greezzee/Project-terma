@@ -100,6 +100,10 @@ void SquareCollider::setSize(const Vector2F size) {
 	_size = size;
 }
 
+Vector2F SquareCollider::getPoint(unsigned i) const {
+	return _points[i];
+}
+
 void SquareCollider::SetPoints()
 {
 	float sum_angle = _angle + _shape_angle;

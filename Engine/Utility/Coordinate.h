@@ -9,7 +9,6 @@ const double EPS = 1E-9;
 * 
 * Введён вместо встроенные в SFML векторов, чтобы избежать появление зависимого от sfml кода там, где он не необходим
 */
-
 struct Vector2F
 {
 	//! Конструктор по умолчанию, вектор (0, 0)
@@ -54,6 +53,9 @@ struct Vector2F
 	friend const Vector2F operator/(const Vector2F& a, float b);
 	friend const bool operator==(const Vector2F& a, const Vector2F& b);
 	friend const bool operator!=(const Vector2F& a, const Vector2F& b);
+
+	//! Вернёт скалярное произведение векторов
+	static float ScalarMult(const Vector2F& a, const Vector2F& b);
 };
 
 struct Vector2U
@@ -174,4 +176,3 @@ struct Vector2I
 	friend const bool operator==(const Vector2I& a, const Vector2I& b);
 	friend const bool operator!=(const Vector2I& a, const Vector2I& b);
 };
-

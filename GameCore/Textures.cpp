@@ -19,9 +19,10 @@ int Textures::RED_STONE_TOP = -1;
 int Textures::SHREK = -1;
 int Textures::INVENTORY = -1;
 int Textures::CONTROLS_BUTTON = -1;
+int Textures::WHITE_BLOCK = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
-	GraphicManager::SetSpritesMaxCount(18);
+	GraphicManager::SetSpritesMaxCount(200);
 
 	Textures::RED_STONE_BOTTOM = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneBottom.png"), Vector2F(8, 8), 1));
 	Textures::RED_STONE_MIDDLE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneMiddle.png"), Vector2F(8, 8), 1));
@@ -41,4 +42,5 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::SHREK = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/shrek.png", Vector2F(750, 650), 1));
 	Textures::INVENTORY = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/inventory.png", Vector2F(500, 500), 1));
 	Textures::CONTROLS_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/controls_button.png", Vector2F(76, 23), 1));
+	Textures::WHITE_BLOCK = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/WhiteBlock.png", Vector2F(32, 32), 1));
 }
