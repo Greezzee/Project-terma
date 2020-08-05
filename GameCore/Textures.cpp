@@ -20,9 +20,9 @@ int Textures::RED_STONE_TOP = -1;
 void Textures::LOAD_ALL_TEXTURES() {
 	GraphicManager::SetSpritesMaxCount(15);
 
-	Textures::RED_STONE_BOTTOM = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneBottom.png"), Vector2F(64, 64), 1));
-	Textures::RED_STONE_MIDDLE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneMiddle.png"), Vector2F(64, 64), 1));
-	Textures::RED_STONE_TOP = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneTop.png"), Vector2F(64, 64), 1));
+	Textures::RED_STONE_BOTTOM = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneBottom.png"), Vector2F(8, 8), 1));
+	Textures::RED_STONE_MIDDLE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneMiddle.png"), Vector2F(8, 8), 1));
+	Textures::RED_STONE_TOP = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneTop.png"), Vector2F(8, 8), 1));
 	Textures::TREE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/Tree.png"), Vector2F(432, 450), 1));
 	Textures::DIRT_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/DirtBlock.png"), Vector2F(8 ,8), 1));
 	Textures::STONE_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/StoneBlock.png"), Vector2F(32, 32), 1));

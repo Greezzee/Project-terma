@@ -6,7 +6,7 @@
 class GrassBlock : public Block {
 public:
 	GrassBlock() : Block() {
-		this->setSpriteId(Textures::GRASS_BLOCK_TEXTURE);
+		this->setSpriteId(Textures::RED_STONE_TOP);
 		this->SetID(12);
 	}
 
