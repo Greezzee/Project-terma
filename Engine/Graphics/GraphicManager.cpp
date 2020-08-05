@@ -1,5 +1,6 @@
 #include "GraphicManager.h"
 #include "../Time/TimeManager.h"
+#include "../../GameCore/Textures.h"
 
 Vector2F GraphicManager::ConvertRealToView(Vector2F pos, Views view_id)
 {
