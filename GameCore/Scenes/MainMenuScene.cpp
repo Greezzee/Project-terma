@@ -1,17 +1,23 @@
 #include "MainMenuScene.h"
 
+#include <cstdio>
+#include <iostream>
+#include <vector>
+
+#include "../../Engine/Control/InputManager.h"
+#include "../../Engine/Graphics/DrawData.h"
+#include "../../Engine/SceneManagment/SceneManager.h"
+#include "../../Engine/Time/TimeManager.h"
+#include "../../Engine/Utility/Coordinate.h"
+#include "../Menu/Buttons/OptionsButton.h"
 #include "../Menu/Buttons/PlayButton.h"
 #include "../Menu/Buttons/QuitButton.h"
 #include "../Menu/ImageWidgets/Background.h"
-#include "../Menu/Buttons/OptionsButton.h"
-
 #include "../Textures.h"
-#include "../../Engine/SceneManagment/SceneManager.h"
-#include "../../Engine/Control/InputManager.h"
 
-#include <iostream>
-
-MainMenuScene::MainMenuScene() {
+MainMenuScene::MainMenuScene()
+{
+	_delay = 0;
 }
 
 void MainMenuScene::Init() {
@@ -57,6 +63,8 @@ void MainMenuScene::Init() {
 }
 
 void MainMenuScene::Update() {
+	_delay += TimeManager::GetDeltaTime();
+
 	for (auto widget : widgets) {
 		widget->Update();
 	}
@@ -64,7 +72,8 @@ void MainMenuScene::Update() {
 		widget->Draw();
 	}
 
-	if (InputManager::IsPressed(KeyboardKey::BACK)) {
+
+	if (InputManager::IsPressed(KeyboardKey::BACK) && _delay > 1000000) {
 		SceneManager::CloseScene(this);
 		return;
 	}

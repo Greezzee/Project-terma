@@ -4,6 +4,8 @@
 
 class MainMenuScene : public MenuScene
 {
+	// Delay before game can be closed with ESC
+	unsigned _delay;
 public:
 	MainMenuScene();
 
