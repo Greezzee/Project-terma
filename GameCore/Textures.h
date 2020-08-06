@@ -14,6 +14,7 @@ public:
 
 	// MULTIBLOCKS
 	static int TREE;
+	static int LANTERN;
 
 	// ENTITIES
 	static int PLAYER_STAND_TEXTURE;

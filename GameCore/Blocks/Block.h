@@ -19,6 +19,7 @@ public:
 	void setName(const std::string &name);
 	float getLightLevel() const;
 	void setLightLevel(float lightLevel = 1.0f);
+	void addLightLevel(float add);
 
 protected:
 	void setSpriteId(int spriteId);

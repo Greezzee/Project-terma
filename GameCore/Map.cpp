@@ -13,6 +13,7 @@
 #include "../Engine/Utility/Coordinate.h"
 #include "Blocks/DirtBlock.h"
 #include "Blocks/GrassBlock.h"
+#include "Blocks/multiblockStructures/Lantern.h"
 #include "Blocks/multiblockStructures/Multiblock.h"
 #include "Blocks/multiblockStructures/StructureBlock.h"
 #include "Blocks/multiblockStructures/Tree.h"
@@ -37,7 +38,7 @@ void Map::addBlock(Vector2I pos, Block *block) {
 template<typename T>
 void Map::collectEntities(void inv(T *ent)) {
 	for (int i = 0; i < this->entities.size(); i++) {
-		if (dynamic_cast<T>(entities[i]) != NULL) {
+		if (dynamic_cast<T*>(entities[i]) != NULL) {
 			inv(entities[i]);
 		}
 	}
@@ -62,6 +63,7 @@ void Map::Init() {
 
 void Map::Update() {
 	if (!is_paused) {
+		updateWallblocks();
 		updateBlocks();
 		updateEntities();
 	}
@@ -121,18 +123,18 @@ template<typename Base, typename T> inline bool Map::instanceof(const T*) {
 //! Рисует блоки, схема прорисовки в ИГРОВЫХ координатах выше.
 void Map::drawBlocks() {
 	View *camera = this->player->getCamera();
-	int total = 0;
-	for (int x = (camera->virtual_position.x - camera->virtual_size.x / 2)
+	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
 			/ BLOCK_SIZE - 1;
-			x
-					< (camera->virtual_position.x + camera->virtual_size.x / 2)
-							/ BLOCK_SIZE + 1; x++) {
-		for (int y = (camera->virtual_position.y - camera->virtual_size.y / 2)
-				/ BLOCK_SIZE - 1;
-				y
-						< (camera->virtual_position.y
-								+ camera->virtual_size.y / 2) / BLOCK_SIZE + 1;
-				y++) {
+	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
+			/ BLOCK_SIZE - 1;
+
+	int endx = (camera->virtual_position.x + camera->virtual_size.x / 2)
+			/ BLOCK_SIZE + 1;
+	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
+			/ BLOCK_SIZE + 1;
+
+	for (int x = startx; x < endx; x++) {
+		for (int y = starty; y < endy; y++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}
@@ -145,8 +147,6 @@ void Map::drawBlocks() {
 			if (dynamic_cast<Multiblock*>(currBlock) != NULL) {
 				continue;
 			}
-
-			total++;
 
 			float x0 = x * BLOCK_SIZE;
 			float y0 = y * BLOCK_SIZE;
@@ -200,18 +200,37 @@ void Map::drawBackground() {
 
 void Map::updateBlocks() {
 	View *camera = this->player->getCamera();
-	int total = 0;
-	for (int x = (camera->virtual_position.x - camera->virtual_size.x / 2)
+
+	//----------------------------------------------------------------------------
+	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
 			/ BLOCK_SIZE - 1;
-			x
-					< (camera->virtual_position.x + camera->virtual_size.x / 2)
-							/ BLOCK_SIZE + 1; x++) {
-		for (int y = (camera->virtual_position.y - camera->virtual_size.y / 2)
-				/ BLOCK_SIZE - 1;
-				y
-						< (camera->virtual_position.y
-								+ camera->virtual_size.y / 2) / BLOCK_SIZE + 1;
-				y++) {
+	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
+			/ BLOCK_SIZE - 1;
+
+	int endx = (camera->virtual_position.x + camera->virtual_size.x / 2)
+			/ BLOCK_SIZE + 1;
+	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
+			/ BLOCK_SIZE + 1;
+	//----------------------------------------------------------------------------
+
+	// FLUSH LIGHT
+	//----------------------------------------------------------------------------
+	for (int x = startx; x < endx; x++) {
+		for (int y = starty; y < endy; y++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
+			if (blocks[x][y]) {
+				blocks[x][y]->setLightLevel(0);
+			}
+		}
+	}
+	//----------------------------------------------------------------------------
+
+	// UPDATE
+	//----------------------------------------------------------------------------
+	for (int x = startx; x < endx; x++) {
+		for (int y = starty; y < endy; y++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}
@@ -220,6 +239,28 @@ void Map::updateBlocks() {
 			}
 		}
 	}
+	//----------------------------------------------------------------------------
+
+	startx -= LIGHT_UPDATE_RADIUS;
+	endx += LIGHT_UPDATE_RADIUS;
+	starty -= LIGHT_UPDATE_RADIUS;
+	endy += LIGHT_UPDATE_RADIUS;
+
+	// LIGHT
+	//----------------------------------------------------------------------------
+	for (int x = startx; x < endx; x++) {
+		for (int y = starty; y < endy; y++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
+			LightSource *sr = NULL;
+			if (blocks[x][y]
+					&& (sr = dynamic_cast<LightSource*>(blocks[x][y])) != NULL) {
+				lightUpBlocks(x, y, sr->getLightRadius());
+			}
+		}
+	}
+	//----------------------------------------------------------------------------
 }
 
 void Map::genTestStuff() {
@@ -248,20 +289,14 @@ void Map::genTestStuff() {
 
 	// TREES
 	for (int x = 0; x < MAX_LEVEL_SIZE - 20; x++) {
-		if (x % 15 == 1) {
-			addMultiblock( { x, 14 }, new Tree());
-		}
-	}
-
-	for (int x = 0; x < MAX_LEVEL_SIZE; x += 20) {
-		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
-			if (blocks[x][y] == NULL) {
-				//addBlock( { x, y }, new DirtBlock());
+		if (x % 15 == 0) {
+			if (x % 2 == 0) {
+				addMultiblock( { x, 14 }, new Lantern());
+			} else {
+				addMultiblock( { x, 14 }, new Tree());
 			}
 		}
 	}
-
-//addEntity( { 600, 500 }, new RedStar());
 }
 
 float Map::testCollision(SquareCollider *col, Vector2F dir) {
@@ -315,18 +350,18 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 
 void Map::drawMultiblocks() {
 	View *camera = this->player->getCamera();
-	for (int x = (camera->virtual_position.x - camera->virtual_size.x / 2)
-			/ BLOCK_SIZE - 1 - MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS;
-			x
-					< (camera->virtual_position.x + camera->virtual_size.x / 2)
-							/ BLOCK_SIZE + 1
-							+ MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS; x++) {
-		for (int y = (camera->virtual_position.y - camera->virtual_size.y / 2)
-				/ BLOCK_SIZE - 1 - MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS;
-				y
-						< (camera->virtual_position.y
-								+ camera->virtual_size.y / 2) / BLOCK_SIZE + 1
-								+ MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS; y++) {
+	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
+			/ BLOCK_SIZE - 1;
+	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
+			/ BLOCK_SIZE - 1;
+
+	int endx = (camera->virtual_position.x + camera->virtual_size.x / 2)
+			/ BLOCK_SIZE + 1;
+	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
+			/ BLOCK_SIZE + 1;
+
+	for (int x = startx; x < endx; x++) {
+		for (int y = starty; y < endy; y++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}
@@ -350,6 +385,15 @@ void Map::drawMultiblocks() {
 			info.size = (float) (BLOCK_SIZE) * currBlock->getSize().to2F();
 
 			info.origin = { 0.5, 0.5 };
+
+			info.color.r =
+					info.color.g =
+							info.color.b =
+									255.0f
+											* getBlockFromMesh(
+													Vector2I(x, y)
+															+ currBlock->getSize()
+																	* 0.5)->getLightLevel();
 
 			info.frame = 0;
 			info.layer = 0;
@@ -388,6 +432,45 @@ void Map::addWallblock(Vector2I pos, Block *block) {
 	this->wallblocks[pos.x][pos.y] = block;
 }
 
+Block* Map::getBlock(Vector2F pos) {
+	int x = pos.x / BLOCK_SIZE;
+	int y = pos.y / BLOCK_SIZE;
+	if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+		return NULL;
+	}
+	return blocks[x][y];
+}
+
+Block* Map::getWallblock(Vector2F pos) {
+	int x = pos.x / BLOCK_SIZE;
+	int y = pos.y / BLOCK_SIZE;
+	if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+		return NULL;
+	}
+	return wallblocks[x][y];
+}
+
+void Map::lightUpBlocks(int startx, int starty, int rad) {
+	float max_len = rad * rad;
+	for (int x = startx - rad; x < startx + rad; x++) {
+		for (int y = starty - rad; y < starty + rad; y++) {
+			float len_sq = (x - startx) * (x - startx)
+					+ (y - starty) * (y - starty);
+
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
+			if (len_sq < max_len) {
+				float factor = std::pow((max_len - len_sq) / max_len, 3);
+				if (blocks[x][y])
+					blocks[x][y]->addLightLevel(factor);
+				if (wallblocks[x][y])
+					wallblocks[x][y]->addLightLevel(factor);
+			}
+		}
+	}
+}
+
 void Map::updateEntities() {
 	for (Entity *ent : entities) {
 		ent->Update();
@@ -396,18 +479,19 @@ void Map::updateEntities() {
 
 void Map::drawWallblocks() {
 	View *camera = this->player->getCamera();
-	int total = 0;
-	for (int x = (camera->virtual_position.x - camera->virtual_size.x / 2)
+
+	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
 			/ BLOCK_SIZE - 1;
-			x
-					< (camera->virtual_position.x + camera->virtual_size.x / 2)
-							/ BLOCK_SIZE + 1; x++) {
-		for (int y = (camera->virtual_position.y - camera->virtual_size.y / 2)
-				/ BLOCK_SIZE - 1;
-				y
-						< (camera->virtual_position.y
-								+ camera->virtual_size.y / 2) / BLOCK_SIZE + 1;
-				y++) {
+	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
+			/ BLOCK_SIZE - 1;
+
+	int endx = (camera->virtual_position.x + camera->virtual_size.x / 2)
+			/ BLOCK_SIZE + 1;
+	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
+			/ BLOCK_SIZE + 1;
+
+	for (int x = startx; x < endx; x++) {
+		for (int y = starty; y < endy; y++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}
@@ -420,8 +504,6 @@ void Map::drawWallblocks() {
 			if (dynamic_cast<Multiblock*>(currBlock) != NULL) {
 				continue;
 			}
-
-			total++;
 
 			float x0 = x * BLOCK_SIZE;
 			float y0 = y * BLOCK_SIZE;
@@ -448,4 +530,48 @@ void Map::drawWallblocks() {
 			GraphicManager::Draw(info, Views::PLAYER_CAM);
 		}
 	}
+}
+
+void Map::updateWallblocks() {
+	View *camera = this->player->getCamera();
+
+	//----------------------------------------------------------------------------
+	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
+			/ BLOCK_SIZE - 1;
+	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
+			/ BLOCK_SIZE - 1;
+
+	int endx = (camera->virtual_position.x + camera->virtual_size.x / 2)
+			/ BLOCK_SIZE + 1;
+	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
+			/ BLOCK_SIZE + 1;
+	//----------------------------------------------------------------------------
+
+	// FLUSH LIGHT
+	//----------------------------------------------------------------------------
+	for (int x = startx; x < endx; x++) {
+		for (int y = starty; y < endy; y++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
+			if (wallblocks[x][y]) {
+				wallblocks[x][y]->setLightLevel(0);
+			}
+		}
+	}
+	//----------------------------------------------------------------------------
+
+	// UPDATE
+	//----------------------------------------------------------------------------
+	for (int x = startx; x < endx; x++) {
+		for (int y = starty; y < endy; y++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
+			if (wallblocks[x][y]) {
+				wallblocks[x][y]->Update();
+			}
+		}
+	}
+	//----------------------------------------------------------------------------
 }

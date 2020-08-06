@@ -4,6 +4,8 @@
 #include "../entities/SolidEntity.h"
 #include "Inventory.h"
 
+struct DrawData;
+
 class Inventory;
 
 struct View;
@@ -27,4 +29,7 @@ private:
 	void drawHealthBar();
 	void drawPlayer();
 	//---------------------------
+
+	// LIGHT
+	void correctLight(DrawData & data);
 };
