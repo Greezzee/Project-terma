@@ -31,6 +31,7 @@ public:
 
 	static int MAIN_OPTIONS_MENU_BACK_BUTTON;
 	static int CONTROLS_BUTTON;
+	static int RESOLUTION_BUTTON;
 	static int SHREK;
 
 	static int INVENTORY;
