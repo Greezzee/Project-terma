@@ -35,12 +35,10 @@ void SolidEntity::Update() {
 	// ADDING OTHER FORCES
 	//------------------------------------------------------------------
 	// SET ACCELERATION TO g
-	externalForce += Vector2F( 0, -g) * mass;
+	externalForce += Vector2F(0, -g) * mass;
 
-	// SOPROTIVLENIYE ZEMLI
-	//if (standsOnTheGround()) {
-		externalForce.x -= speed.x * K;
-	//}
+	// SOPROTIVLENIYE
+	externalForce.x -= speed.x * K;
 	//------------------------------------------------------------------
 
 	// Now we can calculate acceleration
