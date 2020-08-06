@@ -90,6 +90,7 @@ private:
 	//------------------------
 	Block *blocks[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
 	std::vector<Entity*> entities;
+	SquareCollider *colliders_wireframe[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
 	//------------------------
 
 	// INIT blocks and entities (Level)

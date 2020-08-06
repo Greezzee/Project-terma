@@ -48,6 +48,14 @@ void Map::Init() {
 	this->player = new Player();
 	this->addEntity( { 1500, 800 }, this->player);
 
+	// WIREFRAME
+	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
+		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
+			colliders_wireframe[x][y] = new SquareCollider();
+			colliders_wireframe[x][y]->Init(NULL, Vector2F(x, y) * BLOCK_SIZE, Vector2F(1, 1) * BLOCK_SIZE);
+		}
+	}
+
 	genTestStuff();
 }
 
@@ -232,7 +240,6 @@ void Map::genTestStuff() {
 }
 
 float Map::testCollision(SquareCollider *col, Vector2F dir) {
-	SquareCollider bl = { };
 	Vector2F bl_sz = { BLOCK_SIZE / 2, BLOCK_SIZE / 2 };
 
 	float dir_len = dir.Magnitude();
@@ -253,17 +260,12 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 				continue;
 			}
 
-			Vector2F p0 = Vector2F { (float) x, (float) y } * (float) BLOCK_SIZE
-					+ Vector2F(0.5, 0.5) * (float) BLOCK_SIZE;
-
 			if (blocks[x][y] == NULL) {
 				continue;
 			}
 			if (blocks[x][y]->isPassable()) {
 				continue;
 			}
-
-			bl.Init(blocks[x][y], p0, bl_sz);
 
 			// DEBUG
 			//------------------------------
@@ -272,7 +274,7 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 			//		Color::Red());
 			//------------------------------
 
-			float dist = Collider::DistanceBetween(col, &bl, dir);
+			float dist = Collider::DistanceBetween(col, colliders_wireframe[x][y], dir);
 
 			if (!std::isnan(dist)) {
 				if (dist >= 0.0f) {
