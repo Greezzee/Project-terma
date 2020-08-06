@@ -33,6 +33,7 @@ bool Debugger::DrawLine(Vector2F start, Vector2F end, float thick, Views view_id
 	return GraphicManager::Draw(line, view_id);
 }
 
+
 bool Debugger::DrawSquareCollider(const SquareCollider& col, float points_size, float line_thick, Views view_id, Color color, unsigned layer)
 {
 	for (int i = 0; i < 4; i++) {
@@ -41,5 +42,24 @@ bool Debugger::DrawSquareCollider(const SquareCollider& col, float points_size, 
 		if (!DrawLine(col.getPoint(i), col.getPoint((i + 1) % 4), line_thick, view_id, color, layer))
 			return false;
 	}
+	return true;
+}
+
+bool Debugger::DrawRect(const std::vector<Vector2F>& points, float points_size, float line_thick, Views view_id, Color color, unsigned layer)
+{
+	unsigned points_count = points.size();
+	if (points_count > 1) {
+		for (unsigned i = 0; i < points_count; i++)
+		{
+			if (!DrawPoint(points[i], points_size, view_id, color, layer))
+				return false;
+			if (!DrawLine(points[i], points[(i + 1) % points_count], line_thick, view_id, color, layer))
+				return false;
+		}
+		return true;
+	}
+	
+	if (!DrawPoint(points[0], points_size, view_id, color, layer))
+		return false;
 	return true;
 }
