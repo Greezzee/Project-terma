@@ -1,29 +1,83 @@
 #include "SolidEntity.h"
 
+#include <algorithm>
+#include <cmath>
+
 #include "../../Engine/Colliders/SquareCollider.h"
+#include "../../Engine/Graphics/DrawData.h"
 #include "../../Engine/Time/TimeManager.h"
 #include "../../Engine/Utility/Coordinate.h"
-#include "../Map.h"
 #include "../Debugger.h"
+#include "../Map.h"
+
+const float epsilon = 1.0f;
+const float K = 4.0f;
 
 void SolidEntity::Update() {
-	Entity::Update();
-
 	// UPDATE COLLIDER
-	collider->Init(this, this->_pos, this->size * 0.5);
-	//Debugger::DrawSquareCollider(*collider, 10, 0, Views::PLAYER_CAM);
+	collider->Init(this, this->_pos, this->collider_size * 0.5);
+
+	// DEBUG
+	//------------------------------------------------------------------
+	Debugger::DrawSquareCollider(*collider, 10, 0, Views::PLAYER_CAM);
+	Debugger::DrawPoint(_pos, 20, Views::PLAYER_CAM);
+	//------------------------------------------------------------------
 
 	// SET ACCELERATION TO g
 	acceleration += { 0, -5000 };
 
-	// STOP OBJECT IF IT IS FALLING IN TO THE GROUND
-	if (this->isInBlocks = this->getMap()->testCollision(collider)) {
+	// SOPROTIVLENIYE ZEMLI
+	if (standsOnTheGround())
+		acceleration -= speed * K;
+
+	// POSITION UPDATE
+	float dt = TimeManager::GetDeltaTimeF();
+
+	speed += acceleration * dt;
+	Vector2F ds = speed * dt;
+
+	Vector2F dsx = { ds.x, 0 };
+	Vector2F dsy = { 0, ds.y };
+
+	float dsx_len = dsx.Magnitude();
+	float dsy_len = dsy.Magnitude();
+
+	// MAP
+	Map *map = getMap();
+
+	// X
+	float problem_dist = map->testCollision(collider, dsx);
+	problem_dist = std::max(0.0f, problem_dist - epsilon);
+	if (problem_dist < dsx_len) {
+		dsx = dsx.Normalized() * problem_dist;
+	}
+	_pos += dsx;
+
+	// Y
+	problem_dist = map->testCollision(collider, dsy);
+	problem_dist = std::max(0.0f, problem_dist - epsilon);
+	if (problem_dist < dsy_len) {
+		dsy = dsy.Normalized() * problem_dist;
+	}
+	_pos += dsy;
+
+	speed = (dsx + dsy) / dt;
+
+	// FLUSH
+	if (std::abs(speed.x) < epsilon) {
+		speed.x = 0;
+	}
+	if (std::abs(speed.y) < epsilon) {
 		speed.y = 0;
 	}
+	acceleration = { 0, 0 };
 }
 
 SolidEntity::SolidEntity() {
 	collider = new SquareCollider();
 	collider->Init(this);
-	this->isInBlocks = 0;
+}
+
+bool SolidEntity::standsOnTheGround() {
+	return getMap()->testCollision(collider, { 0, -10.0f }) < epsilon;
 }

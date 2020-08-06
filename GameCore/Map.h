@@ -63,7 +63,7 @@ public:
 
 	// COLLISIONS
 	//------------------------
-	bool testCollision(SquareCollider * col);
+	float testCollision(SquareCollider * col, Vector2F dir);
 	//------------------------
 
 private:

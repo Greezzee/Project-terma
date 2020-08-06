@@ -42,6 +42,24 @@ struct View
 	Vector2F unit_vector = { 1, 1 };
 };
 
+struct Color
+{
+	Color() :
+		r(255), g(255), b(255), a(255) {}
+	Color(unsigned red, unsigned green, unsigned blue) :
+		r(red), g(green), b(blue), a(255) {}
+	Color(unsigned red, unsigned green, unsigned blue, unsigned alpha) :
+		r(red), g(green), b(blue), a(alpha) {}
+	unsigned r, g, b, a;
+
+	static Color Red() { return { 255, 0, 0, 255 }; }
+	static Color Green() { return { 0, 255, 0, 255 }; }
+	static Color Blue() { return { 0, 0, 255, 255 }; }
+	static Color White() { return { 255, 255, 255, 255 }; }
+	static Color Black() { return { 0, 0, 0, 255 }; }
+};
+
+
 /*!
 * Структура, содержащая информацию о всех преобразованиях спрайта, который нужно нарисовать на экране.
 * Имеет конструкторы для более простой инициализации
@@ -65,5 +83,7 @@ struct DrawData
 	Vector2F origin; //! Где находится центр спрайта относительно его левого верхнего угла. Измеряется от 0 до 1. {0, 0} - верхний левый угол, (0.5, 0.5) - центр спрайта
 	Vector2F size; //! Размер спрайта в единицах длины игрового поля
 	float rotation; //! Угол поворота спрайта В ГРАДУСАХ, против часовой стрелки
-	int frame; //! Пока никак не используется. Кадр анимации
+	int frame; //! Кадр анимации
+
+	Color color; //! глобальный цвет спрайта ("прибавляется" к цветам спрайта), по умолчанию белый (никак не влияет на цвет спрайта)
 };

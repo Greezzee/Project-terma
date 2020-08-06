@@ -1,7 +1,8 @@
 #include "Map.h"
 
+#include <algorithm>
+#include <cmath>
 #include <cstdlib>
-#include <iostream>
 #include <iterator>
 #include <type_traits>
 
@@ -14,8 +15,7 @@
 #include "Blocks/GrassBlock.h"
 #include "Blocks/multiblockStructures/Multiblock.h"
 #include "Blocks/multiblockStructures/StructureBlock.h"
-#include "Blocks/multiblockStructures/Tree.h"
-#include "entities/mobs/RedStar.h"
+#include "Debugger.h"
 #include "Level.h"
 #include "player/Player.h"
 #include "Textures.h"
@@ -46,7 +46,7 @@ void Map::collectEntities(void inv(T *ent)) {
 void Map::Init() {
 	this->level->generate(this);
 	this->player = new Player();
-	this->addEntity( { 1500, 700 }, this->player);
+	this->addEntity( { 1500, 800 }, this->player);
 
 	genTestStuff();
 }
@@ -213,43 +213,75 @@ void Map::genTestStuff() {
 		}
 	}
 
+	// TREES
 	for (int x = 0; x < MAX_LEVEL_SIZE - 20; x++) {
-		if (x % 15 == 1)
-			addMultiblock( { x, 14 }, new Tree());
+		//if (x % 15 == 1)
+		//	addMultiblock( { x, 14 }, new Tree());
 	}
-	//addEntity( { 600, 500 }, new RedStar());
+
+	for (int x = 0; x < MAX_LEVEL_SIZE; x += 20) {
+		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
+			if (blocks[x][y] == NULL) {
+				addBlock( { x, y }, new DirtBlock());
+			}
+		}
+	}
+
+//addEntity( { 600, 500 }, new RedStar());
 }
 
-bool Map::testCollision(SquareCollider *col) {
+float Map::testCollision(SquareCollider *col, Vector2F dir) {
 	SquareCollider bl = { };
 	Vector2F bl_sz = { BLOCK_SIZE / 2, BLOCK_SIZE / 2 };
 
-	for (int y = (col->getPos().y - 3 * col->getSize().y) / BLOCK_SIZE - 1;
-			y < (col->getPos().y + 3 * col->getSize().y) / BLOCK_SIZE + 1;
-			y++) {
-		for (int x = (col->getPos().x - 3 * col->getSize().x) / BLOCK_SIZE - 1;
-				x < (col->getPos().x + 3 * col->getSize().x) / BLOCK_SIZE + 1;
-				x++) {
+	float dir_len = dir.Magnitude();
+	float result = 10000000.0f;
+
+	for (int y = (col->getPos().y - 1 * col->getSize().y - dir_len) / BLOCK_SIZE
+			- 1;
+			y
+					< (col->getPos().y + 1 * col->getSize().y + dir_len)
+							/ BLOCK_SIZE + 1; y++) {
+		for (int x = (col->getPos().x - 1 * col->getSize().x - dir_len)
+				/ BLOCK_SIZE - 1;
+				x
+						< (col->getPos().x + 1 * col->getSize().x + dir_len)
+								/ BLOCK_SIZE + 1; x++) {
+
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}
+
 			Vector2F p0 = Vector2F { (float) x, (float) y } * (float) BLOCK_SIZE
 					+ Vector2F(0.5, 0.5) * (float) BLOCK_SIZE;
+
 			if (blocks[x][y] == NULL) {
 				continue;
 			}
 			if (blocks[x][y]->isPassable()) {
 				continue;
 			}
+
 			bl.Init(blocks[x][y], p0, bl_sz);
 
-			if (Collider::IsCollide(&bl, col)) {
-				return 1;
+			// DEBUG
+			//------------------------------
+			Debugger::DrawSquareCollider(bl, 10, 4, Views::PLAYER_CAM);
+			Debugger::DrawLine(bl.getPos(), col->getPos(), 4, Views::PLAYER_CAM,
+					Color::Red());
+			//------------------------------
+
+			float dist = Collider::DistanceBetween(col, &bl, dir);
+
+			if (!std::isnan(dist)) {
+				if (dist >= 0.0f) {
+					result = std::min(result, dist);
+				}
 			}
 		}
 	}
 
-	return 0;
+	return result;
 }
 
 void Map::drawMultiblocks() {
@@ -311,18 +343,15 @@ void Map::addMultiblock(Vector2I pos, Multiblock *block) {
 	}
 }
 
-void Map::pauseGame()
-{
+void Map::pauseGame() {
 	is_paused = true;
 }
 
-void Map::unpauseGame()
-{
+void Map::unpauseGame() {
 	is_paused = false;
 }
 
-bool Map::isPaused()
-{
+bool Map::isPaused() {
 	return is_paused;
 }
 

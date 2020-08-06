@@ -16,10 +16,6 @@ void Entity::setMap( Map *map) {
 	this->map = map;
 }
 
-void Entity::setSize( Vector2F size) {
-	this->size = size;
-}
-
 Map* Entity::getMap() {
 	return this->map;
 }
@@ -31,4 +27,12 @@ void Entity::Update() {
 	speed += dt * acceleration;
 
 	acceleration = {0, 0};
+}
+
+void Entity::setColliderSize(const Vector2F &colliderSize) {
+	collider_size = colliderSize;
+}
+
+void Entity::setTextureSize(const Vector2F &textureSize) {
+	texture_size = textureSize;
 }

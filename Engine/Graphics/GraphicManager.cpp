@@ -23,7 +23,7 @@ const unsigned GraphicManager::LAYER_COUNT = 20;
 
 void GraphicManager::Init()
 {
-	window.create(sf::VideoMode(1024, 576), "Test", sf::Style::Titlebar | sf::Style::Close);
+	window.create(sf::VideoMode(1920, 1080), "Test", sf::Style::Titlebar | sf::Style::Close);
 	//window.setFramerateLimit(65);
 
 	_sprites_count = 0;
@@ -31,10 +31,10 @@ void GraphicManager::Init()
 	to_draw.resize(LAYER_COUNT);
 
 	views.resize(VIEWS_COUNT);
-	views[Views::BASIC] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {1024, 576}, {0, 0}, {1, 1} };
-	views[Views::TEST] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {16, 9}, {0, 0}, {1, 1}};
-	views[Views::PLAYER_CAM] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {1600, 900}, {0.5, 0.5}, {1, -1}};
-	views[Views::MAIN_MENU] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {1600, 900}, {0, 0}, {1, -1}};
+	views[Views::BASIC] = { {0, 0}, {1920, 1080}, {0, 0}, {0, 0}, {1024, 576}, {0, 0}, {1, 1} };
+	views[Views::TEST] = { {0, 0}, {1920, 1080}, {0, 0}, {0, 0}, {16, 9}, {0, 0}, {1, 1}};
+	views[Views::PLAYER_CAM] = { {0, 0}, {1920, 1080}, {0, 0}, {0, 0}, {1600, 900}, {0.5, 0.5}, {1, -1}};
+	views[Views::MAIN_MENU] = { {0, 0}, {1920, 1080}, {0, 0}, {0, 0}, {1600, 900}, {0, 0}, {1, -1}};
 }
 
 bool GraphicManager::Update()
@@ -77,6 +77,7 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 
 	spr.sprite.setPosition(sf::Vector2f(data.position.x, data.position.y));
 	spr.sprite.setRotation(data.rotation);
+	spr.sprite.setColor(sf::Color(data.color.r, data.color.g, data.color.b, data.color.a));
 	spr.sprite.setOrigin(sf::Vector2f(data.origin.x * spr.size.x, data.origin.y * spr.size.y));
 	spr.sprite.setScale(sf::Vector2f(data.size.x / spr.size.x, data.size.y / spr.size.y));
 	spr.sprite.setTextureRect(sf::IntRect(spr.size.x * (data.frame % spr.frames_count), 0, (int)spr.size.x, (int)spr.size.y));
@@ -92,6 +93,7 @@ void GraphicManager::SetView(DrawData& data, Views view_id)
 	data.position -= view.real_size * (view.unit_vector - Vector2F(1, 1)) / 2.f;
 	data.position += view.real_position + view.real_size * view.real_origin;
 	data.size = data.size * view.real_size / view.virtual_size;
+	data.rotation *= -1;
 
 	if (data.position.x + data.size.x < 0 ||
 		data.position.y + data.size.y < 0 ||

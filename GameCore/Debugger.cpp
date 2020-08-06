@@ -4,7 +4,7 @@
 #include "Textures.h"
 #include <math.h>
 
-bool Debugger::DrawPoint(Vector2F pos, float size, Views view_id, unsigned layer)
+bool Debugger::DrawPoint(Vector2F pos, float size, Views view_id, Color color, unsigned layer)
 {
 	DrawData point;
 	point.origin = { 0.5, 0.5 };
@@ -14,9 +14,10 @@ bool Debugger::DrawPoint(Vector2F pos, float size, Views view_id, unsigned layer
 	point.layer = layer;
 	point.rotation = 0;
 	point.frame = 0;
+	point.color = color;
 	return GraphicManager::Draw(point, view_id);
 }
-bool Debugger::DrawLine(Vector2F start, Vector2F end, float thick, Views view_id, unsigned layer)
+bool Debugger::DrawLine(Vector2F start, Vector2F end, float thick, Views view_id, Color color, unsigned layer)
 {
 	DrawData line;
 	line.spriteID = Textures::WHITE_BLOCK;
@@ -26,16 +27,39 @@ bool Debugger::DrawLine(Vector2F start, Vector2F end, float thick, Views view_id
 	line.layer = 10;
 	line.frame = 0;
 	line.rotation = atan2f(end.x - start.x, end.y - start.y) / 3.1415926 * 180;
+	Vector2F unit = GraphicManager::GetView(view_id)->unit_vector;
+	line.rotation = unit.y * unit.x * line.rotation;
+	line.color = color;
 	return GraphicManager::Draw(line, view_id);
 }
 
-bool Debugger::DrawSquareCollider(const SquareCollider& col, float points_size, float line_thick, Views view_id, unsigned layer)
+
+bool Debugger::DrawSquareCollider(const SquareCollider& col, float points_size, float line_thick, Views view_id, Color color, unsigned layer)
 {
 	for (int i = 0; i < 4; i++) {
-		if (!DrawPoint(col.getPoint(i), points_size, view_id, layer))
+		if (!DrawPoint(col.getPoint(i), points_size, view_id, color, layer))
 			return false;
-		if (!DrawLine(col.getPoint(i), col.getPoint((i + 1) % 4), line_thick, view_id, layer))
+		if (!DrawLine(col.getPoint(i), col.getPoint((i + 1) % 4), line_thick, view_id, color, layer))
 			return false;
 	}
+	return true;
+}
+
+bool Debugger::DrawRect(const std::vector<Vector2F>& points, float points_size, float line_thick, Views view_id, Color color, unsigned layer)
+{
+	unsigned points_count = points.size();
+	if (points_count > 1) {
+		for (unsigned i = 0; i < points_count; i++)
+		{
+			if (!DrawPoint(points[i], points_size, view_id, color, layer))
+				return false;
+			if (!DrawLine(points[i], points[(i + 1) % points_count], line_thick, view_id, color, layer))
+				return false;
+		}
+		return true;
+	}
+	
+	if (!DrawPoint(points[0], points_size, view_id, color, layer))
+		return false;
 	return true;
 }

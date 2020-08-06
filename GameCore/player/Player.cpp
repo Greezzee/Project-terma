@@ -10,7 +10,8 @@
 Player::Player() {
 	camera = GraphicManager::GetView(Views::PLAYER_CAM);
 
-	size = { 5 * BLOCK_SIZE, 5 * BLOCK_SIZE };
+	texture_size = { 5 * BLOCK_SIZE, 5 * BLOCK_SIZE };
+	collider_size = { 1.7f * BLOCK_SIZE, 5 * BLOCK_SIZE };
 
 	lookingRight = 1;
 
@@ -33,16 +34,63 @@ GameObject* Player::clone() const {
 void Player::Update() {
 	SolidEntity::Update();
 
+	float ac = 4000;//acceleration
+	float bac = 4000;//big acceleration
+
+	// X
+	char going_to = -10;
+	if (speed.x > 0) {
+		going_to = 1;
+	}
+	if (speed.x == 0) {
+		going_to = 0;
+	}
+	if (speed.x < 0) {
+		going_to = -1;
+	}
+
+	char want_to_go = -10;
 	if (InputManager::IsDown(KeyboardKey::R_Right)) {
-		speed.x = 350;
+		want_to_go = 1;
 		lookingRight = 1;
 	} else if (InputManager::IsDown(KeyboardKey::R_Left)) {
-		speed.x = -350;
+		want_to_go = -1;
 		lookingRight = 0;
-	} else
-		speed.x = 0;
-	if (InputManager::IsDown(KeyboardKey::R_Up) && isInBlocks) {
-		speed.y = 1000;
+	} else {
+		want_to_go = 0;
+	}
+
+	if (want_to_go == 1 && going_to == 1) {
+		acceleration.x += ac;
+	}
+	if (want_to_go == 0 && going_to == 1) {
+		acceleration.x -= bac;
+	}
+	if (want_to_go == -1 && going_to == 1) {
+		acceleration.x -= bac;
+	}
+	if (want_to_go == 1 && going_to == 0) {
+		acceleration.x += ac;
+	}
+	if (want_to_go == 0 && going_to == 0) {
+		acceleration.x += 0;
+	}
+	if (want_to_go == -1 && going_to == 0) {
+		acceleration.x -= ac;
+	}
+	if (want_to_go == 1 && going_to == -1) {
+		acceleration.x += bac;
+	}
+	if (want_to_go == 0 && going_to == -1) {
+		acceleration.x += bac;
+	}
+	if (want_to_go == -1 && going_to == -1) {
+		acceleration.x -= ac;
+	}
+
+	// JUMPS
+	if (InputManager::IsDown(KeyboardKey::R_Up) && standsOnTheGround()) {
+		acceleration.y = 40000;
 	}
 
 	camera->virtual_position.x = _pos.x;
@@ -65,8 +113,8 @@ void Player::drawHealthBar() {
 		info.position = this->_pos;
 		info.position.x -= bar_width / 2;
 
-		info.position.x += ((float)(i) * bar_width / (float)(total));
-		info.position.y += (size.y / 2.0f + BLOCK_SIZE);
+		info.position.x += ((float) (i) * bar_width / (float) (total));
+		info.position.y += (texture_size.y / 2.0f + BLOCK_SIZE);
 		info.size = Vector2F(1, 1) * BLOCK_SIZE;
 		//----------------------------
 
@@ -94,7 +142,7 @@ void Player::drawPlayer() {
 	// BASE DATA
 	//----------------------------
 	info.position = this->_pos;
-	info.size = this->size;
+	info.size = this->texture_size;
 	info.size.x *= (lookingRight ? 1.0f : -1.0f);
 	info.rotation = _angle;
 	//----------------------------

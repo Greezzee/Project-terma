@@ -1,8 +1,10 @@
 #pragma once
 
-#include <map>
+#include <string>
 
 #include "../../Engine/Gameplay/GameObject.h"
+
+class SquareCollider;
 
 class Block : public GameObject {
 public:
