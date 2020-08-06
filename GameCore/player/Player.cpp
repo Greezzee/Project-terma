@@ -31,8 +31,8 @@ GameObject* Player::clone() const {
 	return new Player();
 }
 
-const float base_acceleration = 4000; // this will be used if players will matches current speed direction
-const float stop_acceleration = 8000; // this will be used if players will is not matching current speed direction
+const float base_acceleration = 2000; // this will be used if players will matches current speed direction
+const float stop_acceleration = 4000; // this will be used if players will is not matching current speed direction
 
 void Player::Update() {
 	SolidEntity::Update();
