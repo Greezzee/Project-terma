@@ -19,6 +19,7 @@
 #include "Level.h"
 #include "player/Player.h"
 #include "Textures.h"
+#include "Debugger.h"
 
 class Multiblock;
 
@@ -223,12 +224,12 @@ void Map::genTestStuff() {
 bool Map::testCollision(SquareCollider *col) {
 	SquareCollider bl = { };
 	Vector2F bl_sz = { BLOCK_SIZE / 2, BLOCK_SIZE / 2 };
-
-	for (int y = (col->getPos().y - 3 * col->getSize().y) / BLOCK_SIZE - 1;
-			y < (col->getPos().y + 3 * col->getSize().y) / BLOCK_SIZE + 1;
+	bool out = false;
+	for (int y = (col->getPos().y - 1 * col->getSize().y) / BLOCK_SIZE - 1;
+			y < (col->getPos().y + 1 * col->getSize().y) / BLOCK_SIZE + 1;
 			y++) {
-		for (int x = (col->getPos().x - 3 * col->getSize().x) / BLOCK_SIZE - 1;
-				x < (col->getPos().x + 3 * col->getSize().x) / BLOCK_SIZE + 1;
+		for (int x = (col->getPos().x - 1 * col->getSize().x) / BLOCK_SIZE - 1;
+				x < (col->getPos().x + 1 * col->getSize().x) / BLOCK_SIZE + 1;
 				x++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
@@ -242,14 +243,15 @@ bool Map::testCollision(SquareCollider *col) {
 				continue;
 			}
 			bl.Init(blocks[x][y], p0, bl_sz);
-
+			Debugger::DrawSquareCollider(bl, 10, 4, Views::PLAYER_CAM);
 			if (Collider::IsCollide(&bl, col)) {
-				return 1;
+				Debugger::DrawLine(bl.getPos(), col->getPos(), 4, Views::PLAYER_CAM, Color::Red());
+				out = true;
 			}
 		}
 	}
 
-	return 0;
+	return out;
 }
 
 void Map::drawMultiblocks() {

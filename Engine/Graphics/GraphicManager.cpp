@@ -77,6 +77,7 @@ bool GraphicManager::Draw(DrawData& data, Views view_id)
 
 	spr.sprite.setPosition(sf::Vector2f(data.position.x, data.position.y));
 	spr.sprite.setRotation(data.rotation);
+	spr.sprite.setColor(sf::Color(data.color.r, data.color.g, data.color.b, data.color.a));
 	spr.sprite.setOrigin(sf::Vector2f(data.origin.x * spr.size.x, data.origin.y * spr.size.y));
 	spr.sprite.setScale(sf::Vector2f(data.size.x / spr.size.x, data.size.y / spr.size.y));
 	spr.sprite.setTextureRect(sf::IntRect(spr.size.x * (data.frame % spr.frames_count), 0, (int)spr.size.x, (int)spr.size.y));
@@ -92,6 +93,7 @@ void GraphicManager::SetView(DrawData& data, Views view_id)
 	data.position -= view.real_size * (view.unit_vector - Vector2F(1, 1)) / 2.f;
 	data.position += view.real_position + view.real_size * view.real_origin;
 	data.size = data.size * view.real_size / view.virtual_size;
+	data.rotation *= -1;
 
 	if (data.position.x + data.size.x < 0 ||
 		data.position.y + data.size.y < 0 ||
