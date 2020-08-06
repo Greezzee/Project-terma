@@ -22,13 +22,13 @@ struct Vector2F
 	float x, y;
 
 	//! Вернёт длину вектора
-	float Magnitude();
+	float Magnitude() const;
 
 	//! Вернёт квадрат длины вектора. БЫСТРЕЕ, ЧЕМ ОБЫЧНАЯ ДЛИНА
-	float SqrMagnitude();
+	float SqrMagnitude() const;
 
 	//! Вернёт единичный вектор, сонаправленный с данным
-	Vector2F Normalized();
+	Vector2F Normalized() const;
 
 	//! Операции сложения векторов и умножения на число совпадают с классическими векторными операциями
 	/*!
@@ -106,10 +106,10 @@ struct Vector2D
 	double x, y;
 
 	//! Вернёт длину вектора
-	double Magnitude();
+	double Magnitude() const;
 
 	//! Вернёт квадрат длины вектора. БЫСТРЕЕ, ЧЕМ ОБЫЧНАЯ ДЛИНА
-	double SqrMagnitude();
+	double SqrMagnitude() const;
 
 	//! Вернёт единичный вектор, сонаправленный с данным
 	Vector2D Normalized();

@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "../Utility/Coordinate.h"
+#include "../Utility/Line.h"
 #include "math.h"
 
 float sqr(float x) {
@@ -229,4 +230,90 @@ float Collider::DistanceBetween(SquareCollider* a, SquareCollider* b, const Vect
 		return possible_distance.x;
 
 	return NAN;
+}
+
+bool Collider::IsCollide(CircleCollider* a, CircleCollider* b)
+{
+	return Vector2F(a->_pos - b->_pos).SqrMagnitude() <= sqr(a->_radius + b->_radius);
+}
+
+bool Collider::IsCollide(CircleCollider* a, SquareCollider* b)
+{
+	/*
+	Vector2F norm = a->GetPos() - b->getPos();
+	float pos, max_b;
+	float magn = norm.Magnitude();
+	Vector2F n = norm / magn;
+	max_b = Vector2F::ScalarMult(b->_points[0] - b->_pos, norm);
+	for (unsigned j = 1; j < 4; j++)
+	{
+		float len_b = Vector2F::ScalarMult(b->_points[j] - b->_pos, norm);
+		if (len_b > max_b)
+			max_b = len_b;
+	}
+
+	return magn < max_b / magn + a->_radius;
+	*/
+
+	float min_a, min_b, max_a, max_b;
+	Vector2F norm = Vector2F(a->_pos - b->_pos).Normalized();
+	Vector2F circle_point1, circle_point2;
+	circle_point1 = a->_pos - norm * a->_radius;
+	circle_point2 = a->_pos + norm * a->_radius;
+
+	min_a = Vector2F::ScalarMult(circle_point1, norm);
+	max_a = Vector2F::ScalarMult(circle_point2, norm);
+
+	if (min_a > max_a) {
+		float buf = min_a;
+		min_a = max_a;
+		max_a = buf;
+	}
+
+	min_b = max_b = Vector2F::ScalarMult(b->_points[0], norm);
+	for (unsigned j = 1; j < 4; j++)
+	{
+		float len_b = Vector2F::ScalarMult(b->_points[j], norm);
+		if (len_b < min_b)
+			min_b = len_b;
+		if (len_b > max_b)
+			max_b = len_b;
+	}
+
+	return (min_b <= min_a && min_a <= max_b) || (min_b <= max_a && max_a <= max_b);
+}
+
+bool Collider::IsCollide(SquareCollider* a, CircleCollider* b)
+{
+	return IsCollide(b, a);
+}
+
+float Collider::DistanceBetween(CircleCollider* a, SquareCollider* b, const Vector2F& dir)
+{
+	float min_a, min_b, max_a, max_b;
+	Vector2F norm = Vector2F(a->_pos - b->_pos).Normalized();
+	Vector2F circle_point1, circle_point2;
+	circle_point1 = a->_pos - norm * a->_radius;
+	circle_point2 = a->_pos + norm * a->_radius;
+
+	min_a = Vector2F::ScalarMult(circle_point1, norm);
+	max_a = Vector2F::ScalarMult(circle_point2, norm);
+
+	if (min_a > max_a) {
+		float buf = min_a;
+		min_a = max_a;
+		max_a = buf;
+	}
+
+	min_b = max_b = Vector2F::ScalarMult(b->_points[0], norm);
+	for (unsigned j = 1; j < 4; j++)
+	{
+		float len_b = Vector2F::ScalarMult(b->_points[j], norm);
+		if (len_b < min_b)
+			min_b = len_b;
+		if (len_b > max_b)
+			max_b = len_b;
+	}
+
+	return (min_b <= min_a && min_a <= max_b) || (min_b <= max_a && max_a <= max_b);
 }

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "entities/Entity.h"
+#include "../Engine/Colliders/Collider.h"
 
 class Multiblock;
 
@@ -63,7 +64,7 @@ public:
 
 	// COLLISIONS
 	//------------------------
-	bool testCollision(SquareCollider * col);
+	bool testCollision(CircleCollider* col);
 	//------------------------
 
 private:

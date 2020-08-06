@@ -25,12 +25,12 @@ Vector2F::Vector2F(const Vector2F& that)
 	y = that.y;
 }
 
-float Vector2F::SqrMagnitude()
+float Vector2F::SqrMagnitude() const
 {
 	return x * x + y * y;
 }
 
-float Vector2F::Magnitude()
+float Vector2F::Magnitude() const
 {
 	return sqrtf(SqrMagnitude());
 }
@@ -40,7 +40,7 @@ const Vector2F operator/(const Vector2F& a, float b)
 	return Vector2F(a.x / b, a.y / b);
 }
 
-Vector2F Vector2F::Normalized()
+Vector2F Vector2F::Normalized() const
 {
 	float len = Magnitude();
 	if (len == 0)
@@ -141,12 +141,12 @@ Vector2D::Vector2D(const Vector2D& that)
 	y = that.y;
 }
 
-double Vector2D::SqrMagnitude()
+double Vector2D::SqrMagnitude() const
 {
 	return x * x + y * y;
 }
 
-double Vector2D::Magnitude()
+double Vector2D::Magnitude() const
 {
 	return sqrtf(SqrMagnitude());
 }
@@ -156,6 +156,7 @@ const Vector2D operator/(Vector2D& a, double b)
 	return Vector2D(a.x / b, a.y / b);
 }
 
+
 Vector2D Vector2D::Normalized()
 {
 	double len = Magnitude();
@@ -163,7 +164,6 @@ Vector2D Vector2D::Normalized()
 		return *this;
 	return *this / len;
 }
-
 const bool Vector2D::operator<(const Vector2D& that)
 {
 	return x < that.x - EPS || abs(x - that.x) < EPS && y < that.y - EPS;

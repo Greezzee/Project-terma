@@ -6,18 +6,6 @@
 //! Задаёт нулевой коллайдер, никому не принадлежащий
 void SquareCollider::Init()
 {
-	_my_obj = nullptr;
-	_size = { 0, 0 };
-	_pos = { 0, 0 };
-	_angle = 0;
-	_shape_angle = 0;
-	SetPoints();
-}
-
-//! Задаёт нулевой коллайдер, принадлежащий obj
-void SquareCollider::Init(GameObject* obj)
-{
-	_my_obj = obj;
 	_size = { 0, 0 };
 	_pos = { 0, 0 };
 	_angle = 0;
@@ -29,9 +17,8 @@ void SquareCollider::Init(GameObject* obj)
 //! Размер сторон size, положение в пространстве pos
 //! Прямоугольник со сторонами, паралелльными осям координат
 //! ЦЕНТР - ВСЕГДА ТОЧКА ПЕРЕСЕЧЕНИЯ ДИАГОНАЛЕЙ
-void SquareCollider::Init(GameObject* obj, const Vector2F& pos, const Vector2F& size)
+void SquareCollider::Init(const Vector2F& pos, const Vector2F& size)
 {
-	_my_obj = obj;
 	_size = size;
 	_pos = pos;
 	_angle = 0;
@@ -43,9 +30,8 @@ void SquareCollider::Init(GameObject* obj, const Vector2F& pos, const Vector2F& 
 //! Размер сторон size, положение в пространстве pos
 //! Прямоугольник. Нижняя сторона наклонена под углом angle (В РАДИАНАХ) к оси x, против часовой
 //! ЦЕНТР (относительно центра происходит определение координаты и вращение) - ВСЕГДА ТОЧКА ПЕРЕСЕЧЕНИЯ ДИАГОНАЛЕЙ
-void SquareCollider::Init(GameObject* obj, const Vector2F& pos, const Vector2F& size, float angle)
+void SquareCollider::Init(const Vector2F& pos, const Vector2F& size, float angle)
 {
-	_my_obj = obj;
 	_size = size;
 	_pos = pos;
 	_angle = angle;
@@ -58,9 +44,8 @@ void SquareCollider::Init(GameObject* obj, const Vector2F& pos, const Vector2F& 
 //! Параллелепипед. Нижний левый угол (до прочих поворотов) - shape_angle (в радианах). shape_angle = PI/2 - задаёт прямоугольник
 //! Нижняя сторона наклонена под углом angle (В РАДИАНАХ) к оси x, против часовой
 //! ЦЕНТР (относительно центра происходит определение координаты и вращение) - ВСЕГДА ТОЧКА ПЕРЕСЕЧЕНИЯ ДИАГОНАЛЕЙ
-void SquareCollider::Init(GameObject* obj, const Vector2F& pos, const Vector2F& size, float angle, float shape_angle)
+void SquareCollider::Init(const Vector2F& pos, const Vector2F& size, float angle, float shape_angle)
 {
-	_my_obj = obj;
 	_size = size;
 	_pos = pos;
 	_angle = angle;
@@ -74,14 +59,7 @@ float SquareCollider::getAngle() const {
 
 void SquareCollider::setAngle(float angle) {
 	_angle = angle;
-}
-
-GameObject* SquareCollider::getMyObj() const {
-	return _my_obj;
-}
-
-void SquareCollider::setMyObj(GameObject *myObj) {
-	_my_obj = myObj;
+	SetPoints();
 }
 
 Vector2F SquareCollider::getPos() const {
@@ -90,6 +68,7 @@ Vector2F SquareCollider::getPos() const {
 
 void SquareCollider::setPos(Vector2F pos) {
 	_pos = pos;
+	SetPoints();
 }
 
 Vector2F SquareCollider::getSize() const {
@@ -98,6 +77,7 @@ Vector2F SquareCollider::getSize() const {
 
 void SquareCollider::setSize(const Vector2F size) {
 	_size = size;
+	SetPoints();
 }
 
 Vector2F SquareCollider::getPoint(unsigned i) const {

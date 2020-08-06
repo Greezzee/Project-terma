@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entity.h"
-
+#include "../../Engine/Colliders/Collider.h"
 class SquareCollider;
 
 //! Sey klass obrabativaet vse suschnosty, kotorye podverscheny gravitacii
@@ -12,6 +12,6 @@ public:
 	SolidEntity();
 
 protected:
-	SquareCollider * collider;
+	CircleCollider * collider;
 	bool isInBlocks;
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include "EllipseCollider.h"
 #include "SquareCollider.h"
-
+#include "CircleCollider.h"
 
 class Collider
 {
@@ -18,12 +18,32 @@ public:
 	//! ѕровер€ет, пересекаютс€ ли 2 данных коллайдера
 	static bool IsCollide(SquareCollider* a, SquareCollider* b);
 
+	//! ѕровер€ют, пересекаютс€ ли 2 данных круга
+	static bool IsCollide(CircleCollider* a, CircleCollider* b);
+
+	//! ѕровер€ет, пересекаютс€ ли данный круг и данный пр€моугольник
+	static bool IsCollide(CircleCollider* a, SquareCollider* b);
+
+	//! ѕровер€ет, пересекаютс€ ли данный круг и данный пр€моугольник
+	static bool IsCollide(SquareCollider* a, CircleCollider* b);
+
 	//! ¬ыпускает из центра коллайдера a вектор в направлении direction
 	//! ќпредел€ет, сколько должен пройти коллайдер a в направлении данного вектора, чтобы столкнутьс€ в b
 	//! ¬ернЄт искомое рассто€ние в тех же единицах, в которых заданы коллайдеры
 	//! ¬ернЄт NAN, если при движении в данном направлении, a никогда не встретит b
 	static float DistanceBetween(SquareCollider* a, SquareCollider* b, const Vector2F& direction);
-	
+
+	//! ¬ыпускает из центра коллайдера a вектор в направлении direction
+	//! ќпредел€ет, сколько должен пройти коллайдер a в направлении данного вектора, чтобы столкнутьс€ в b
+	//! ¬ернЄт искомое рассто€ние в тех же единицах, в которых заданы коллайдеры
+	//! ¬ернЄт NAN, если при движении в данном направлении, a никогда не встретит b
+	static float DistanceBetween(CircleCollider* a, SquareCollider* b, const Vector2F& direction);
+
+	//! ¬ыпускает из центра коллайдера a вектор в направлении direction
+	//! ќпредел€ет, сколько должен пройти коллайдер a в направлении данного вектора, чтобы столкнутьс€ в b
+	//! ¬ернЄт искомое рассто€ние в тех же единицах, в которых заданы коллайдеры
+	//! ¬ернЄт NAN, если при движении в данном направлении, a никогда не встретит b
+	//static float DistanceBetween(SquareCollider* a, CircleCollider* b, const Vector2F& direction);
 
 private:
 	
