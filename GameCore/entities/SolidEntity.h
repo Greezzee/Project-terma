@@ -11,7 +11,9 @@ public:
 	void Update();
 	SolidEntity();
 	bool standsOnTheGround();
+	void setMass(float mass = 1);
 
 protected:
 	SquareCollider * collider;
+	float mass = 1;
 };

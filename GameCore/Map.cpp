@@ -15,7 +15,7 @@
 #include "Blocks/GrassBlock.h"
 #include "Blocks/multiblockStructures/Multiblock.h"
 #include "Blocks/multiblockStructures/StructureBlock.h"
-#include "Debugger.h"
+#include "Blocks/multiblockStructures/Tree.h"
 #include "Level.h"
 #include "player/Player.h"
 #include "Textures.h"
@@ -215,14 +215,15 @@ void Map::genTestStuff() {
 
 	// TREES
 	for (int x = 0; x < MAX_LEVEL_SIZE - 20; x++) {
-		//if (x % 15 == 1)
-		//	addMultiblock( { x, 14 }, new Tree());
+		if (x % 15 == 1) {
+			addMultiblock( { x, 14 }, new Tree());
+		}
 	}
 
 	for (int x = 0; x < MAX_LEVEL_SIZE; x += 20) {
 		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
 			if (blocks[x][y] == NULL) {
-				addBlock( { x, y }, new DirtBlock());
+				//addBlock( { x, y }, new DirtBlock());
 			}
 		}
 	}
@@ -266,9 +267,9 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 
 			// DEBUG
 			//------------------------------
-			Debugger::DrawSquareCollider(bl, 10, 4, Views::PLAYER_CAM);
-			Debugger::DrawLine(bl.getPos(), col->getPos(), 4, Views::PLAYER_CAM,
-					Color::Red());
+			//Debugger::DrawSquareCollider(bl, 10, 4, Views::PLAYER_CAM);
+			//Debugger::DrawLine(bl.getPos(), col->getPos(), 4, Views::PLAYER_CAM,
+			//		Color::Red());
 			//------------------------------
 
 			float dist = Collider::DistanceBetween(col, &bl, dir);

@@ -31,11 +31,11 @@ GameObject* Player::clone() const {
 	return new Player();
 }
 
+const float base_acceleration = 4000; // this will be used if players will matches current speed direction
+const float stop_acceleration = 4000; // this will be used if players will is not matching current speed direction
+
 void Player::Update() {
 	SolidEntity::Update();
-
-	float ac = 4000;//acceleration
-	float bac = 4000;//big acceleration
 
 	// X
 	char going_to = -10;
@@ -61,36 +61,36 @@ void Player::Update() {
 	}
 
 	if (want_to_go == 1 && going_to == 1) {
-		acceleration.x += ac;
+		externalForce.x += base_acceleration;
 	}
 	if (want_to_go == 0 && going_to == 1) {
-		acceleration.x -= bac;
+		externalForce.x -= stop_acceleration;
 	}
 	if (want_to_go == -1 && going_to == 1) {
-		acceleration.x -= bac;
+		externalForce.x -= stop_acceleration;
 	}
 	if (want_to_go == 1 && going_to == 0) {
-		acceleration.x += ac;
+		externalForce.x += base_acceleration;
 	}
 	if (want_to_go == 0 && going_to == 0) {
-		acceleration.x += 0;
+		externalForce.x += 0;
 	}
 	if (want_to_go == -1 && going_to == 0) {
-		acceleration.x -= ac;
+		externalForce.x -= base_acceleration;
 	}
 	if (want_to_go == 1 && going_to == -1) {
-		acceleration.x += bac;
+		externalForce.x += stop_acceleration;
 	}
 	if (want_to_go == 0 && going_to == -1) {
-		acceleration.x += bac;
+		externalForce.x += stop_acceleration;
 	}
 	if (want_to_go == -1 && going_to == -1) {
-		acceleration.x -= ac;
+		externalForce.x -= base_acceleration;
 	}
 
 	// JUMPS
 	if (InputManager::IsDown(KeyboardKey::R_Up) && standsOnTheGround()) {
-		acceleration.y = 40000;
+		externalForce.y = 40000;
 	}
 
 	camera->virtual_position.x = _pos.x;

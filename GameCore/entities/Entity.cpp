@@ -24,9 +24,9 @@ void Entity::Update() {
 	float dt = TimeManager::GetDeltaTimeF();
 
 	_pos += dt * speed;
-	speed += dt * acceleration;
+	speed += dt * externalForce;
 
-	acceleration = {0, 0};
+	externalForce = {0, 0};
 }
 
 void Entity::setColliderSize(const Vector2F &colliderSize) {

@@ -12,25 +12,42 @@
 
 const float epsilon = 1.0f;
 const float K = 4.0f;
+const float g = 5000;
 
+//!
+//! m * a = externalForce - V * K + g * m;
+//! dV = a * dt;
+//! dS = V * dt;
+//!
+//! V * K	will be counted ONLY IF ENTITY IS TOUCHING THE GROUND (standsOnTheGround() == true)
+//!
+//! Where: V - speed, a - acceleration, dt - small time
 void SolidEntity::Update() {
 	// UPDATE COLLIDER
 	collider->Init(this, this->_pos, this->collider_size * 0.5);
 
 	// DEBUG
 	//------------------------------------------------------------------
-	Debugger::DrawSquareCollider(*collider, 10, 0, Views::PLAYER_CAM);
-	Debugger::DrawPoint(_pos, 20, Views::PLAYER_CAM);
+	//Debugger::DrawSquareCollider(*collider, 10, 0, Views::PLAYER_CAM);
+	//Debugger::DrawPoint(_pos, 20, Views::PLAYER_CAM);
 	//------------------------------------------------------------------
 
+	// ADDING OTHER FORCES
+	//------------------------------------------------------------------
 	// SET ACCELERATION TO g
-	acceleration += { 0, -5000 };
+	externalForce += Vector2F( 0, -g) * mass;
 
 	// SOPROTIVLENIYE ZEMLI
-	if (standsOnTheGround())
-		acceleration -= speed * K;
+	if (standsOnTheGround()) {
+		externalForce -= speed * K;
+	}
+	//------------------------------------------------------------------
+
+	// Now we can calculate acceleration
+	Vector2F acceleration = externalForce / mass;
 
 	// POSITION UPDATE
+	//------------------------------------------------------------------
 	float dt = TimeManager::GetDeltaTimeF();
 
 	speed += acceleration * dt;
@@ -62,15 +79,18 @@ void SolidEntity::Update() {
 	_pos += dsy;
 
 	speed = (dsx + dsy) / dt;
+	//------------------------------------------------------------------
 
 	// FLUSH
+	//------------------------------------------------------------------
 	if (std::abs(speed.x) < epsilon) {
 		speed.x = 0;
 	}
 	if (std::abs(speed.y) < epsilon) {
 		speed.y = 0;
 	}
-	acceleration = { 0, 0 };
+	externalForce = { 0, 0 };
+	//------------------------------------------------------------------
 }
 
 SolidEntity::SolidEntity() {
@@ -80,4 +100,8 @@ SolidEntity::SolidEntity() {
 
 bool SolidEntity::standsOnTheGround() {
 	return getMap()->testCollision(collider, { 0, -10.0f }) < epsilon;
+}
+
+void SolidEntity::setMass(float mass) {
+	this->mass = mass;
 }

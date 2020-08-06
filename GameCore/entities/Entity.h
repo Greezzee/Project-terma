@@ -32,7 +32,7 @@ protected:
 	//! Skorost objekta
 	Vector2F speed = {0, 0};
 	//! Uskorenie objekta
-	Vector2F acceleration = {0, 0};
+	Vector2F externalForce = {0, 0};
 private:
 	Map* map;
 };
