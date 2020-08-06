@@ -17,6 +17,8 @@ public:
 	void setPassable(bool passable);
 	const std::string& getName() const;
 	void setName(const std::string &name);
+	float getLightLevel() const;
+	void setLightLevel(float lightLevel = 1.0f);
 
 protected:
 	void setSpriteId(int spriteId);
@@ -25,4 +27,6 @@ protected:
 	int sprite_id;
 	//! Можно ли через блок пройти
 	bool passable = 0;
+
+	float lightLevel = 1.0f;
 };

@@ -52,7 +52,8 @@ void Map::Init() {
 	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
 			colliders_wireframe[x][y] = new SquareCollider();
-			colliders_wireframe[x][y]->Init(NULL, Vector2F(x, y) * BLOCK_SIZE, Vector2F(1, 1) * BLOCK_SIZE);
+			colliders_wireframe[x][y]->Init(NULL, Vector2F(x, y) * BLOCK_SIZE,
+					Vector2F(1, 1) * BLOCK_SIZE);
 		}
 	}
 
@@ -66,6 +67,7 @@ void Map::Update() {
 	}
 
 	drawBackground();
+	drawWallblocks();
 	drawBlocks();
 	drawEntities();
 	drawMultiblocks();
@@ -164,6 +166,9 @@ void Map::drawBlocks() {
 			info.frame = 0;
 			info.layer = 0;
 
+			info.color.b = info.color.r = info.color.g = 255
+					* currBlock->getLightLevel();
+
 			info.spriteID = currBlock->getSpriteId();
 			GraphicManager::Draw(info, Views::PLAYER_CAM);
 		}
@@ -194,15 +199,35 @@ void Map::drawBackground() {
 }
 
 void Map::updateBlocks() {
-	for (int i = 0; i < MAX_LEVEL_SIZE; i++) {
-		for (int j = 0; j < MAX_LEVEL_SIZE; j++) {
-			if (blocks[i][j])
-				blocks[i][j]->Update();
+	View *camera = this->player->getCamera();
+	int total = 0;
+	for (int x = (camera->virtual_position.x - camera->virtual_size.x / 2)
+			/ BLOCK_SIZE - 1;
+			x
+					< (camera->virtual_position.x + camera->virtual_size.x / 2)
+							/ BLOCK_SIZE + 1; x++) {
+		for (int y = (camera->virtual_position.y - camera->virtual_size.y / 2)
+				/ BLOCK_SIZE - 1;
+				y
+						< (camera->virtual_position.y
+								+ camera->virtual_size.y / 2) / BLOCK_SIZE + 1;
+				y++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
+			if (blocks[x][y]) {
+				blocks[x][y]->Update();
+			}
 		}
 	}
 }
 
 void Map::genTestStuff() {
+	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
+		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
+			addWallblock( { x, y }, new DirtBlock());
+		}
+	}
 	for (int y = 0; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 			addBlock( { x, y }, new DirtBlock());
@@ -274,7 +299,8 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 			//		Color::Red());
 			//------------------------------
 
-			float dist = Collider::DistanceBetween(col, colliders_wireframe[x][y], dir);
+			float dist = Collider::DistanceBetween(col,
+					colliders_wireframe[x][y], dir);
 
 			if (!std::isnan(dist)) {
 				if (dist >= 0.0f) {
@@ -358,8 +384,68 @@ bool Map::isPaused() {
 	return is_paused;
 }
 
+void Map::addWallblock(Vector2I pos, Block *block) {
+	this->wallblocks[pos.x][pos.y] = block;
+}
+
 void Map::updateEntities() {
 	for (Entity *ent : entities) {
 		ent->Update();
+	}
+}
+
+void Map::drawWallblocks() {
+	View *camera = this->player->getCamera();
+	int total = 0;
+	for (int x = (camera->virtual_position.x - camera->virtual_size.x / 2)
+			/ BLOCK_SIZE - 1;
+			x
+					< (camera->virtual_position.x + camera->virtual_size.x / 2)
+							/ BLOCK_SIZE + 1; x++) {
+		for (int y = (camera->virtual_position.y - camera->virtual_size.y / 2)
+				/ BLOCK_SIZE - 1;
+				y
+						< (camera->virtual_position.y
+								+ camera->virtual_size.y / 2) / BLOCK_SIZE + 1;
+				y++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
+
+			Block *currBlock = wallblocks[x][y];
+
+			if (!currBlock) {
+				continue;
+			}
+			if (dynamic_cast<Multiblock*>(currBlock) != NULL) {
+				continue;
+			}
+
+			total++;
+
+			float x0 = x * BLOCK_SIZE;
+			float y0 = y * BLOCK_SIZE;
+
+			float x1 = (x + 1) * BLOCK_SIZE;
+			float y1 = (y + 1) * BLOCK_SIZE;
+
+			DrawData info = { };
+			info.position.x = (x0 + x1) / 2;
+			info.position.y = (y0 + y1) / 2;
+
+			info.size.x = BLOCK_SIZE;
+			info.size.y = BLOCK_SIZE;
+
+			info.origin = { 0.5, 0.5 };
+
+			info.frame = 0;
+			info.layer = 0;
+
+			info.color.b = info.color.r = info.color.g = 255.0f
+					* currBlock->getLightLevel() * 0.5f;
+
+			info.spriteID = currBlock->getSpriteId();
+			GraphicManager::Draw(info, Views::PLAYER_CAM);
+		}
 	}
 }

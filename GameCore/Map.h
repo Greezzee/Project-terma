@@ -51,6 +51,7 @@ public:
 	// MAP EDITOR
 	//------------------------
 	void addMultiblock(Vector2I pos, Multiblock * block);
+	void addWallblock(Vector2I pos, Block* block);
 	void addBlock(Vector2I pos, Block * block);
 	void addEntity(Vector2F pos, Entity * entity);
 	void removeEntity(Entity * entity);
@@ -78,6 +79,7 @@ private:
 	void drawEntities();
 	void drawBackground();
 	void drawMultiblocks();
+	void drawWallblocks();
 	//------------------------
 
 	// UPDATE
@@ -89,6 +91,7 @@ private:
 	// MAP STUFF
 	//------------------------
 	Block *blocks[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
+	Block *wallblocks[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
 	std::vector<Entity*> entities;
 	SquareCollider *colliders_wireframe[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
 	//------------------------

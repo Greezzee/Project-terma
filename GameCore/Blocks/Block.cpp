@@ -31,3 +31,11 @@ bool Block::isPassable() const {
 void Block::setPassable(bool passable) {
 	this->passable = passable;
 }
+
+float Block::getLightLevel() const {
+	return lightLevel;
+}
+
+void Block::setLightLevel(float lightLevel) {
+	this->lightLevel = lightLevel;
+}
