@@ -1,7 +1,5 @@
 #include "Player.h"
 
-#include <iostream>
-
 #include "../../Engine/Control/InputManager.h"
 #include "../../Engine/Graphics/DrawData.h"
 #include "../../Engine/Graphics/GraphicManager.h"

@@ -6,11 +6,9 @@ class OptionsButton: public Button {
 public:
 	OptionsButton();
 
-	bool isClicked() override;
 	void clickReact() override;
 	void focusReact() override;
-
-	void Draw() override;
-	virtual void Init(GameObject *owner) override;
-	virtual void Destroy() override;
+	void disfocusReact() override;
+	void Destroy() override;
+	void Init(GameObject *owner) override;
 };

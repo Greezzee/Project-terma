@@ -3,7 +3,7 @@
 #include <cmath>
 
 #include "../Utility/Coordinate.h"
-#include "../Utility/Line.h"
+#include "math.h"
 
 float sqr(float x) {
 	return x * x;

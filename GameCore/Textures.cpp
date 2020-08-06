@@ -16,14 +16,17 @@ int Textures::TREE = -1;
 int Textures::RED_STONE_BOTTOM = -1;
 int Textures::RED_STONE_MIDDLE = -1;
 int Textures::RED_STONE_TOP = -1;
+int Textures::SHREK = -1;
+int Textures::INVENTORY = -1;
+int Textures::CONTROLS_BUTTON = -1;
 int Textures::WHITE_BLOCK = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
 	GraphicManager::SetSpritesMaxCount(200);
 
-	Textures::RED_STONE_BOTTOM = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneBottom.png"), Vector2F(64, 64), 1));
-	Textures::RED_STONE_MIDDLE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneMiddle.png"), Vector2F(64, 64), 1));
-	Textures::RED_STONE_TOP = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneTop.png"), Vector2F(64, 64), 1));
+	Textures::RED_STONE_BOTTOM = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneBottom.png"), Vector2F(8, 8), 1));
+	Textures::RED_STONE_MIDDLE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneMiddle.png"), Vector2F(8, 8), 1));
+	Textures::RED_STONE_TOP = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/RedStoneTop.png"), Vector2F(8, 8), 1));
 	Textures::TREE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/Tree.png"), Vector2F(432, 450), 1));
 	Textures::DIRT_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/DirtBlock.png"), Vector2F(8 ,8), 1));
 	Textures::STONE_BLOCK_TEXTURE = GraphicManager::LoadSprite(GraphicPrefabData(std::string("./Resources/StoneBlock.png"), Vector2F(32, 32), 1));
@@ -36,5 +39,8 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::RED_STAR = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/RedStar.png", Vector2F(20, 19), 1));
 	Textures::MAIN_MENU_OPTIONS_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/options_button.png", Vector2F(760, 230), 1));
 	Textures::MAIN_OPTIONS_MENU_BACK_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/back_button.png", Vector2F(280, 280), 1));
+	Textures::SHREK = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/shrek.png", Vector2F(750, 650), 1));
+	Textures::INVENTORY = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/inventory.png", Vector2F(500, 500), 1));
+	Textures::CONTROLS_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/controls_button.png", Vector2F(76, 23), 1));
 	Textures::WHITE_BLOCK = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/WhiteBlock.png", Vector2F(32, 32), 1));
 }

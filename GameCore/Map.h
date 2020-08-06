@@ -24,6 +24,8 @@ const int MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
  * Сей класс наследуется от GameField, тут будет вся инфа о текущих объектах в игре
  */
 class Map {
+	// Shows if the game is paused or not
+	bool is_paused;
 public:
 	// BASE
 	//------------------------
@@ -31,7 +33,11 @@ public:
 	void Update();
 	void Destroy();
 	//------------------------
-
+	// PAUSE GAME
+	void pauseGame();
+	void unpauseGame();
+	bool isPaused();
+	//
 	// GETTERS|SETTERS
 	//------------------------
 	void setLevel(Level *level);

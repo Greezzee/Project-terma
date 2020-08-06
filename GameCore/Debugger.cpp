@@ -1,5 +1,8 @@
 #include "Debugger.h"
+
+#include "../Engine/Graphics/DrawData.h"
 #include "Textures.h"
+#include <math.h>
 
 bool Debugger::DrawPoint(Vector2F pos, float size, Views view_id, unsigned layer)
 {
