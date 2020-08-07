@@ -18,7 +18,8 @@ bool Button::isClicked() {
 			&& (_mpos.x <= 0.5 * _size.x + _pos.x - _gap.x)
 			&& (_mpos.y >= _pos.y - _size.y * 0.5 + _gap.y)
 			&& (_mpos.y <= 0.5 * _size.y + _pos.y - _gap.y) && _click;
-
+	if (_click)
+		printf("Clicked!!!\n");
 	return _res;
 }
 

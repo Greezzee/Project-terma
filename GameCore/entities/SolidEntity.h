@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entity.h"
-
+#include "../../Engine/Colliders/Collider.h"
 class SquareCollider;
 
 //! Sey klass obrabativaet vse suschnosty, kotorye podverscheny gravitacii i ne moschet provodit cherez bloki
@@ -15,5 +15,5 @@ public:
 
 protected:
 	SquareCollider * collider;
-	float mass = 1;
+	bool isInBlocks;
 };

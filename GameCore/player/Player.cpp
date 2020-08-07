@@ -135,7 +135,7 @@ void Player::drawHealthBar() {
 
 		// LIGHT
 		//----------------------------
-		correctLight(info);
+		//correctLight(info);
 		//----------------------------
 
 		// DRAW
@@ -169,7 +169,7 @@ void Player::drawPlayer() {
 
 	// LIGHT
 	//----------------------------
-	correctLight(info);
+	//correctLight(info);
 	//----------------------------
 
 	// DRAW

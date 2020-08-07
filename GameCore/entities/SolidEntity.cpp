@@ -24,13 +24,8 @@ const float g = 5000;
 //! Where: V - speed, a - acceleration, dt - small time
 void SolidEntity::Update() {
 	// UPDATE COLLIDER
-	collider->Init(this, this->_pos, this->collider_size * 0.5);
-
-	// DEBUG
-	//------------------------------------------------------------------
+	collider->Init(this, this->_pos, this->size * 0.5);
 	//Debugger::DrawSquareCollider(*collider, 10, 0, Views::PLAYER_CAM);
-	//Debugger::DrawPoint(_pos, 20, Views::PLAYER_CAM);
-	//------------------------------------------------------------------
 
 	// ADDING OTHER FORCES
 	//------------------------------------------------------------------
@@ -93,13 +88,6 @@ void SolidEntity::Update() {
 
 SolidEntity::SolidEntity() {
 	collider = new SquareCollider();
-	collider->Init(this);
-}
-
-bool SolidEntity::standsOnTheGround() {
-	return getMap()->testCollision(collider, { 0, -10.0f }) < epsilon;
-}
-
-void SolidEntity::setMass(float mass) {
-	this->mass = mass;
+	collider->Init();
+	this->isInBlocks = 0;
 }

@@ -36,6 +36,10 @@ void InputManager::Init()
 void InputManager::Update()
 {
 	for (int i = 0; i < KeysCount; i++) {
+		if (_key_info[i].is_realesed)
+			_key_info[i].is_realesed = false;
+		if (_key_info[i].is_pressed)
+			_key_info[i].is_pressed = false;
 		if (sf::Keyboard::isKeyPressed(_control_keys[i])) {
 			if (!_key_info[i].is_down)
 				_key_info[i].is_pressed = true;
@@ -56,33 +60,33 @@ void InputManager::Update()
 	_mouse_info.pos += Vector2F((float)GraphicManager::GetWindow()->getSize().x, (float)GraphicManager::GetWindow()->getSize().y) / 2;
 
 
+	if (_mouse_info.l_button.is_pressed)
+		_mouse_info.l_button.is_pressed = false;
+	if (_mouse_info.l_button.is_realesed)
+		_mouse_info.l_button.is_realesed = false;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 		if (!_mouse_info.l_button.is_down)
 			_mouse_info.l_button.is_pressed = true;
-		else
-			_mouse_info.l_button.is_pressed = false;
 		_mouse_info.l_button.is_down = true;
 	}
 	else {
 		if (_mouse_info.l_button.is_down)
 			_mouse_info.l_button.is_realesed = true;
-		else
-			_mouse_info.l_button.is_realesed = false;
 		_mouse_info.l_button.is_down = false;
 	}
 
+	if (_mouse_info.r_button.is_pressed)
+		_mouse_info.r_button.is_pressed = false;
+	if (_mouse_info.r_button.is_realesed)
+		_mouse_info.r_button.is_realesed = false;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 		if (!_mouse_info.r_button.is_down)
 			_mouse_info.r_button.is_pressed = true;
-		else
-			_mouse_info.r_button.is_pressed = false;
 		_mouse_info.r_button.is_down = true;
 	}
 	else {
 		if (_mouse_info.r_button.is_down)
 			_mouse_info.r_button.is_realesed = true;
-		else
-			_mouse_info.r_button.is_realesed = false;
 		_mouse_info.r_button.is_down = false;
 	}
 
