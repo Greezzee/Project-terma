@@ -20,7 +20,7 @@ void ProjectTerma::Init()
 
 void ProjectTerma::Update()
 {
-	SceneManager::CreateScene(new MainMenuScene());
+	SceneManager::CreateScene(new MainMenuScene);
 	SceneManager::CloseScene(this);
 }
 

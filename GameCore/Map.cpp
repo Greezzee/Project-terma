@@ -1,4 +1,4 @@
-#include "Map.h"
+п»ї#include "Map.h"
 
 #include <algorithm>
 #include <cmath>
@@ -7,6 +7,7 @@
 #include <type_traits>
 
 #include "../Engine/Colliders/Collider.h"
+#include "../Engine/Colliders/CircleCollider.h"
 #include "../Engine/Colliders/SquareCollider.h"
 #include "../Engine/Graphics/DrawData.h"
 #include "../Engine/Graphics/GraphicManager.h"
@@ -20,6 +21,7 @@
 #include "Level.h"
 #include "player/Player.h"
 #include "Textures.h"
+#include "Debugger.h"
 
 class Multiblock;
 
@@ -53,7 +55,7 @@ void Map::Init() {
 	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
 			colliders_wireframe[x][y] = new SquareCollider();
-			colliders_wireframe[x][y]->Init(Vector2F(x, y) * BLOCK_SIZE,
+			colliders_wireframe[x][y]->Init(NULL, Vector2F(x, y) * BLOCK_SIZE,
 					Vector2F(1, 1) * BLOCK_SIZE);
 		}
 	}
@@ -120,7 +122,7 @@ template<typename Base, typename T> inline bool Map::instanceof(const T*) {
 
 
  */
-//! Рисует блоки, схема прорисовки в ИГРОВЫХ координатах выше.
+//! пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
 void Map::drawBlocks() {
 	View *camera = this->player->getCamera();
 	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
@@ -299,23 +301,16 @@ void Map::genTestStuff() {
 	}
 }
 
-float Map::testCollision(SquareCollider *col, Vector2F dir) {
+bool Map::testCollision(SquareCollider *col) {
+	SquareCollider bl = { };
 	Vector2F bl_sz = { BLOCK_SIZE / 2, BLOCK_SIZE / 2 };
 
-	float dir_len = dir.Magnitude();
-	float result = 10000000.0f;
-
-	for (int y = (col->GetPos().y - 1 * col->GetSize().y - dir_len) / BLOCK_SIZE
-			- 1;
-			y
-					< (col->GetPos().y + 1 * col->GetSize().y + dir_len)
-							/ BLOCK_SIZE + 1; y++) {
-		for (int x = (col->GetPos().x - 1 * col->GetSize().x - dir_len)
-				/ BLOCK_SIZE - 1;
-				x
-						< (col->GetPos().x + 1 * col->GetSize().x + dir_len)
-								/ BLOCK_SIZE + 1; x++) {
-
+	for (int y = (col->getPos().y - 3 * col->getSize().y) / BLOCK_SIZE - 1;
+			y < (col->getPos().y + 3 * col->getSize().y) / BLOCK_SIZE + 1;
+			y++) {
+		for (int x = (col->getPos().x - 3 * col->getSize().x) / BLOCK_SIZE - 1;
+				x < (col->getPos().x + 3 * col->getSize().x) / BLOCK_SIZE + 1;
+				x++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}
@@ -326,26 +321,15 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 			if (blocks[x][y]->isPassable()) {
 				continue;
 			}
+			bl.Init(blocks[x][y], p0, bl_sz);
 
-			// DEBUG
-			//------------------------------
-			//Debugger::DrawSquareCollider(bl, 10, 4, Views::PLAYER_CAM);
-			//Debugger::DrawLine(bl.getPos(), col->getPos(), 4, Views::PLAYER_CAM,
-			//		Color::Red());
-			//------------------------------
-
-			float dist = Collider::DistanceBetween(col,
-					colliders_wireframe[x][y], dir);
-
-			if (!std::isnan(dist)) {
-				if (dist >= 0.0f) {
-					result = std::min(result, dist);
-				}
+			if (Collider::IsCollide(&bl, col)) {
+				return 1;
 			}
 		}
 	}
 
-	return result;
+	return 0;
 }
 
 void Map::drawMultiblocks() {

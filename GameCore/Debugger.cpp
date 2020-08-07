@@ -33,48 +33,13 @@ bool Debugger::DrawLine(Vector2F start, Vector2F end, float thick, Views view_id
 	return GraphicManager::Draw(line, view_id);
 }
 
-
-bool Debugger::DrawCollider(const SquareCollider& col, float points_size, float line_thick, Views view_id, Color color, unsigned layer)
+bool Debugger::DrawSquareCollider(const SquareCollider& col, float points_size, float line_thick, Views view_id, unsigned layer)
 {
 	for (int i = 0; i < 4; i++) {
-		if (!DrawPoint(col.GetPoint(i), points_size, view_id, color, layer))
+		if (!DrawPoint(col.getPoint(i), points_size, view_id, layer))
 			return false;
-		if (!DrawLine(col.GetPoint(i), col.GetPoint((i + 1) % 4), line_thick, view_id, color, layer))
+		if (!DrawLine(col.getPoint(i), col.getPoint((i + 1) % 4), line_thick, view_id, layer))
 			return false;
 	}
 	return true;
-}
-
-bool Debugger::DrawRect(const std::vector<Vector2F>& points, float points_size, float line_thick, Views view_id, Color color, unsigned layer)
-{
-	unsigned points_count = points.size();
-	if (points_count > 1) {
-		for (unsigned i = 0; i < points_count; i++)
-		{
-			if (!DrawPoint(points[i], points_size, view_id, color, layer))
-				return false;
-			if (!DrawLine(points[i], points[(i + 1) % points_count], line_thick, view_id, color, layer))
-				return false;
-		}
-		return true;
-	}
-	
-	if (!DrawPoint(points[0], points_size, view_id, color, layer))
-		return false;
-	return true;
-}
-
-//! Рисует круглый коллайдер
-bool Debugger::DrawCollider(const CircleCollider& col, Views view_id, Color color, unsigned layer)
-{
-	DrawData circle;
-	circle.spriteID = Textures::WHITE_CIRCLE;
-	circle.color = color;
-	circle.frame = 0;
-	circle.rotation = 0;
-	circle.layer = layer;
-	circle.origin = { 0.5, 0.5 };
-	circle.position = col.GetPos();
-	circle.size = Vector2F(2, 2) * col.GetRadius();
-	return GraphicManager::Draw(circle, view_id);
 }

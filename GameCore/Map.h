@@ -1,8 +1,9 @@
-#pragma once
+п»ї#pragma once
 
 #include <vector>
 
 #include "entities/Entity.h"
+#include "../Engine/Colliders/Collider.h"
 
 class Multiblock;
 
@@ -16,15 +17,15 @@ class Level;
 
 #define FAST_CAST(OBJECT, CAST_TARGET, ACTION) {CAST_TARGET * casted = NULL; if ((casted = dynamic_cast<CAST_TARGET*>(OBJECT)) != NULL) { ACTION } }
 
-//! Максимальная длинна сетки блоков и блоков стен
+//! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 const int MAX_LEVEL_SIZE = 500;
 const int BLOCK_SIZE = 40;
-//! размер экрана как бы увеличивается на это число во время прорисовки мультиблоков
+//! пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 const int MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
 const int LIGHT_UPDATE_RADIUS = 20;
 
 /*
- * Сей класс наследуется от GameField, тут будет вся инфа о текущих объектах в игре
+ * пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ GameField, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
  */
 class Map {
 	// Shows if the game is paused or not
@@ -48,7 +49,7 @@ public:
 	//------------------------
 	void setLevel(Level *level);
 	Level* getLevel();
-	//! Возвращает блок по координатам В СЕТКЕ!!!
+	//! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ!!!
 	Block* getBlockFromMesh(Vector2I pos);
 	Block* getBlock(Vector2F pos);
 	Block* getWallblock(Vector2F pos);
@@ -72,12 +73,7 @@ public:
 
 	// COLLISIONS
 	//------------------------
-	float testCollision(SquareCollider * col, Vector2F dir);
-	//------------------------
-
-	// LIGHT
-	//------------------------
-	void lightUpBlocks(int x, int y, int rad);
+	bool testCollision(SquareCollider * col);
 	//------------------------
 
 private:
@@ -112,7 +108,7 @@ private:
 
 	// INIT blocks and entities (Level)
 	//------------------------
-	Level *level;//! Это вещь отвечает за начальную генерацию карты, метод generated будет запущен единственный раз в начале.
+	Level *level;//! пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ generated пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
 	//------------------------
 
 	// PLAYER
