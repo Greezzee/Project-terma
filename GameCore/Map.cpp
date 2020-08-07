@@ -53,7 +53,7 @@ void Map::Init() {
 	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
 			colliders_wireframe[x][y] = new SquareCollider();
-			colliders_wireframe[x][y]->Init(NULL, Vector2F(x, y) * BLOCK_SIZE,
+			colliders_wireframe[x][y]->Init(Vector2F(x, y) * BLOCK_SIZE,
 					Vector2F(1, 1) * BLOCK_SIZE);
 		}
 	}
@@ -305,15 +305,15 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 	float dir_len = dir.Magnitude();
 	float result = 10000000.0f;
 
-	for (int y = (col->getPos().y - 1 * col->getSize().y - dir_len) / BLOCK_SIZE
+	for (int y = (col->GetPos().y - 1 * col->GetSize().y - dir_len) / BLOCK_SIZE
 			- 1;
 			y
-					< (col->getPos().y + 1 * col->getSize().y + dir_len)
+					< (col->GetPos().y + 1 * col->GetSize().y + dir_len)
 							/ BLOCK_SIZE + 1; y++) {
-		for (int x = (col->getPos().x - 1 * col->getSize().x - dir_len)
+		for (int x = (col->GetPos().x - 1 * col->GetSize().x - dir_len)
 				/ BLOCK_SIZE - 1;
 				x
-						< (col->getPos().x + 1 * col->getSize().x + dir_len)
+						< (col->GetPos().x + 1 * col->GetSize().x + dir_len)
 								/ BLOCK_SIZE + 1; x++) {
 
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {

@@ -10,6 +10,10 @@ float sqr(float x) {
 	return x * x;
 }
 
+float sign(float x) {
+	return x / fabsf(x);
+}
+
 bool Collider::IsCollide(EllipseCollider* a, EllipseCollider* b) {
 
 	float myR = fmaxf(a->_size.x, a->_size.y);
@@ -331,5 +335,5 @@ float Collider::DistanceBetween(CircleCollider* a, CircleCollider* b, const Vect
 	if (fabsf(pos_b.y) > a->_radius + b->_radius)
 		return NAN;
 
-	return pos_b.x - sqrtf(sqr(a->_radius + b->_radius) - sqr(pos_b.y));
+	return sign(pos_b.x) * (fabsf(pos_b.x) - sqrtf(sqr(a->_radius + b->_radius) - sqr(pos_b.y)));
 }
