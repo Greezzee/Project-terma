@@ -19,8 +19,7 @@ public:
 	//------------------------------------------
 	Map* getMap();
 	void setMap(Map *map);
-	void setColliderSize(const Vector2F &colliderSize = { 0, 0 });
-	void setTextureSize(const Vector2F &textureSize = { 0, 0 });
+	void setSize(Vector2F size = { 0, 0 });
 	//------------------------------------------
 
 protected:
