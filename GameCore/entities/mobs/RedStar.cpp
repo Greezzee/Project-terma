@@ -6,7 +6,8 @@
 #include "../../Textures.h"
 
 RedStar::RedStar() {
-	size = {BLOCK_SIZE * 10 , BLOCK_SIZE * 10};
+	texture_size = {BLOCK_SIZE * 10 , BLOCK_SIZE * 10};
+	collider_size = {BLOCK_SIZE * 10 , BLOCK_SIZE * 10};
 }
 
 void RedStar::Draw() {
@@ -16,7 +17,7 @@ void RedStar::Draw() {
 	// BASE DATA
 	//----------------------------
 	info.position = this->_pos;
-	info.size = this->size;
+	info.size = this->texture_size;
 	info.rotation = _angle;
 	//----------------------------
 

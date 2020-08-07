@@ -1,17 +1,19 @@
 #pragma once
 
 #include "Entity.h"
-#include "../../Engine/Colliders/Collider.h"
+
 class SquareCollider;
 
-//! Sey klass obrabativaet vse suschnosty, kotorye podverscheny gravitacii
+//! Sey klass obrabativaet vse suschnosty, kotorye podverscheny gravitacii i ne moschet provodit cherez bloki
 //! Neobhodimo vyzivat funkciu Update VO VSEH DOCHERNIH KLASSAH vo vremya obnovleniya.
 class SolidEntity : public Entity {
 public:
 	void Update();
 	SolidEntity();
+	bool standsOnTheGround();
+	void setMass(float mass = 1);
 
 protected:
-	CircleCollider * collider;
-	bool isInBlocks;
+	SquareCollider * collider;
+	float mass = 1;
 };

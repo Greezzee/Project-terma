@@ -23,7 +23,7 @@ const unsigned GraphicManager::LAYER_COUNT = 20;
 
 void GraphicManager::Init()
 {
-	window.create(sf::VideoMode(1024, 576), "Test", sf::Style::Titlebar | sf::Style::Close);
+	window.create(sf::VideoMode(1920, 1080), "Test", sf::Style::Titlebar | sf::Style::Close);
 	//window.setFramerateLimit(65);
 
 	_sprites_count = 0;
@@ -31,10 +31,10 @@ void GraphicManager::Init()
 	to_draw.resize(LAYER_COUNT);
 
 	views.resize(VIEWS_COUNT);
-	views[Views::BASIC] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {1024, 576}, {0, 0}, {1, 1} };
-	views[Views::TEST] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {16, 9}, {0, 0}, {1, 1}};
-	views[Views::PLAYER_CAM] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {1600, 900}, {0.5, 0.5}, {1, -1}};
-	views[Views::MAIN_MENU] = { {0, 0}, {1024, 576}, {0, 0}, {0, 0}, {1600, 900}, {0, 0}, {1, -1}};
+	views[Views::BASIC] = { {0, 0}, {1920, 1080}, {0, 0}, {0, 0}, {1024, 576}, {0, 0}, {1, 1} };
+	views[Views::TEST] = { {0, 0}, {1920, 1080}, {0, 0}, {0, 0}, {16, 9}, {0, 0}, {1, 1}};
+	views[Views::PLAYER_CAM] = { {0, 0}, {1920, 1080}, {0, 0}, {0, 0}, {1600, 900}, {0.5, 0.5}, {1, -1}};
+	views[Views::MAIN_MENU] = { {0, 0}, {1920, 1080}, {0, 0}, {0, 0}, {1600, 900}, {0, 0}, {1, -1}};
 }
 
 bool GraphicManager::Update()
