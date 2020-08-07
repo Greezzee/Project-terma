@@ -37,9 +37,9 @@ bool Debugger::DrawLine(Vector2F start, Vector2F end, float thick, Views view_id
 bool Debugger::DrawCollider(const SquareCollider& col, float points_size, float line_thick, Views view_id, Color color, unsigned layer)
 {
 	for (int i = 0; i < 4; i++) {
-		if (!DrawPoint(col.getPoint(i), points_size, view_id, color, layer))
+		if (!DrawPoint(col.GetPoint(i), points_size, view_id, color, layer))
 			return false;
-		if (!DrawLine(col.getPoint(i), col.getPoint((i + 1) % 4), line_thick, view_id, color, layer))
+		if (!DrawLine(col.GetPoint(i), col.GetPoint((i + 1) % 4), line_thick, view_id, color, layer))
 			return false;
 	}
 	return true;

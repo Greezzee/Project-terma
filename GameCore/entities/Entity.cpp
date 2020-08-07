@@ -16,7 +16,7 @@ void Entity::setMap( Map *map) {
 	this->map = map;
 }
 
-void Entity::setSize( Vector2F size) {
+void Entity::SetSize( Vector2F size) {
 	this->size = size;
 }
 

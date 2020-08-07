@@ -246,7 +246,7 @@ bool Map::testCollision(CircleCollider *col) {
 			bl.Init(p0, bl_sz);
 			Debugger::DrawCollider(bl, 10, 4, Views::PLAYER_CAM);
 			if (Collider::IsCollide(&bl, col)) {
-				Debugger::DrawLine(bl.getPos(), col->GetPos(), 4, Views::PLAYER_CAM, Color::Red());
+				Debugger::DrawLine(bl.GetPos(), col->GetPos(), 4, Views::PLAYER_CAM, Color::Red());
 				out = true;
 			}
 		}

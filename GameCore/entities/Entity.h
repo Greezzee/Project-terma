@@ -19,7 +19,7 @@ public:
 	//------------------------------------------
 	Map* getMap();
 	void setMap(Map *map);
-	void setSize(Vector2F size = { 0, 0 });
+	void SetSize(Vector2F size = { 0, 0 });
 	//------------------------------------------
 
 protected:

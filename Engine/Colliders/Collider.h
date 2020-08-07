@@ -31,19 +31,22 @@ public:
 	//! Определяет, сколько должен пройти коллайдер a в направлении данного вектора, чтобы столкнуться в b
 	//! Вернёт искомое расстояние в тех же единицах, в которых заданы коллайдеры
 	//! Вернёт NAN, если при движении в данном направлении, a никогда не встретит b
+	//! НЕ РАБОТАЕТ
 	static float DistanceBetween(SquareCollider* a, SquareCollider* b, const Vector2F& direction);
 
 	//! Выпускает из центра коллайдера a вектор в направлении direction
 	//! Определяет, сколько должен пройти коллайдер a в направлении данного вектора, чтобы столкнуться в b
 	//! Вернёт искомое расстояние в тех же единицах, в которых заданы коллайдеры
 	//! Вернёт NAN, если при движении в данном направлении, a никогда не встретит b
+	//! НЕ РАБОТАЕТ
 	static float DistanceBetween(CircleCollider* a, SquareCollider* b, const Vector2F& direction);
 
 	//! Выпускает из центра коллайдера a вектор в направлении direction
 	//! Определяет, сколько должен пройти коллайдер a в направлении данного вектора, чтобы столкнуться в b
 	//! Вернёт искомое расстояние в тех же единицах, в которых заданы коллайдеры
 	//! Вернёт NAN, если при движении в данном направлении, a никогда не встретит b
-	//static float DistanceBetween(SquareCollider* a, CircleCollider* b, const Vector2F& direction);
+
+	static float DistanceBetween(CircleCollider* a, CircleCollider* b, const Vector2F& direction);
 
 private:
 	

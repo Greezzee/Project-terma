@@ -32,13 +32,13 @@ public:
 	void Init(const Vector2F &pos, const Vector2F &size,
 			float angle, float shape_angle);
 
-	float getAngle() const;
-	void setAngle(float angle);
-	Vector2F getPos() const;
-	void setPos(Vector2F pos);
-	Vector2F getSize() const;
-	void setSize(Vector2F size);
-	Vector2F getPoint(unsigned i) const;
+	float GetAngle() const;
+	void SetAngle(float angle);
+	Vector2F GetPos() const;
+	void SetPos(Vector2F pos);
+	Vector2F GetSize() const;
+	void SetSize(Vector2F size);
+	Vector2F GetPoint(unsigned i) const;
 
 protected:
 

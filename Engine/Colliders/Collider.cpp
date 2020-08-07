@@ -317,3 +317,19 @@ float Collider::DistanceBetween(CircleCollider* a, SquareCollider* b, const Vect
 
 	return (min_b <= min_a && min_a <= max_b) || (min_b <= max_a && max_a <= max_b);
 }
+
+float Collider::DistanceBetween(CircleCollider* a, CircleCollider* b, const Vector2F& direction)
+{
+	Vector2F pos_a = {0, 0};
+	Vector2F pos_b = b->_pos - a->_pos;
+
+	float dir_angle = atan2f(direction.y, direction.x);
+	float cos_dir = cosf(dir_angle);
+	float sin_dir = sinf(dir_angle);
+	pos_b = { pos_b.x * cos_dir + pos_b.y * sin_dir, -pos_b.x * sin_dir + pos_b.y * cos_dir };
+
+	if (fabsf(pos_b.y) > a->_radius + b->_radius)
+		return NAN;
+
+	return pos_b.x - sqrtf(sqr(a->_radius + b->_radius) - sqr(pos_b.y));
+}

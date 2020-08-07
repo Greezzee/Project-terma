@@ -53,34 +53,34 @@ void SquareCollider::Init(const Vector2F& pos, const Vector2F& size, float angle
 	SetPoints();
 }
 
-float SquareCollider::getAngle() const {
+float SquareCollider::GetAngle() const {
 	return _angle;
 }
 
-void SquareCollider::setAngle(float angle) {
+void SquareCollider::SetAngle(float angle) {
 	_angle = angle;
 	SetPoints();
 }
 
-Vector2F SquareCollider::getPos() const {
+Vector2F SquareCollider::GetPos() const {
 	return _pos;
 }
 
-void SquareCollider::setPos(Vector2F pos) {
+void SquareCollider::SetPos(Vector2F pos) {
 	_pos = pos;
 	SetPoints();
 }
 
-Vector2F SquareCollider::getSize() const {
+Vector2F SquareCollider::GetSize() const {
 	return _size;
 }
 
-void SquareCollider::setSize(const Vector2F size) {
+void SquareCollider::SetSize(const Vector2F size) {
 	_size = size;
 	SetPoints();
 }
 
-Vector2F SquareCollider::getPoint(unsigned i) const {
+Vector2F SquareCollider::GetPoint(unsigned i) const {
 	return _points[i];
 }
 
