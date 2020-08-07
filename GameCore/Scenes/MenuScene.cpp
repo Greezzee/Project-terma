@@ -16,3 +16,8 @@ void MenuScene::disableScene()
 {
 	is_active = false;
 }
+
+MenuScene::~MenuScene()
+{
+	widgets.clear();
+}

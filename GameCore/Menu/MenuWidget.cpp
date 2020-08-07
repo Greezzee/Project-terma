@@ -32,5 +32,4 @@ Vector2F MenuWidget::GetSize() {
 	return _size;
 }
 
-
-
+MenuWidget::~MenuWidget() {}

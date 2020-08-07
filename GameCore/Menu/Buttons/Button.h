@@ -35,4 +35,6 @@ public:
 	void Draw();
 	virtual void Init(GameObject *owner) = 0;
 	virtual void Destroy() = 0;
+
+	virtual ~Button();
 };

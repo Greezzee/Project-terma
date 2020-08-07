@@ -29,4 +29,6 @@ public:
 	virtual void Update() = 0;
 	//! The Destroy() method should include deleting all widgets in order to free memory
 	virtual void Destroy() = 0;
+
+	virtual ~MenuScene();
 };

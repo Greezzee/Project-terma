@@ -43,3 +43,5 @@ Views Background::GetView()
 void Background::Destroy() {
 	printf("Background destroyed!\n");
 }
+
+Background::~Background() {}
