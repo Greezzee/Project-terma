@@ -25,6 +25,8 @@ MainMenuScene::MainMenuScene() {
 }
 
 void MainMenuScene::Init() {
+	widgets = new std::vector<MenuWidget*>;
+
 	//! Initializing the background
 	Background *background = new Background();
 	background->Init(nullptr);
@@ -33,7 +35,7 @@ void MainMenuScene::Init() {
 	background->SetSize( { 2000, 1000 });
 	background->SetPos( { 1000, 500 });
 	background->SetView(Views::MAIN_MENU);
-	widgets.push_back(background);
+	widgets->push_back(background);
 
 	//! Initializing the button that leads to the gameplay scene
 	PlayButton *play_button = new PlayButton();
@@ -43,17 +45,7 @@ void MainMenuScene::Init() {
 	play_button->SetPos( { 800, 600 });
 	play_button->SetSize( { 410, 240 });
 	play_button->SetGap( { 45, 55 });
-	widgets.push_back(play_button);
-
-	//! Initializing the button that exits
-	QuitButton *quit_button = new QuitButton();
-	quit_button->Init(nullptr);
-	quit_button->setScene(this);
-	quit_button->setSpriteID(Textures::MAIN_MENU_QUIT_BUTTON);
-	quit_button->SetPos( { 800, 200 });
-	quit_button->SetSize( { 490, 190 });
-	quit_button->SetGap( { 10, 10 });
-	widgets.push_back(quit_button);
+	widgets->push_back(play_button);
 
 	//! Initializing the button that leads to the settings scene
 	OptionsButton *options_button = new OptionsButton();
@@ -63,18 +55,24 @@ void MainMenuScene::Init() {
 	options_button->SetPos( { 800, 400 });
 	options_button->SetSize( { 760, 230 });
 	options_button->SetGap( { 70, 50 });
-	widgets.push_back(options_button);
+	widgets->push_back(options_button);
+
+	//! Initializing the button that exits
+	QuitButton *quit_button = new QuitButton();
+	quit_button->Init(nullptr);
+	quit_button->setScene(this);
+	quit_button->setSpriteID(Textures::MAIN_MENU_QUIT_BUTTON);
+	quit_button->SetPos( { 800, 200 });
+	quit_button->SetSize( { 490, 190 });
+	quit_button->SetGap( { 10, 10 });
+	widgets->push_back(quit_button);
 }
 
 void MainMenuScene::Update() {
 	_delay += TimeManager::GetDeltaTime();
 
-	for (auto widget : widgets) {
-		widget->Update();
-	}
-	for (auto widget : widgets) {
-		widget->Draw();
-	}
+	updateWidgets();
+	drawWidgets();
 
 	if (InputManager::IsPressed(KeyboardKey::BACK) && _delay > 1000000) {
 		SceneManager::CloseScene(this);
@@ -89,11 +87,12 @@ void MainMenuScene::Update() {
 }
 
 void MainMenuScene::Destroy() {
-	for (auto widget : widgets) {
+	for (auto widget : *widgets) {
 		widget->Destroy();
 		delete widget;
 	}
-	widgets.clear();
+	widgets->clear();
+	delete widgets;
 
 	printf("MainMenuScene destroyed!\n");
 	std::cout.flush();

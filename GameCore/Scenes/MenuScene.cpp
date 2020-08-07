@@ -1,23 +1,28 @@
 #include "MenuScene.h"
 
-MenuScene::MenuScene()
-{
+#include <cstdio>
+#include <iostream>
+
+MenuScene::MenuScene() {
+	widgets = nullptr;
 	is_active = true;
 }
 
-void MenuScene::drawWidgets()
-{
-	for (auto widget : widgets) {
+void MenuScene::drawWidgets() {
+	for (auto widget : *widgets) {
 		widget->Draw();
 	}
 }
 
-void MenuScene::disableScene()
-{
+void MenuScene::updateWidgets() {
+	for (auto widget : *widgets) {
+		widget->Update();
+	}
+}
+
+void MenuScene::disableScene() {
 	is_active = false;
 }
 
-MenuScene::~MenuScene()
-{
-	widgets.clear();
+MenuScene::~MenuScene() {
 }

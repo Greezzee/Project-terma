@@ -7,20 +7,25 @@
 
 class MenuWidget;
 
-//! Все сцены меню должны наслдоваться от этого класса. Все виджеты
-//! должны при инициализации класться в вектор widgets. Доступные
-//! виджеты: Button и ImageWidget.
+//! Все сцены меню должны наследоваться от этого класса.
+//! ВАЖНО! При создании сцены меню не забыть:
+//! 1) Выделить память под вектор widgets в функции Init()
+//! 2) Создать все виджеты и положить их в вектор в функции Init()
+//! 3) Рисовать и обновлять все виджеты в функции Update()
+//! 4) Освободить память под все виджеты, очистить вектор, удалить вектор
 class MenuScene : public Scene {
 protected:
 	//! Shows whether the scene is active (for correct switching scenes with buttons)
 	bool is_active;
 	//! Vector that contains all buttons of this menu
-	std::vector<MenuWidget*> widgets;
+	std::vector<MenuWidget*> *widgets;
 public:
 	MenuScene();
 
-	//! These functions draw certain widgets of the menu
+	//! Draw all widgets from the vector
 	void drawWidgets();
+	//! Update all widgets from the vector
+	void updateWidgets();
 	//! Sets the 'is_active' variable to false
 	void disableScene();
 
