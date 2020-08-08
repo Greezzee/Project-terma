@@ -1,7 +1,8 @@
 #pragma once
 
+#include "../../../Engine/Utility/Coordinate.h"
+#include "../../../Engine/Gameplay/GameObject.h"
 #include "../MenuWidget.h"
-#include "../../../Engine/SceneManagment/Scene.h"
 
 //! Все кнопки должны наследоваться от этого класса. При инициализации в
 //! сцене обязательно задать размер, позицию и gap.
@@ -35,4 +36,6 @@ public:
 	void Draw();
 	virtual void Init(GameObject *owner) = 0;
 	virtual void Destroy() = 0;
+
+	virtual ~Button();
 };

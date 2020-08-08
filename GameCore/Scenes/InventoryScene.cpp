@@ -19,6 +19,8 @@ InventoryScene::InventoryScene(Map *_map) {
 }
 
 void InventoryScene::Init() {
+	widgets = new std::vector<MenuWidget*>;
+
 	//! Initializing the inventory background
 	Background *background = new Background();
 	background->Init(nullptr);
@@ -27,7 +29,7 @@ void InventoryScene::Init() {
 	background->SetView(Views::MAIN_MENU);
 	background->SetPos({800, 450});
 	background->SetSize({1600, 900});
-	widgets.push_back(background);
+	widgets->push_back(background);
 
 	printf("InventoryScene created!\n");
 }
@@ -40,20 +42,18 @@ void InventoryScene::Update() {
 		SceneManager::CloseScene(this);
 	}
 
-	for (auto widget : widgets) {
-		widget->Draw();
-	}
-	for (auto widget : widgets) {
-		widget->Update();
-	}
+	updateWidgets();
+	drawWidgets();
 }
 
 void InventoryScene::Destroy() {
-	for (auto widget : widgets) {
+	for (auto widget : *widgets) {
 		widget->Destroy();
 		delete widget;
 	}
-	widgets.clear();
+	widgets->clear();
+
+	delete widgets;
 
 	printf("InventoryScene destroyed!\n");
 	std::cout.flush();

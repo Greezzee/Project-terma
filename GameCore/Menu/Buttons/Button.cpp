@@ -62,3 +62,5 @@ void Button::SetGap(Vector2F __gap)
 {
 	_gap = __gap;
 }
+
+Button::~Button() {}

@@ -20,6 +20,7 @@ int Textures::SHREK = -1;
 int Textures::INVENTORY = -1;
 int Textures::CONTROLS_BUTTON = -1;
 int Textures::WHITE_BLOCK = -1;
+int Textures::RESOLUTION_BUTTON = -1;
 int Textures::LANTERN = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
@@ -42,7 +43,8 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::MAIN_MENU_OPTIONS_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/options_button.png", Vector2F(760, 230), 1));
 	Textures::MAIN_OPTIONS_MENU_BACK_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/back_button.png", Vector2F(280, 280), 1));
 	Textures::SHREK = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/shrek.png", Vector2F(750, 650), 1));
-	Textures::INVENTORY = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/inventory.png", Vector2F(500, 500), 1));
+	Textures::INVENTORY = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/inventory.png", Vector2F(1272, 679), 1));
 	Textures::CONTROLS_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/controls_button.png", Vector2F(76, 23), 1));
 	Textures::WHITE_BLOCK = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/WhiteBlock.png", Vector2F(32, 32), 1));
+	Textures::RESOLUTION_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/resolution_button.png", Vector2F(76, 23), 1));
 }

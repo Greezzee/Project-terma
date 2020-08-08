@@ -33,4 +33,6 @@ public:
 
 	//! Useless function for menu widgets
 	GameObject* clone() const override;
+
+	virtual ~MenuWidget();
 };

@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Button.h"
+#include "../../../Engine/Gameplay/GameObject.h"
 
-#include "../../Scenes/MenuScene.h"
+class GameObject;
 
 class PlayButton : public Button
 {
