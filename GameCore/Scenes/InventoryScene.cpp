@@ -22,8 +22,8 @@ InventoryScene::InventoryScene(Map *_map) {
 }
 
 // Constant vectors for item buttons
-const Vector2F itemIconSize = {75, 80};
-const Vector2F itemStartPos = {110, 610};
+const Vector2F itemIconSize = { 75, 80 };
+const Vector2F itemStartPos = { 110, 610 };
 const unsigned maxColumns = 8;
 const unsigned maxRows = 7;
 
@@ -36,30 +36,31 @@ void InventoryScene::Init() {
 	background->setScene(this);
 	background->setSpriteID(Textures::INVENTORY);
 	background->SetView(Views::MAIN_MENU);
-	background->SetPos({800, 450});
-	background->SetSize({1600, 900});
+	background->SetPos( { 800, 450 });
+	background->SetSize( { 1600, 900 });
 	widgets->push_back(background);
 
 	// Create each item's button
 	unsigned column = 0;
 	unsigned row = 0;
 
-	std::vector<Item*>* items = inventory->getItems();
+	std::vector<Item*> *items = inventory->getItems();
 	for (auto item : *items) {
 		ItemButton *_button = new ItemButton(item);
 		_button->Init(nullptr);
 		_button->setScene(this);
 		_button->setSpriteID(item->getIconID());
-		_button->SetPos({itemStartPos.x + column * itemIconSize.x, itemStartPos.y - row * itemIconSize.y});
+		_button->SetPos(
+				{ itemStartPos.x + column * itemIconSize.x, itemStartPos.y
+						- row * itemIconSize.y });
 		_button->SetSize(itemIconSize);
-		_button->SetGap({0, 0});
+		_button->SetGap( { 0, 0 });
 		widgets->push_back(_button);
 
 		if (column >= maxColumns) {
 			column = 0;
 			row++;
-		}
-		else {
+		} else {
 			column++;
 		}
 
@@ -75,13 +76,13 @@ void InventoryScene::Init() {
 void InventoryScene::Update() {
 	delay += TimeManager::GetDeltaTime();
 
+	updateWidgets();
+	drawWidgets();
+
 	if (InputManager::IsPressed(KeyboardKey::OPEN_INV) && delay > 100000) {
 		gamefield->unpauseGame();
 		SceneManager::CloseScene(this);
 	}
-
-	updateWidgets();
-	drawWidgets();
 }
 
 void InventoryScene::Destroy() {
