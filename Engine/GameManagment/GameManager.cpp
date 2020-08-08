@@ -1,4 +1,3 @@
-#pragma once
 #include "GameManager.h"
 #include "../Graphics/GraphicManager.h"
 #include "../Time/TimeManager.h"

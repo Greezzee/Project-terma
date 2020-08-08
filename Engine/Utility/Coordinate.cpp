@@ -1,4 +1,3 @@
-#pragma once
 #include "Coordinate.h"
 #include <cmath>
 
@@ -50,7 +49,7 @@ Vector2F Vector2F::Normalized()
 
 const bool Vector2F::operator<(const Vector2F& that)
 {
-	return x < that.x - EPS || abs(x - that.x) < EPS && y < that.y - EPS;
+	return x < that.x - EPS || abs(x - that.x) < EPS && y < that.y - EPS;// TODO uncertain situation, you need to place parentheses
 }
 
 const Vector2F& Vector2F::operator=(const Vector2F& that)
@@ -166,7 +165,7 @@ Vector2D Vector2D::Normalized()
 
 const bool Vector2D::operator<(const Vector2D& that)
 {
-	return x < that.x - EPS || abs(x - that.x) < EPS && y < that.y - EPS;
+	return x < that.x - EPS || abs(x - that.x) < EPS && y < that.y - EPS;// TODO uncertain situation, you need to place parentheses
 }
 
 const Vector2D& Vector2D::operator=(const Vector2D& that)

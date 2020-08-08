@@ -46,11 +46,11 @@ bool GraphicManager::Update()
 			return true;
 	}
 
-	window.clear();
+	window.clear();//TODO invalid write of size 4
 	
 	for (int i = 0; i < LAYER_COUNT; i++) {
 		for (auto obj = to_draw[i].begin(); obj != to_draw[i].end(); obj++) {
-			window.draw(*obj);
+			window.draw(*obj);//TODO invalid write of size 2
 		}
 		to_draw[i].clear();
 	}
@@ -134,7 +134,7 @@ int GraphicManager::LoadSprite(GraphicPrefabData data)
 {
 	if (_sprites_count >= GetSpritesMaxCount())
 		return -1;
-	bool text_success = sprites[_sprites_count].texture.loadFromFile(data.file);
+	bool text_success = sprites[_sprites_count].texture.loadFromFile(data.file);//TODO invalid write of size 8
 	if (!text_success)
 		return -1;
 	sprites[_sprites_count].sprite.setTexture(sprites[_sprites_count].texture);
