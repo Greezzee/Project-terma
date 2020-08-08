@@ -10,6 +10,9 @@ public:
 		this->SetID(11);
 	}
 
+	~DirtBlock() {
+	}
+
 	GameObject* clone() const {
 		return new DirtBlock();
 	}

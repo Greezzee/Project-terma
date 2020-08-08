@@ -53,7 +53,7 @@ void MainMenuScene::Init() {
 	quit_button->SetPos( { 800, 200 });
 	quit_button->SetSize( { 490, 190 });
 	quit_button->SetGap( { 10, 10 });
-	widgets.push_back(quit_button);
+	widgets.push_back(quit_button);//TODO fix mem 32 bytes are lost
 
 	//! Initializing the button that leads to the settings scene
 	OptionsButton *options_button = new OptionsButton();

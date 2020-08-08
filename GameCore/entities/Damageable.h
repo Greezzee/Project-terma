@@ -10,13 +10,14 @@
 
 class Damageable {
 public:
-	Damageable();
-	virtual ~Damageable();
+	Damageable() {};
+	~Damageable() {};
+
 	float getCurrentHealth() const;
 	void setCurrentHealth(float currentHealth);
 
 private:
-	float currentHealth;
+	float currentHealth = -1;
 };
 
 #endif /* GAMECORE_ENTITIES_DAMAGEABLE_H_ */

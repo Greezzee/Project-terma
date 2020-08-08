@@ -18,7 +18,7 @@ void GameplayScene::Init() {
 	gamefield = new Map();
 
 	// TODO в будущем нужно, чтобы значение этого поля приходило из gui (после выбора игроком)
-	gamefield->setLevel(new TestLevel());
+	gamefield->setLevel(currentLevel = new TestLevel());//TODO fix mem
 	//
 
 	gamefield->Init();
@@ -44,6 +44,7 @@ void GameplayScene::Update() {
 void GameplayScene::Destroy() {
 	gamefield->Destroy();
 	delete gamefield;
+	delete currentLevel;
 	printf("GameplayScene Destroyed\n");
 	std::cout.flush();
 }

@@ -17,7 +17,7 @@ public:
 	void setLightRadius(int lightRadius);
 
 protected:
-	int lightRadius;
+	int lightRadius = 0;
 };
 
 #endif /* GAMECORE_BLOCKS_LIGHTSOURCE_H_ */

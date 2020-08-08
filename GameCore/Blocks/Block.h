@@ -8,10 +8,24 @@ class SquareCollider;
 
 class Block : public GameObject {
 public:
+
+	// CONSTRUCTOR AND DESTRUCTOR
+	//--------------------------------------
+	Block() {};
+	virtual ~Block() {};
+	//--------------------------------------
+
+	// BASE
+	//--------------------------------------
 	void Draw();
 	void Destroy();
 	void Init(GameObject *owner);
 	void Update();
+	//--------------------------------------
+
+	// GETTERS AND SETTERS
+	//--------------------------------------
+	void setSpriteId(int spriteId);
 	int getSpriteId() const;
 	bool isPassable() const;
 	void setPassable(bool passable);
@@ -20,14 +34,15 @@ public:
 	float getLightLevel() const;
 	void setLightLevel(float lightLevel = 1.0f);
 	void addLightLevel(float add);
+	//--------------------------------------
 
 protected:
-	void setSpriteId(int spriteId);
+
 
 	//! указатель на спрайт, который является ЕДИНСТВЕННОЙ текстурой данного блока
-	int sprite_id;
+	int sprite_id = -1;
 	//! Можно ли через блок пройти
 	bool passable = 0;
-
+	//! current light level in [0, 1]
 	float lightLevel = 1.0f;
 };

@@ -1,8 +1,7 @@
 #include "Block.h"
 
-#include <string>
+#include <algorithm>
 
-#include "../../Engine/Graphics/GraphicManager.h"
 
 int Block::getSpriteId() const {
 	return this->sprite_id;

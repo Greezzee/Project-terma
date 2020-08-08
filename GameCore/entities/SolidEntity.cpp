@@ -100,6 +100,10 @@ bool SolidEntity::standsOnTheGround() {
 	return getMap()->testCollision(collider, { 0, -10.0f }) < epsilon;
 }
 
+SolidEntity::~SolidEntity() {
+	delete collider;
+}
+
 void SolidEntity::setMass(float mass) {
 	this->mass = mass;
 }

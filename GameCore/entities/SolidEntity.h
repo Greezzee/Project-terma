@@ -8,10 +8,23 @@ class SquareCollider;
 //! Neobhodimo vyzivat funkciu Update VO VSEH DOCHERNIH KLASSAH vo vremya obnovleniya.
 class SolidEntity : public Entity {
 public:
-	void Update();
+
+	// CONSTRUCTOR AND DESTRUCTOR
+	//----------------------------------
 	SolidEntity();
+	~SolidEntity();
+	//----------------------------------
+
+	// BASE
+	//----------------------------------
+	void Update();
+	//----------------------------------
+
+	// GETTERS AND SETTERS
+	//----------------------------------
 	bool standsOnTheGround();
 	void setMass(float mass = 1);
+	//----------------------------------
 
 protected:
 	SquareCollider * collider;

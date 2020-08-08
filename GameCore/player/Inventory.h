@@ -1,11 +1,14 @@
+#include <stddef.h>
+
+
 class Player;
 
 class Inventory {
 public:
-	Inventory();
-	virtual ~Inventory();
+	Inventory() {};
+	~Inventory() {};
 	void init(Player * player);
 	void update();
 private:
-	Player * player;
+	Player * player = NULL;
 };

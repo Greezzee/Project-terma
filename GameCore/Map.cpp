@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <iostream>
 #include <iterator>
 #include <type_traits>
 
@@ -32,6 +33,9 @@ Level* Map::getLevel() {
 }
 
 void Map::addBlock(Vector2I pos, Block *block) {
+	if (blocks[pos.x][pos.y] != NULL) {
+		delete blocks[pos.x][pos.y];
+	}
 	this->blocks[pos.x][pos.y] = block;
 }
 
@@ -76,6 +80,22 @@ void Map::Update() {
 }
 
 void Map::Destroy() {
+	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
+		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
+			delete colliders_wireframe[x][y];
+			delete blocks[x][y];
+			delete wallblocks[x][y];
+
+			blocks[x][y] = NULL;
+			wallblocks[x][y] = NULL;
+			colliders_wireframe[x][y] = NULL;
+		}
+	}
+	for (unsigned i = 0; i < entities.size(); i++) {
+		delete entities[i];
+	}
+	entities.clear();
+	player = NULL;
 }
 
 void Map::addEntity(Vector2F pos, Entity *entity) {
@@ -300,8 +320,6 @@ void Map::genTestStuff() {
 }
 
 float Map::testCollision(SquareCollider *col, Vector2F dir) {
-	Vector2F bl_sz = { BLOCK_SIZE / 2, BLOCK_SIZE / 2 };
-
 	float dir_len = dir.Magnitude();
 	float result = 10000000.0f;
 

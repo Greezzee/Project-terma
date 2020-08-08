@@ -7,15 +7,6 @@
 
 #include "Damageable.h"
 
-Damageable::Damageable() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Damageable::~Damageable() {
-	// TODO Auto-generated destructor stub
-}
-
 float Damageable::getCurrentHealth() const {
 	return currentHealth;
 }

@@ -1,12 +1,17 @@
 #pragma once
 
+#include <stddef.h>
+
 #include "../../Engine/SceneManagment/Scene.h"
+
+class Level;
 
 class GameField;
 class Map;
 
 class GameplayScene: public Scene {
-	Map *gamefield;
+	Map *gamefield = NULL;
+	Level* currentLevel = NULL;
 public:
 	GameplayScene();
 

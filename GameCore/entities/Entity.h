@@ -7,6 +7,11 @@ class Map;
 
 class Entity : public GameObject {
 public:
+	// CONSTRUCTOR AND DESTRUCTOR
+	//------------------------------------------
+	Entity() {};
+	~Entity() {};
+	//------------------------------------------
 
 	// BASE
 	//------------------------------------------
@@ -34,5 +39,5 @@ protected:
 	//! Uskorenie objekta
 	Vector2F externalForce = {0, 0};
 private:
-	Map* map;
+	Map* map = NULL;
 };
