@@ -4,6 +4,8 @@
 
 #include "entities/Entity.h"
 
+class Inventory;
+
 class Multiblock;
 
 class SquareCollider;
@@ -52,6 +54,7 @@ public:
 	Block* getBlockFromMesh(Vector2I pos);
 	Block* getBlock(Vector2F pos);
 	Block* getWallblock(Vector2F pos);
+	Inventory* getInventory();
 	//! This function may invoke given function with every entity on map that is unasledovana from T
 	template<typename T> void collectEntities(void inv(T * ent));
 	//------------------------
@@ -79,7 +82,6 @@ public:
 	//------------------------
 	void lightUpBlocks(int x, int y, int rad);
 	//------------------------
-
 private:
 	// UTILS
 	//------------------------

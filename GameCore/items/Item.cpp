@@ -1,13 +1,39 @@
 #include "Item.h"
 
-void Item::Draw() {
+void Item::Draw()
+{
+	// TODO Draw the item on the player
 }
 
-void Item::Destroy() {
+Item::Item()
+{
+	icon_id = -1;
+	size = {0 ,0};
 }
 
-void Item::Init(GameObject *owner) {
+void Item::setIconID(unsigned _id)
+{
+	icon_id = _id;
 }
 
-void Item::Update() {
+unsigned Item::getIconID()
+{
+	return icon_id;
 }
+
+void Item::setSize(Vector2F _size)
+{
+	size = _size;
+}
+
+Vector2F Item::getSize()
+{
+	return size;
+}
+
+GameObject* Item::clone() const
+{
+	return nullptr;
+}
+
+Item::~Item() {}

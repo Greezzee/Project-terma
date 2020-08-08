@@ -1,5 +1,9 @@
 #include "MenuWidget.h"
 
+#include "../../Engine/Gameplay/GameObject.h"
+
+#include <cstdio>
+
 MenuWidget::MenuWidget()
 {
 	current_scene = nullptr;
@@ -32,4 +36,13 @@ Vector2F MenuWidget::GetSize() {
 	return _size;
 }
 
-MenuWidget::~MenuWidget() {}
+MenuWidget::~MenuWidget() {
+}
+
+void MenuWidget::debugPrint()
+{
+	printf("==========================\n");
+	printf("Size: %g %g\n", _size.x, _size.y);
+	printf("Position: %g %g\n", _pos.x, _pos.y);
+	printf("==========================\n");
+}

@@ -51,6 +51,7 @@ void Map::collectEntities(void inv(T *ent)) {
 void Map::Init() {
 	this->level->generate(this);
 	this->player = new Player();
+	player->Init(nullptr);
 	this->addEntity( { 1500, 800 }, this->player);
 
 	// WIREFRAME
@@ -63,6 +64,7 @@ void Map::Init() {
 	}
 
 	genTestStuff();
+	printf("Map created!\n");
 }
 
 void Map::Update() {
@@ -92,6 +94,7 @@ void Map::Destroy() {
 		}
 	}
 	for (unsigned i = 0; i < entities.size(); i++) {
+		entities[i]->Destroy();
 		delete entities[i];
 	}
 	entities.clear();
@@ -592,4 +595,9 @@ void Map::updateWallblocks() {
 		}
 	}
 	//----------------------------------------------------------------------------
+}
+
+Inventory* Map::getInventory()
+{
+	return player->inventory;
 }

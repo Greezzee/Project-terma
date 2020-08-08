@@ -36,6 +36,7 @@ public:
 	static int SHREK;
 
 	static int INVENTORY;
+	static int SWORD;
 
 	//! Texture loader. LOAD EVERY TEXTURE HERE!!! BUT FIRST DEFINE IT IN THIS CLASS!!!
 	static void LOAD_ALL_TEXTURES();

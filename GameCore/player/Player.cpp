@@ -10,6 +10,7 @@
 #include "../Blocks/Block.h"
 #include "../Map.h"
 #include "../Textures.h"
+#include "../items/Sword.h"
 
 Player::Player() {
 	camera = GraphicManager::GetView(Views::PLAYER_CAM);
@@ -20,6 +21,8 @@ Player::Player() {
 	lookingRight = 1;
 
 	this->setCurrentHealth(50);
+
+	inventory = nullptr;
 }
 
 View* Player::getCamera() {
@@ -103,7 +106,25 @@ void Player::Update() {
 
 void Player::Init(GameObject *owner) {
 	Entity::Init(owner);
-	inventory.init(this);
+
+	inventory = new Inventory;
+	inventory->Init();
+
+	// TEST ITEMS
+	for (int i = 0; i < 100; i++) {
+		Sword *sword = new Sword();
+		sword->Init(nullptr);
+		inventory->addItem(sword);
+	}
+	printf("Player created!\n");
+	printf("%d item(s) in the inventory!\n", inventory->getItemsNumber());
+}
+
+void Player::Destroy() {
+	inventory->Destroy();
+	delete inventory;
+	printf("Player destroyed!\n");
+	std::cout.flush();
 }
 
 void Player::drawHealthBar() {

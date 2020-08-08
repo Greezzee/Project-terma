@@ -22,6 +22,7 @@ int Textures::CONTROLS_BUTTON = -1;
 int Textures::WHITE_BLOCK = -1;
 int Textures::RESOLUTION_BUTTON = -1;
 int Textures::LANTERN = -1;
+int Textures::SWORD = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
 	GraphicManager::SetSpritesMaxCount(200);
@@ -47,4 +48,5 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::CONTROLS_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/controls_button.png", Vector2F(76, 23), 1));
 	Textures::WHITE_BLOCK = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/WhiteBlock.png", Vector2F(32, 32), 1));
 	Textures::RESOLUTION_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/resolution_button.png", Vector2F(76, 23), 1));
+	Textures::SWORD = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/sword.png", Vector2F(300, 320), 1));
 }
