@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "../items/Item.h"
+#include "../player/Player.h"
 
 class Player;
 

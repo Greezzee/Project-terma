@@ -27,3 +27,8 @@ void Sword::Update()
 {
 	// TODO Update sword
 }
+
+Sword::Sword()
+{
+	type = MELEE_WEAPON;
+}

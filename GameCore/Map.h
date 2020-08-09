@@ -82,6 +82,8 @@ public:
 	//------------------------
 	void lightUpBlocks(int x, int y, int rad);
 	//------------------------
+	friend class InventoryScene;
+	friend class ItemButton;
 private:
 	// UTILS
 	//------------------------

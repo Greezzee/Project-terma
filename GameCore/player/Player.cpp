@@ -23,6 +23,7 @@ Player::Player() {
 	this->setCurrentHealth(50);
 
 	inventory = nullptr;
+	weapon_equipped = nullptr;
 }
 
 View* Player::getCamera() {
@@ -43,6 +44,12 @@ const float stop_acceleration = 4000; // this will be used if players will is no
 
 void Player::Update() {
 	SolidEntity::Update();
+
+	// Print the equipped item
+
+	if (isEquipped())
+		std::cout << "Player is holding " << weapon_equipped->getName() << std::endl;
+
 
 	// X
 	char going_to = -10;
@@ -111,9 +118,10 @@ void Player::Init(GameObject *owner) {
 	inventory->Init();
 
 	// TEST ITEMS
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 19; i++) {
 		Sword *sword = new Sword();
 		sword->Init(nullptr);
+		sword->setName("Sword " + std::to_string(i));
 		inventory->addItem(sword);
 	}
 	printf("Player created!\n");
@@ -121,8 +129,16 @@ void Player::Init(GameObject *owner) {
 }
 
 void Player::Destroy() {
+	// Clear and destroy inventory
+	for (auto item : *(inventory->getItems())) {
+		item->Destroy();
+		delete item;
+	}
+
 	inventory->Destroy();
 	delete inventory;
+
+
 	printf("Player destroyed!\n");
 	std::cout.flush();
 }
@@ -212,4 +228,19 @@ void Player::correctLight(DrawData &info) {
 				* cent2->getLightLevel();
 	}
 	//----------------------------
+}
+
+void Player::equipWeapon(Item *weapon)
+{
+	weapon_equipped = weapon;
+}
+
+void Player::unequipWeapon()
+{
+	weapon_equipped = nullptr;
+}
+
+bool Player::isEquipped()
+{
+	return (weapon_equipped == nullptr) ? false : true;
 }

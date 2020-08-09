@@ -19,7 +19,7 @@
 InventoryScene::InventoryScene(Map *_map) {
 	delay = 0;
 	gamefield = _map;
-	inventory = gamefield->getInventory();
+	inventory = gamefield->player->inventory;
 	focused_item = nullptr;
 }
 
@@ -56,6 +56,7 @@ void InventoryScene::Init() {
 				{ itemStartPos.x + column * itemIconSize.x, itemStartPos.y
 						- row * itemIconSize.y });
 		item->SetPos(_button->GetPos());
+		_button->setOriginalPos(_button->GetPos());
 		_button->SetSize(itemIconSize);
 		_button->SetGap( { 0, 0 });
 		widgets->push_back(_button);

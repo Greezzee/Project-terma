@@ -32,7 +32,7 @@ public:
 	//! A virtual method that determines what is meant to happen when the button is focused
 	virtual void focusReact() = 0;
 
-	void Update();
+	virtual void Update();
 	void Draw();
 	virtual void Init(GameObject *owner) = 0;
 	virtual void Destroy() = 0;

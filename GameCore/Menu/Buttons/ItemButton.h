@@ -7,6 +7,8 @@
 class ItemButton: public Button {
 	// Button's item
 	Item* item;
+	// Save the original position (in case it gets equipped and change its position)
+	Vector2F original_pos;
 public:
 	ItemButton(Item* _item);
 
@@ -15,6 +17,11 @@ public:
 	void disfocusReact() override;
 	void Destroy() override;
 	void Init(GameObject *owner) override;
+
+	void Update() override;
+
+	void setOriginalPos(Vector2F original);
+	Vector2F getOriginalPos();
 
 	~ItemButton();
 

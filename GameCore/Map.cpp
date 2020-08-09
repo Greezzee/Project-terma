@@ -596,8 +596,3 @@ void Map::updateWallblocks() {
 	}
 	//----------------------------------------------------------------------------
 }
-
-Inventory* Map::getInventory()
-{
-	return player->inventory;
-}

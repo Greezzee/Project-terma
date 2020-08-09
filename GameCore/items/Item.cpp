@@ -7,8 +7,10 @@ void Item::Draw()
 
 Item::Item()
 {
+	type = MELEE_WEAPON;
 	icon_id = -1;
 	size = {0 ,0};
+	is_equipped = false;
 }
 
 void Item::setIconID(unsigned _id)
@@ -36,4 +38,20 @@ GameObject* Item::clone() const
 	return nullptr;
 }
 
-Item::~Item() {}
+void Item::equip()
+{
+	is_equipped = true;
+}
+
+void Item::unequip()
+{
+	is_equipped = false;
+}
+
+Item::~Item() {
+}
+
+bool Item::isEquipped()
+{
+	return is_equipped;
+}

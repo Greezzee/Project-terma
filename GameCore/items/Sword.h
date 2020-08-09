@@ -4,7 +4,7 @@
 
 class Sword: public Item {
 public:
-	Sword() {}
+	Sword();
 
 	void Draw() override;
 	void Destroy() override;

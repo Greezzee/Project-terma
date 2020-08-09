@@ -20,9 +20,18 @@ public:
 	View* getCamera();
 	virtual void Init(GameObject *owner);
 
+	void equipWeapon(Item* weapon);
+	void unequipWeapon();
+	bool isEquipped();
+
+	friend class InventoryScene;
+	friend class ItemButton;
+private:
 	// INVENTORY
 	Inventory *inventory;
-private:
+
+	Item* weapon_equipped;
+
 	View *camera;
 	bool lookingRight;
 
