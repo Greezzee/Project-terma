@@ -244,3 +244,8 @@ bool Player::isEquipped()
 {
 	return (weapon_equipped == nullptr) ? false : true;
 }
+
+Item* Player::equippedWeapon()
+{
+	return weapon_equipped;
+}

@@ -20,7 +20,9 @@ public:
 
 	void Update() override;
 
+	// Sets the original position of this button (in the inventory)
 	void setOriginalPos(Vector2F original);
+	// Get the original position
 	Vector2F getOriginalPos();
 
 	~ItemButton();
