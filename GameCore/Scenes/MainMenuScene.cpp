@@ -38,8 +38,8 @@ void MainMenuScene::Init() {
 	play_button->setScene(this);
 	play_button->setSpriteID(Textures::MAIN_MENU_PLAY_BUTTON);
 	play_button->SetPos( { 800, 600 });
-	play_button->SetSize( { 410, 240 });
-	play_button->SetGap( { 45, 55 });
+	play_button->SetSize( { 512, 128 });
+	play_button->SetGap( { 0, 0 });
 	widgets->push_back(play_button);
 
 	//! Initializing the button that exits

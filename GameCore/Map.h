@@ -4,7 +4,7 @@
 
 #include "entities/Entity.h"
 
-class Inventory;
+#include "player/Inventory.h"
 
 class Multiblock;
 

@@ -111,7 +111,7 @@ void Player::Init(GameObject *owner) {
 	inventory->Init();
 
 	// TEST ITEMS
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 4; i++) {
 		Sword *sword = new Sword();
 		sword->Init(nullptr);
 		inventory->addItem(sword);

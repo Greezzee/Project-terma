@@ -16,7 +16,7 @@ void PlayButton::clickReact()
 
 void PlayButton::focusReact()
 {
-	sprite_id = Textures::SHREK;
+	sprite_id = Textures::MAIN_MENU_PLAY_BUTTON_FOCUS;
 }
 
 void PlayButton::Init(GameObject* owner)

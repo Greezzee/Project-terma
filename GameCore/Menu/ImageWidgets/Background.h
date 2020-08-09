@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../../../Engine/Graphics/DrawData.h"
 #include "ImageWidget.h"
 

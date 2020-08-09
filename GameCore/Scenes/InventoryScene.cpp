@@ -12,6 +12,7 @@
 
 #include "../Map.h"
 #include "../Menu/ImageWidgets/Background.h"
+#include "../Menu/ImageWidgets/ItemFocus.h"
 #include "../Menu/Buttons/ItemButton.h"
 #include "../Textures.h"
 
@@ -19,6 +20,7 @@ InventoryScene::InventoryScene(Map *_map) {
 	delay = 0;
 	gamefield = _map;
 	inventory = gamefield->getInventory();
+	focused_item = nullptr;
 }
 
 // Constant vectors for item buttons
@@ -53,6 +55,7 @@ void InventoryScene::Init() {
 		_button->SetPos(
 				{ itemStartPos.x + column * itemIconSize.x, itemStartPos.y
 						- row * itemIconSize.y });
+		item->SetPos(_button->GetPos());
 		_button->SetSize(itemIconSize);
 		_button->SetGap( { 0, 0 });
 		widgets->push_back(_button);
@@ -69,6 +72,16 @@ void InventoryScene::Init() {
 			break;
 		}
 	}
+
+	// Create focus item image widget
+	ItemFocus* item_focus = new ItemFocus();
+	item_focus->Init(nullptr);
+	item_focus->setScene(this);
+	item_focus->setSpriteID(Textures::ITEM_FOCUS);
+	item_focus->SetPos({0, 0});
+	item_focus->SetSize(itemIconSize);
+	this->focused_item = item_focus;
+	widgets->push_back(item_focus);
 
 	printf("InventoryScene created!\n");
 }
@@ -96,4 +109,9 @@ void InventoryScene::Destroy() {
 
 	printf("InventoryScene destroyed!\n");
 	std::cout.flush();
+}
+
+void InventoryScene::setItemFocus(ItemFocus *_item)
+{
+	focused_item = _item;
 }

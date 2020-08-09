@@ -1,4 +1,7 @@
+#pragma once
+
 #include "../MenuWidget.h"
+#include "../../../Engine/Gameplay/GameObject.h"
 
 class ImageWidget : public MenuWidget
 {

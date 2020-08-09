@@ -27,6 +27,7 @@ public:
 
 	// TEST BUTTON
 	static int MAIN_MENU_PLAY_BUTTON;
+	static int MAIN_MENU_PLAY_BUTTON_FOCUS;
 	static int MAIN_MENU_QUIT_BUTTON;
 	static int MAIN_MENU_OPTIONS_BUTTON;
 
@@ -37,6 +38,8 @@ public:
 
 	static int INVENTORY;
 	static int SWORD;
+
+	static int ITEM_FOCUS;
 
 	//! Texture loader. LOAD EVERY TEXTURE HERE!!! BUT FIRST DEFINE IT IN THIS CLASS!!!
 	static void LOAD_ALL_TEXTURES();
