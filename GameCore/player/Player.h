@@ -21,7 +21,7 @@ public:
 	virtual void Init(GameObject *owner);
 
 	//! Get the current equipped weapon. Returns the nullptr, if none weapon is equipped at the time
-	Item* equippedWeapon();
+	Item* getEquippedWeapon();
 
 	//! Equips the given weapon to this player
 	void equipWeapon(Item* weapon);
