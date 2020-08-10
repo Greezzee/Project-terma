@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../Engine/Utility/Coordinate.h"
+#include "../../../Engine/AllEngine.h"
 #include "../../Textures.h"
 #include "../LightSource.h"
 #include "Multiblock.h"
@@ -14,7 +14,7 @@ public:
 		setPassable(1);
 	}
 
-	GameObject* clone() const {
+	GameObject* Clone() const {
 		return new Tree();
 	}
 };

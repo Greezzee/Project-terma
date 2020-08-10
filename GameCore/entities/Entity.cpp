@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-#include "../../Engine/Gameplay/GameField.h"
-#include "../../Engine/Time/TimeManager.h"
+#include "../../Engine/AllEngine.h"
 #include "../Map.h"
 
 void Entity::Destroy() {

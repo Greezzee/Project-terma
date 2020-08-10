@@ -1,12 +1,9 @@
+#include "../../Engine/AllEngine.h"
 #include "MainOptionsScene.h"
 
 #include <cstdio>
 #include <iostream>
 #include <vector>
-
-#include "../../Engine/Control/InputManager.h"
-#include "../../Engine/SceneManagment/SceneManager.h"
-#include "../../Engine/Utility/Coordinate.h"
 
 #include "../Menu/Buttons/BackOptionsButton.h"
 #include "../Menu/Buttons/ControlsButton.h"

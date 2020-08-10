@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../../../Engine/Utility/Coordinate.h"
-#include "../../../Engine/Gameplay/GameObject.h"
+#include "../../../Engine/AllEngine.h"
 #include "../MenuWidget.h"
 
 //! Все кнопки должны наследоваться от этого класса. При инициализации в

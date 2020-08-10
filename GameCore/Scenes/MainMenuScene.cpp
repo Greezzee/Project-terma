@@ -1,14 +1,10 @@
+#include "../../Engine/AllEngine.h"
 #include "MainMenuScene.h"
 
 #include <cstdio>
 #include <iostream>
 #include <vector>
 
-#include "../../Engine/Control/InputManager.h"
-#include "../../Engine/Graphics/DrawData.h"
-#include "../../Engine/SceneManagment/SceneManager.h"
-#include "../../Engine/Time/TimeManager.h"
-#include "../../Engine/Utility/Coordinate.h"
 #include "../Menu/Buttons/OptionsButton.h"
 #include "../Menu/Buttons/PlayButton.h"
 #include "../Menu/Buttons/QuitButton.h"

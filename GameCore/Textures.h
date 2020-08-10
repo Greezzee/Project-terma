@@ -2,7 +2,6 @@
 
 //! В этом файле лежат все текстуры, которые мы используем в проекте.
 
-#include "../Engine/Graphics/GraphicManager.h"
 
 class Textures {
 public:

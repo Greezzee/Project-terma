@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Engine/Gameplay/GameObject.h"
+#include "../../Engine/AllEngine.h"
 
 enum itemType {
 	MELEE_WEAPON, ARMOR
@@ -32,7 +32,7 @@ public:
 	virtual void Destroy() = 0;
 	virtual void Init(GameObject *owner) = 0;
 	virtual void Update() = 0;
-	virtual GameObject* clone() const;
+	virtual GameObject* Clone() const;
 
 
 	virtual ~Item();

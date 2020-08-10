@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../../../Engine/Graphics/DrawData.h"
+#include "../../../Engine/AllEngine.h"
 #include "ImageWidget.h"
 
 class Background : public ImageWidget
 {
-	Views view;
+	unsigned view;
 public:
 	Background();
 
-	void SetView(Views _view);
-	Views GetView();
+	void SetView(unsigned _view);
+	unsigned GetView();
 
 	void Init(GameObject* owner) override;
 	void Update() override;

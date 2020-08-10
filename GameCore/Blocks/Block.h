@@ -5,8 +5,6 @@
 #include "../../Engine/Gameplay/GameObject.h"
 #include "../../Engine/Gameplay/ObjectsArray.h"
 
-using namespace ge;
-
 class SquareCollider;
 
 class Block : public GameObject {

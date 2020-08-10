@@ -13,7 +13,7 @@ public:
 	~DirtBlock() {
 	}
 
-	GameObject* clone() const {
+	GameObject* Clone() const {
 		return new DirtBlock();
 	}
 

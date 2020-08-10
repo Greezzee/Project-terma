@@ -1,8 +1,6 @@
 #include "OptionsButton.h"
 
-#include "../../../Engine/Control/InputManager.h"
-#include "../../../Engine/SceneManagment/SceneManager.h"
-#include "../../../Engine/Graphics/DrawData.h"
+#include "../../../Engine/AllEngine.h"
 #include "../../../GameCore/Textures.h"
 
 #include "../../../GameCore/Scenes/MainOptionsScene.h"

@@ -7,8 +7,7 @@
 
 #ifndef GAMECORE_BLOCKS_LANTERN_H_
 #define GAMECORE_BLOCKS_LANTERN_H_
-
-#include "../../../Engine/Utility/Coordinate.h"
+#include "../../../Engine/AllEngine.h"
 #include "../../Textures.h"
 #include "../LightSource.h"
 #include "Multiblock.h"
@@ -24,7 +23,7 @@ public:
 		setLightRadius(12);
 	}
 
-	GameObject* clone() const {
+	GameObject* Clone() const {
 		return new Lantern();
 	}
 };

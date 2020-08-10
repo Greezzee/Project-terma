@@ -1,10 +1,10 @@
+#include "../../Engine/AllEngine.h"
+
 #include "GameplayScene.h"
 
 #include <cstdio>
 #include <iostream>
 
-#include "../../Engine/Control/InputManager.h"
-#include "../../Engine/SceneManagment/SceneManager.h"
 #include "../Map.h"
 #include "../testing/TestLevel.h"
 #include "MainMenuScene.h"

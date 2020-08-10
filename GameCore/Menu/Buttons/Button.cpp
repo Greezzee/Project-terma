@@ -1,9 +1,6 @@
 #include "Button.h"
 
-#include "../../../Engine/Control/InputManager.h"
-#include "../../../Engine/Graphics/DrawData.h"
-#include "../../../Engine/Graphics/GraphicManager.h"
-#include "../../../Engine/Utility/Coordinate.h"
+#include "../../../Engine/AllEngine.h"
 
 Button::Button()
 {

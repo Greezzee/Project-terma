@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Textures.h"
-#include "../Engine/SceneManagment/Scene.h"
+#include "../../Engine/AllEngine.h"
 /*
  * Этот файл является основным для текущего игрового проекта
  * 

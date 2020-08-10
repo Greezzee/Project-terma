@@ -8,7 +8,7 @@ public:
 	RedStar();
 
 	void Draw();
-	GameObject* clone() const;
+	GameObject* Clone() const;
 	void Update();
 
 };

@@ -1,5 +1,5 @@
 #include "Textures.h"
-
+#include "../../Engine/AllEngine.h"
 // Redefine
 int Textures::RED_STAR = -1;
 int Textures::PLAYER_STAND_TEXTURE = -1;

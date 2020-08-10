@@ -9,7 +9,7 @@ class StructureBlock : public Block, public LightSource {
 public:
 	StructureBlock(Multiblock * parent);
 	void update();
-	GameObject * clone() const;
+	GameObject * Clone() const;
 private:
 	Multiblock * parent;
 };

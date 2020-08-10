@@ -30,12 +30,12 @@ void Background::Draw() {
 	GraphicManager::Draw(info, view);
 }
 
-void Background::SetView(Views _view)
+void Background::SetView(unsigned _view)
 {
 	view = _view;
 }
 
-Views Background::GetView()
+unsigned Background::GetView()
 {
 	return view;
 }

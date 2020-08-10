@@ -1,12 +1,9 @@
+#include "../Engine/AllEngine.h"
 #include "ProjectTerma.h"
 
 #include <cstdio>
 
-#include "../Engine/SceneManagment/SceneManager.h"
-
 #include "Scenes/MainMenuScene.h"
-#include "../Engine/Graphics/GraphicManager.h"
-#include "../Engine/Graphics/DrawData.h"
 
 class MainMenuScene;
 

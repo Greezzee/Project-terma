@@ -39,7 +39,7 @@ void RedStar::Draw() {
 
 }
 
-GameObject* RedStar::clone() const {
+GameObject* RedStar::Clone() const {
 	return new RedStar();
 }
 

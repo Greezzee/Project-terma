@@ -33,7 +33,7 @@ Vector2F Item::getSize()
 	return size;
 }
 
-GameObject* Item::clone() const
+GameObject* Item::Clone() const
 {
 	return nullptr;
 }

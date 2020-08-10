@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Engine/Gameplay/GameObject.h"
+#include "../../Engine/AllEngine.h"
 #include "../Scenes/MenuScene.h"
 
 class MenuScene;
@@ -34,7 +34,7 @@ public:
 	void debugPrint();
 
 	//! Useless function for menu widgets
-	GameObject* clone() const override;
+	GameObject* Clone() const override;
 
 	virtual ~MenuWidget();
 };

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../../Engine/Gameplay/GameObject.h"
-#include "../../Engine/Utility/Coordinate.h"
+#include "../../Engine/AllEngine.h"
 
 class Map;
 

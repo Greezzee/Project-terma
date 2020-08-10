@@ -21,7 +21,7 @@ void MenuWidget::setSpriteID(unsigned _id)
 	sprite_id = _id;
 }
 
-GameObject* MenuWidget::clone() const
+GameObject* MenuWidget::Clone() const
 {
 	printf("Error! Cloning MenuWidget isn't supported\n");
 

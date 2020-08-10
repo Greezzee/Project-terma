@@ -3,17 +3,12 @@
 #include <algorithm>
 #include <cmath>
 
-#include "../../Engine/Colliders/SquareCollider.h"
-#include "../../Engine/Graphics/DrawData.h"
-#include "../../Engine/Time/TimeManager.h"
-#include "../../Engine/Utility/Coordinate.h"
-#include "../Debugger.h"
+#include "../../Engine/AllEngine.h"
 #include "../Map.h"
 
 const float epsilon = 1.0f;
 const float K = 4.0f;
 const float g = 5000;
-
 //!
 //! m * a = externalForce - V * K + g * m;
 //! dV = a * dt;
@@ -24,7 +19,7 @@ const float g = 5000;
 //! Where: V - speed, a - acceleration, dt - small time
 void SolidEntity::Update() {
 	// UPDATE COLLIDER
-	collider->Init(this, this->_pos, this->collider_size * 0.5);
+	collider->Init(this->_pos, this->collider_size * 0.5);
 
 	// DEBUG
 	//------------------------------------------------------------------
@@ -93,7 +88,7 @@ void SolidEntity::Update() {
 
 SolidEntity::SolidEntity() {
 	collider = new SquareCollider();
-	collider->Init(this);
+	collider->Init();
 }
 
 bool SolidEntity::standsOnTheGround() {

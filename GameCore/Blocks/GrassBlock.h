@@ -10,7 +10,7 @@ public:
 		this->SetID(12);
 	}
 
-	GameObject* clone() const {
+	GameObject* Clone() const {
 		return new GrassBlock();
 	}
 
