@@ -17,6 +17,8 @@
 #include "Level.h"
 #include "player/Player.h"
 #include "Textures.h"
+#include "Controls.h"
+#include "Views.h"
 
 class Multiblock;
 

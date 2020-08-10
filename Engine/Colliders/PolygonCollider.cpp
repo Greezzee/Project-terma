@@ -1,5 +1,7 @@
 #include "PolygonCollider.h"
 
+#include <cmath>
+
 PolygonCollider::PolygonCollider()
 {
 	Init();

@@ -7,6 +7,7 @@
 #include "../../../Engine/Graphics/GraphicManager.h"
 
 #include "../../items/Item.h"
+#include "../../Views.h"
 
 void ItemFocus::Init(GameObject *owner) {
 	printf("ItemFocus created!\n");

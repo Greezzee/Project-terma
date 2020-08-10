@@ -10,6 +10,7 @@
 #include "../Menu/Buttons/ResolutionButton.h"
 #include "../Menu/ImageWidgets/Background.h"
 #include "../Textures.h"
+#include "../Views.h"
 
 #include "MainMenuScene.h"
 

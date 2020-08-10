@@ -40,7 +40,9 @@ private:
 
 	Item* weapon_equipped;
 
-	View *camera;
+	// View ID
+	View* camera;
+
 	bool lookingRight;
 
 	// DRAW

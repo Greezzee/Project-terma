@@ -1,5 +1,16 @@
 #include "GraphicManager.h"
-#include "../Time/TimeManager.h"
+
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/VideoMode.hpp>
+#include <SFML/Window/WindowStyle.hpp>
+#include <cmath>
+
 
 using namespace tge;
 Vector2F GraphicManager::ConvertRealToView(Vector2F pos, unsigned view_id)
@@ -25,7 +36,7 @@ const unsigned GraphicManager::LAYER_COUNT = 20;
 
 void GraphicManager::Init()
 {
-	window.create(sf::VideoMode(1280, 720), "Test", sf::Style::Titlebar | sf::Style::Close);
+	window.create(sf::VideoMode(1024, 576), "Test", sf::Style::Titlebar | sf::Style::Close);
 	//window.setFramerateLimit(65);
 
 	_sprites_count = 0;

@@ -9,6 +9,8 @@
 #include "../testing/TestLevel.h"
 #include "MainMenuScene.h"
 #include "InventoryScene.h"
+#include "../Textures.h"
+#include "../Controls.h"
 
 GameplayScene::GameplayScene() {
 }
@@ -26,13 +28,13 @@ void GameplayScene::Init() {
 
 void GameplayScene::Update() {
 	if (!gamefield->isPaused()) {
-		if (InputManager::IsPressed(KeyboardKey::BACK)) {
+		if (InputManager::IsPressed(Controls::BACK)) {
 			SceneManager::CreateScene(new MainMenuScene());
 			SceneManager::CloseScene(this);
 			return;
 		}
 
-		if (InputManager::IsPressed(KeyboardKey::OPEN_INV)) {
+		if (InputManager::IsPressed(Controls::OPEN_INV)) {
 			gamefield->pauseGame();
 			SceneManager::CreateScene(new InventoryScene(gamefield));
 		}

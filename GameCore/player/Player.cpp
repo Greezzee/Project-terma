@@ -10,10 +10,11 @@
 #include "../items/Sword.h"
 #include "../Map.h"
 #include "../Textures.h"
+#include "../Views.h"
+#include "../Controls.h"
 
 Player::Player() {
-	camera = new View();
-	GraphicManager::AddView(*camera);
+	camera = GraphicManager::GetView(Views::PLAYER_CAM);
 
 	texture_size = { 5 * BLOCK_SIZE, 5 * BLOCK_SIZE };
 	collider_size = { 1.7f * BLOCK_SIZE, 5 * BLOCK_SIZE };
@@ -46,10 +47,10 @@ void Player::Update() {
 	SolidEntity::Update();
 
 	// Print the equipped item
-
+	/*
 	if (isEquipped())
 		std::cout << "Player is holding " << weapon_equipped->getName() << std::endl;
-
+	*/
 
 	// X
 	char going_to = -10;
@@ -64,10 +65,10 @@ void Player::Update() {
 	}
 
 	char want_to_go = -10;
-	if (InputManager::IsDown(KeyboardKey::R_Right)) {
+	if (InputManager::IsDown(Controls::RIGHT)) {
 		want_to_go = 1;
 		lookingRight = 1;
-	} else if (InputManager::IsDown(KeyboardKey::R_Left)) {
+	} else if (InputManager::IsDown(Controls::LEFT)) {
 		want_to_go = -1;
 		lookingRight = 0;
 	} else {
@@ -103,7 +104,7 @@ void Player::Update() {
 	}
 
 	// JUMPS
-	if (InputManager::IsDown(KeyboardKey::R_Up) && standsOnTheGround()) {
+	if (InputManager::IsDown(Controls::JUMP) && standsOnTheGround()) {
 		externalForce.y = 40000;
 	}
 
@@ -121,7 +122,7 @@ void Player::Init(GameObject *owner) {
 	for (int i = 0; i < 19; i++) {
 		Sword *sword = new Sword();
 		sword->Init(nullptr);
-		sword->setName("Sword " + std::to_string(i));
+		// sword->setName("Sword " + std::to_string(i));
 		inventory->addItem(sword);
 	}
 	printf("Player created!\n");

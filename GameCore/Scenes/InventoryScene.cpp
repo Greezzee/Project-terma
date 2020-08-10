@@ -10,6 +10,8 @@
 #include "../Menu/ImageWidgets/ItemFocus.h"
 #include "../Menu/Buttons/ItemButton.h"
 #include "../Textures.h"
+#include "../Views.h"
+#include "../Controls.h"
 
 InventoryScene::InventoryScene(Map *_map) {
 	delay = 0;
@@ -88,7 +90,7 @@ void InventoryScene::Update() {
 	updateWidgets();
 	drawWidgets();
 
-	if (InputManager::IsPressed(KeyboardKey::OPEN_INV) && delay > 100000) {
+	if (InputManager::IsPressed(Controls::OPEN_INV) && delay > 100000) {
 		gamefield->unpauseGame();
 		SceneManager::CloseScene(this);
 	}

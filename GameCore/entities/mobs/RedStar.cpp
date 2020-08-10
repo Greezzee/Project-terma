@@ -4,6 +4,7 @@
 #include "../../../Engine/Graphics/GraphicManager.h"
 #include "../../Map.h"
 #include "../../Textures.h"
+#include "../../Views.h"
 
 RedStar::RedStar() {
 	texture_size = {BLOCK_SIZE * 10 , BLOCK_SIZE * 10};

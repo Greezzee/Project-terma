@@ -7,7 +7,7 @@
 #include "../Map.h"
 
 const float epsilon = 1.0f;
-const float K = 4.0f;
+const float k = 4.0f;
 const float g = 5000;
 //!
 //! m * a = externalForce - V * K + g * m;
@@ -33,7 +33,7 @@ void SolidEntity::Update() {
 	externalForce += Vector2F(0, -g) * mass;
 
 	// SOPROTIVLENIYE
-	externalForce.x -= speed.x * K;
+	externalForce.x -= speed.x * k;
 	//------------------------------------------------------------------
 
 	// Now we can calculate acceleration

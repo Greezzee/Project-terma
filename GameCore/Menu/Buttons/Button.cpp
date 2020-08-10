@@ -1,6 +1,7 @@
 #include "Button.h"
 
 #include "../../../Engine/AllEngine.h"
+#include "../../Views.h"
 
 Button::Button()
 {
