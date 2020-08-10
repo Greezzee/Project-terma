@@ -2,19 +2,11 @@
 
 #include <vector>
 
-#include "entities/Entity.h"
-
+#include "../Engine/AllEngine.h"
+#include "Blocks/multiblockStructures/Multiblock.h"
+#include "Level.h"
 #include "player/Inventory.h"
-
-class Multiblock;
-
-class SquareCollider;
-
-class Player;
-
-class Block;
-
-class Level;
+#include "player/Player.h"
 
 #define FAST_CAST(OBJECT, CAST_TARGET, ACTION) {CAST_TARGET * casted = NULL; if ((casted = dynamic_cast<CAST_TARGET*>(OBJECT)) != NULL) { ACTION } }
 

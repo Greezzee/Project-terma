@@ -3,6 +3,9 @@
 #include <string>
 
 #include "../../Engine/Gameplay/GameObject.h"
+#include "../../Engine/Gameplay/ObjectsArray.h"
+
+using namespace ge;
 
 class SquareCollider;
 

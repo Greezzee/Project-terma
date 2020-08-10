@@ -5,17 +5,17 @@
 #include "Inventory.h"
 
 struct DrawData;
+class Item;
+struct View;
 
 class Inventory;
-
-struct View;
 
 class Player: public SolidEntity, public Damageable {
 public:
 	Player();
 	void Draw();
 	void Destroy() override;
-	GameObject* clone() const;
+	GameObject* Clone() const;
 	void Update();
 	View* getCamera();
 	virtual void Init(GameObject *owner);

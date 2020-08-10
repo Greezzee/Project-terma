@@ -1,19 +1,19 @@
 #include "Player.h"
 
-#include <stddef.h>
+#include <cstdio>
 #include <iostream>
+#include <string>
+#include <vector>
 
-#include "../../Engine/Control/InputManager.h"
-#include "../../Engine/Graphics/DrawData.h"
-#include "../../Engine/Graphics/GraphicManager.h"
-#include "../../Engine/Utility/Coordinate.h"
+#include "../../Engine/AllEngine.h"
 #include "../Blocks/Block.h"
+#include "../items/Sword.h"
 #include "../Map.h"
 #include "../Textures.h"
-#include "../items/Sword.h"
 
 Player::Player() {
-	camera = GraphicManager::GetView(Views::PLAYER_CAM);
+	camera = new View();
+	GraphicManager::AddView(*camera);
 
 	texture_size = { 5 * BLOCK_SIZE, 5 * BLOCK_SIZE };
 	collider_size = { 1.7f * BLOCK_SIZE, 5 * BLOCK_SIZE };
@@ -35,7 +35,7 @@ void Player::Draw() {
 	drawHealthBar();
 }
 
-GameObject* Player::clone() const {
+GameObject* Player::Clone() const {
 	return new Player();
 }
 
