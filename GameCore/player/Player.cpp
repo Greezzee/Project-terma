@@ -2,16 +2,19 @@
 
 #include <cstdio>
 #include <iostream>
-#include <string>
 #include <vector>
 
-#include "../../Engine/AllEngine.h"
+#include "../../Engine/Control/InputManager.h"
+#include "../../Engine/Graphics/DrawData.h"
+#include "../../Engine/Graphics/GraphicManager.h"
+#include "../../Engine/Time/TimeManager.h"
+#include "../../Engine/Utility/Coordinate.h"
 #include "../Blocks/Block.h"
+#include "../Controls.h"
 #include "../items/Sword.h"
 #include "../Map.h"
 #include "../Textures.h"
 #include "../Views.h"
-#include "../Controls.h"
 
 Player::Player() {
 	camera = GraphicManager::GetView(Views::PLAYER_CAM);
@@ -105,7 +108,7 @@ void Player::Update() {
 
 	// JUMPS
 	if (InputManager::IsDown(Controls::JUMP) && standsOnTheGround()) {
-		externalForce.y = 40000;
+		speed.y = 1500;
 	}
 
 	camera->virtual_position.x = _pos.x;
