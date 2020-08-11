@@ -7,12 +7,14 @@
 
 class MenuWidget;
 
-//! Все сцены меню должны наследоваться от этого класса.
-//! ВАЖНО! При создании сцены меню не забыть:
-//! 1) Выделить память под вектор widgets в функции Init()
-//! 2) Создать все виджеты и положить их в вектор в функции Init()
-//! 3) Рисовать и обновлять все виджеты в функции Update()
-//! 4) Освободить память под все виджеты, очистить вектор, удалить вектор
+//! Class MenuScene. Usage:
+//! 1) Inherit your menu class from this class
+//! 2) Overwrite Init(), Update() and Destroy
+//! 3) Create all widgets in YOUR_MENU_SCENE::Init()
+//! 4) Update and draw them in YOUR_MENU_SCENE::Update() and
+//!	   call updateWidgets() and drawWidgets()
+//! 5) Destroy them in YOUR_MENU_SCENE::Destroy() (more in comments in widgets)
+
 class MenuScene : public Scene {
 protected:
 	//! Shows whether the scene is active (for correct switching scenes with buttons)

@@ -8,6 +8,7 @@
 #include "../Menu/Buttons/OptionsButton.h"
 #include "../Menu/Buttons/PlayButton.h"
 #include "../Menu/Buttons/QuitButton.h"
+#include "../Menu/Buttons/MenuLevelEditorButton.h"
 #include "../Menu/ImageWidgets/Background.h"
 #include "../Textures.h"
 #include "../Views.h"
@@ -58,6 +59,16 @@ void MainMenuScene::Init() {
 	options_button->SetSize( { 760, 230 });
 	options_button->SetGap( { 70, 50 });
 	widgets->push_back(options_button);
+
+	//! Initializing the level editor button
+	MenuLevelEditorButton* menu_level_editor_button = new MenuLevelEditorButton();
+	menu_level_editor_button->Init(nullptr);
+	menu_level_editor_button->setScene(this);
+	menu_level_editor_button->setSpriteID(Textures::MAIN_MENU_EDITOR);
+	menu_level_editor_button->SetPos({800, 800});
+	menu_level_editor_button->SetSize({400, 200});
+	menu_level_editor_button->SetGap({20, 27});
+	widgets->push_back(menu_level_editor_button);
 }
 
 void MainMenuScene::Update() {

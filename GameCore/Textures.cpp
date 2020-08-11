@@ -25,6 +25,7 @@ int Textures::RESOLUTION_BUTTON = -1;
 int Textures::LANTERN = -1;
 int Textures::SWORD = -1;
 int Textures::ITEM_FOCUS = -1;
+int Textures::MAIN_MENU_EDITOR = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
 	GraphicManager::SetSpritesMaxCount(200);
@@ -46,6 +47,7 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::MAIN_MENU_PLAY_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/play_button.png", Vector2F(128, 32), 1));
 	Textures::MAIN_MENU_PLAY_BUTTON_FOCUS = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/play_button_focus.png", Vector2F(128, 32), 1));
 	Textures::MAIN_MENU_QUIT_BUTTON = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/quit_button.png", Vector2F(490, 190), 1));
+	Textures::MAIN_MENU_EDITOR = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/editor_button.png", Vector2F(400, 200), 1));
 
 	Textures::RED_STAR = GraphicManager::LoadSprite(GraphicPrefabData("./Resources/RedStar.png", Vector2F(20, 19), 1));
 

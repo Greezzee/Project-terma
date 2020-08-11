@@ -2,17 +2,19 @@
 
 #include "../Engine/AllEngine.h"
 
-// Здесь объявлены все вьюшки, их инициализация в конструкторе
+//! Class Views. Usage:
+//! 1) Add static unsigned variable in calss declaration
+//! 2) Define it in Views.cpp
+//! 3) Load it in Views::LOAD_ALL_VIEWS()
+
 class Views {
 
 public:
 	Views() {};
 
-	// Все вьюшки перечислять здесь
 	static unsigned MAIN_MENU;
 	static unsigned PLAYER_CAM;
 
-	// Вызвать, чтобы загрузить все вьюшки в GraphicManager (инициализировать внутри функции вручную!)
 	static void LOAD_ALL_VIEWS();
 
 	~Views() {}

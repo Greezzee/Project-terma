@@ -1,6 +1,6 @@
 #pragma once
 
-//! В этом файле лежат все текстуры, которые мы используем в проекте.
+//! пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 
 
 class Textures {
@@ -34,6 +34,7 @@ public:
 	static int CONTROLS_BUTTON;
 	static int RESOLUTION_BUTTON;
 	static int SHREK;
+	static int MAIN_MENU_EDITOR;
 
 	static int INVENTORY;
 	static int SWORD;
