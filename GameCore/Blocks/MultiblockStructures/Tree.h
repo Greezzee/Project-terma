@@ -3,7 +3,7 @@
 #include "../../../Engine/AllEngine.h"
 #include "../../Textures.h"
 #include "../LightSource.h"
-#include "Multiblock.h"
+#include "../MultiblockStructures/Multiblock.h"
 
 class Tree: public Multiblock {
 public:

@@ -5,7 +5,7 @@
  *      Author: timattt
  */
 
-#include "Damageable.h"
+#include "../Entities/Damageable.h"
 
 float Damageable::getCurrentHealth() const {
 	return currentHealth;

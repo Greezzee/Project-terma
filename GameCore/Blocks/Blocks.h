@@ -2,8 +2,8 @@
 
 #include "DirtBlock.h"
 #include "GrassBlock.h"
-#include "multiblockStructures/Lantern.h"
-#include "multiblockStructures/Tree.h"
+#include "MultiblockStructures/Lantern.h"
+#include "MultiblockStructures/Tree.h"
 
 const Block * DIRT_BLOCK = new DirtBlock();
 const Block * GRASS_BLOCK = new GrassBlock();

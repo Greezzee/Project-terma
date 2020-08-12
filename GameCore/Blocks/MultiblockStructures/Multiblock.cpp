@@ -1,4 +1,4 @@
-#include "Multiblock.h"
+#include "../MultiblockStructures/Multiblock.h"
 
 Multiblock::Multiblock() {
 }

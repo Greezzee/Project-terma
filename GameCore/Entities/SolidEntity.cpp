@@ -1,4 +1,4 @@
-#include "SolidEntity.h"
+#include "../Entities/SolidEntity.h"
 
 #include <algorithm>
 #include <cmath>

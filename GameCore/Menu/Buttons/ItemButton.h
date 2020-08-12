@@ -1,8 +1,8 @@
 #pragma once
 
+#include "../../Items/Item.h"
 #include "Button.h"
 
-#include "../../items/Item.h"
 
 class ItemButton: public Button {
 	// Button's item

@@ -1,4 +1,4 @@
-#include "RedStar.h"
+#include "../Mobs/RedStar.h"
 
 #include "../../../Engine/Graphics/DrawData.h"
 #include "../../../Engine/Graphics/GraphicManager.h"

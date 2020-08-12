@@ -10,7 +10,7 @@
 #include "../../../Engine/AllEngine.h"
 #include "../../Textures.h"
 #include "../LightSource.h"
-#include "Multiblock.h"
+#include "../MultiblockStructures/Multiblock.h"
 
 class Lantern: public Multiblock, public LightSource {
 public:

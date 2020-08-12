@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "../Player/Player.h"
 
 #include <cstdio>
 #include <iostream>
@@ -11,7 +11,7 @@
 #include "../../Engine/Utility/Coordinate.h"
 #include "../Blocks/Block.h"
 #include "../Controls.h"
-#include "../items/Sword.h"
+#include "../Items/Sword.h"
 #include "../Map.h"
 #include "../Textures.h"
 #include "../Views.h"

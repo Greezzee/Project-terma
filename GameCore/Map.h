@@ -3,10 +3,10 @@
 #include <vector>
 
 #include "../Engine/AllEngine.h"
-#include "Blocks/multiblockStructures/Multiblock.h"
+#include "Blocks/MultiblockStructures/Multiblock.h"
 #include "Level.h"
-#include "player/Inventory.h"
-#include "player/Player.h"
+#include "Player/Inventory.h"
+#include "Player/Player.h"
 
 #define FAST_CAST(OBJECT, CAST_TARGET, ACTION) {CAST_TARGET * casted = NULL; if ((casted = dynamic_cast<CAST_TARGET*>(OBJECT)) != NULL) { ACTION } }
 

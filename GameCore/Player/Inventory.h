@@ -3,8 +3,8 @@
 #include <stddef.h>
 #include <vector>
 
-#include "../items/Item.h"
-#include "../player/Player.h"
+#include "../Items/Item.h"
+#include "../Player/Player.h"
 
 class Player;
 

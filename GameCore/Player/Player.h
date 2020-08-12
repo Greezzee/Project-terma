@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../entities/Damageable.h"
-#include "../entities/SolidEntity.h"
-#include "Inventory.h"
+#include "../Entities/Damageable.h"
+#include "../Entities/SolidEntity.h"
+#include "../Player/Inventory.h"
 
 struct DrawData;
 class Item;

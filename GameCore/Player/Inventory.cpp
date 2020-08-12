@@ -1,4 +1,4 @@
-#include "Inventory.h"
+#include "../Player/Inventory.h"
 
 #include <cstdio>
 #include <iostream>

@@ -6,11 +6,11 @@
 #include <iostream>
 
 #include "../Map.h"
-#include "../testing/TestLevel.h"
 #include "MainMenuScene.h"
 #include "InventoryScene.h"
 #include "../Textures.h"
 #include "../Controls.h"
+#include "../Testing/TestLevel.h"
 
 GameplayScene::GameplayScene() {
 }
