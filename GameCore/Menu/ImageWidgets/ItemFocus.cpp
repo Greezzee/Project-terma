@@ -5,8 +5,8 @@
 
 #include "../../../Engine/Graphics/DrawData.h"
 #include "../../../Engine/Graphics/GraphicManager.h"
-
-#include "../../items/Item.h"
+#include "../../../Engine/Utility/Coordinate.h"
+#include "../../Items/Item.h"
 #include "../../Views.h"
 
 void ItemFocus::Init(GameObject *owner) {

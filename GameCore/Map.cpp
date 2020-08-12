@@ -15,7 +15,7 @@
 #include "Blocks/MultiblockStructures/StructureBlock.h"
 #include "Blocks/MultiblockStructures/Tree.h"
 #include "Level.h"
-#include "player/Player.h"
+#include "Player/Player.h"
 #include "Textures.h"
 #include "Controls.h"
 #include "Views.h"

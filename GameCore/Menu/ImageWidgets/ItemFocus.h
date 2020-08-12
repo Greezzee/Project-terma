@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ImageWidget.h"
-#include "../../items/Item.h"
+#include "../../Items/Item.h"
 
 class ItemFocus: public ImageWidget {
 	// Put an item there to indicate it is focused
