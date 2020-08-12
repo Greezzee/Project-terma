@@ -15,7 +15,6 @@ const int MAX_LEVEL_SIZE = 500;
 const int BLOCK_SIZE = 40;
 //! размер экрана как бы увеличивается на это число во время прорисовки мультиблоков
 const int MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
-const int LIGHT_UPDATE_RADIUS = 20;
 
 /*
  * Сей класс наследуется от GameField, тут будет вся инфа о текущих объектах в игре
@@ -74,13 +73,10 @@ public:
 	//------------------------
 	void lightUpBlocks(int x, int y, int rad);
 	//------------------------
+
 	friend class InventoryScene;
 	friend class ItemButton;
 private:
-	// UTILS
-	//------------------------
-	template<typename Base, typename T> inline bool instanceof(const T*);
-	//------------------------
 
 	// DRAW
 	//------------------------

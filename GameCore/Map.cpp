@@ -35,6 +35,12 @@ void Map::addBlock(Vector2I pos, Block *block) {
 		delete blocks[pos.x][pos.y];
 	}
 	this->blocks[pos.x][pos.y] = block;
+
+	// LIGHT
+	LightSource *sr = NULL;
+	if ((sr = dynamic_cast<LightSource*>(blocks[pos.x][pos.y])) != NULL) {
+		lightUpBlocks(pos.x, pos.y, sr->getLightRadius());
+	}
 }
 
 template<typename T>
@@ -116,10 +122,6 @@ void Map::removeEntity(Entity *entity) {
 			return;
 		}
 	}
-}
-
-template<typename Base, typename T> inline bool Map::instanceof(const T*) {
-	return std::is_base_of<Base, T>::value;
 }
 
 /*
@@ -234,20 +236,6 @@ void Map::updateBlocks() {
 			/ BLOCK_SIZE + 1;
 	//----------------------------------------------------------------------------
 
-	// FLUSH LIGHT
-	//----------------------------------------------------------------------------
-	for (int x = startx; x < endx; x++) {
-		for (int y = starty; y < endy; y++) {
-			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
-				continue;
-			}
-			if (blocks[x][y]) {
-				blocks[x][y]->setLightLevel(0);
-			}
-		}
-	}
-	//----------------------------------------------------------------------------
-
 	// UPDATE
 	//----------------------------------------------------------------------------
 	for (int x = startx; x < endx; x++) {
@@ -257,27 +245,6 @@ void Map::updateBlocks() {
 			}
 			if (blocks[x][y]) {
 				blocks[x][y]->Update();
-			}
-		}
-	}
-	//----------------------------------------------------------------------------
-
-	startx -= LIGHT_UPDATE_RADIUS;
-	endx += LIGHT_UPDATE_RADIUS;
-	starty -= LIGHT_UPDATE_RADIUS;
-	endy += LIGHT_UPDATE_RADIUS;
-
-	// LIGHT
-	//----------------------------------------------------------------------------
-	for (int x = startx; x < endx; x++) {
-		for (int y = starty; y < endy; y++) {
-			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
-				continue;
-			}
-			LightSource *sr = NULL;
-			if (blocks[x][y]
-					&& (sr = dynamic_cast<LightSource*>(blocks[x][y])) != NULL) {
-				lightUpBlocks(x, y, sr->getLightRadius());
 			}
 		}
 	}
@@ -564,20 +531,6 @@ void Map::updateWallblocks() {
 			/ BLOCK_SIZE + 1;
 	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
 			/ BLOCK_SIZE + 1;
-	//----------------------------------------------------------------------------
-
-	// FLUSH LIGHT
-	//----------------------------------------------------------------------------
-	for (int x = startx; x < endx; x++) {
-		for (int y = starty; y < endy; y++) {
-			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
-				continue;
-			}
-			if (wallblocks[x][y]) {
-				wallblocks[x][y]->setLightLevel(0);
-			}
-		}
-	}
 	//----------------------------------------------------------------------------
 
 	// UPDATE

@@ -45,5 +45,5 @@ protected:
 	//! Можно ли через блок пройти
 	bool passable = 0;
 	//! current light level in [0, 1]
-	float lightLevel = 1.0f;
+	float lightLevel = 0.0f;
 };
