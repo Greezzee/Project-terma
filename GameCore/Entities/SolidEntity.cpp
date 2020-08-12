@@ -1,10 +1,12 @@
-#include "../Entities/SolidEntity.h"
+#include "SolidEntity.h"
 
 #include <algorithm>
 #include <cmath>
 
-#include "../../Engine/AllEngine.h"
-#include "../Map.h"
+#include "../../Engine/Colliders/SquareCollider.h"
+#include "../../Engine/Time/TimeManager.h"
+#include "../../Engine/Utility/Coordinate.h"
+#include "../Map/Map.h"
 
 const float epsilon = 1.0f;
 const float k = 4.0f;

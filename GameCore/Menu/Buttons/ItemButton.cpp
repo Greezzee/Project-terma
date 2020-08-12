@@ -1,9 +1,13 @@
 #include "ItemButton.h"
 
-#include "../../Scenes/InventoryScene.h"
-
 #include <cstdio>
 #include <iostream>
+
+#include "../../../Engine/Utility/Coordinate.h"
+#include "../../Map/Map.h"
+#include "../../Player/Player.h"
+#include "../../Scenes/InventoryScene.h"
+#include "../ImageWidgets/ItemFocus.h"
 
 ItemButton::ItemButton(Item *_item) {
 	item = _item;

@@ -14,9 +14,4 @@ public:
 		return new GrassBlock();
 	}
 
-	void Update();
 };
-
-void GrassBlock::Update() {
-
-}

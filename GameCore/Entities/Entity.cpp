@@ -1,9 +1,7 @@
-#include "../Entities/Entity.h"
+#include "Entity.h"
 
-#include <iostream>
-
-#include "../../Engine/AllEngine.h"
-#include "../Map.h"
+#include "../../Engine/Time/TimeManager.h"
+#include "../../Engine/Utility/Coordinate.h"
 
 void Entity::Destroy() {
 }

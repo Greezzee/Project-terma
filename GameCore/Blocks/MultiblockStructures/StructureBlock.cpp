@@ -1,9 +1,7 @@
-#include "../MultiblockStructures/StructureBlock.h"
+#include "StructureBlock.h"
 
-#include <stddef.h>
-
-#include "../../Map.h"
-#include "../MultiblockStructures/Multiblock.h"
+#include "../../Map/Map.h"
+#include "Multiblock.h"
 
 class Textures;
 

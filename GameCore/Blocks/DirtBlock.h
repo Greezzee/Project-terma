@@ -17,8 +17,4 @@ public:
 		return new DirtBlock();
 	}
 
-	void Update();
 };
-
-void DirtBlock::Update() {
-}

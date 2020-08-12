@@ -1,8 +1,10 @@
-#include "../Mobs/RedStar.h"
+#include "RedStar.h"
+
+#include <cstdlib>
 
 #include "../../../Engine/Graphics/DrawData.h"
 #include "../../../Engine/Graphics/GraphicManager.h"
-#include "../../Map.h"
+#include "../../Map/Map.h"
 #include "../../Textures.h"
 #include "../../Views.h"
 

@@ -1,16 +1,15 @@
-#include "../../Engine/AllEngine.h"
-
 #include "GameplayScene.h"
 
 #include <cstdio>
 #include <iostream>
 
-#include "../Map.h"
-#include "MainMenuScene.h"
-#include "InventoryScene.h"
-#include "../Textures.h"
+#include "../../Engine/Control/InputManager.h"
+#include "../../Engine/SceneManagment/SceneManager.h"
 #include "../Controls.h"
+#include "../Map/Map.h"
 #include "../Testing/TestLevel.h"
+#include "InventoryScene.h"
+#include "MainMenuScene.h"
 
 GameplayScene::GameplayScene() {
 }

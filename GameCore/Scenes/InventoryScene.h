@@ -2,8 +2,9 @@
 
 #include "MenuScene.h"
 
-#include "../Map.h"
-#include "../Menu/ImageWidgets/ItemFocus.h"
+class Inventory;
+class ItemFocus;
+class Map;
 
 class InventoryScene: public MenuScene {
 	// Current map

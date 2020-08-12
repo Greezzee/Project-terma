@@ -1,17 +1,23 @@
-#include "../../Engine/AllEngine.h"
 #include "InventoryScene.h"
 
 #include <cstdio>
 #include <iostream>
 #include <vector>
 
-#include "../Map.h"
+#include "../../Engine/Control/InputManager.h"
+#include "../../Engine/SceneManagment/SceneManager.h"
+#include "../../Engine/Time/TimeManager.h"
+#include "../../Engine/Utility/Coordinate.h"
+#include "../Controls.h"
+#include "../Items/Item.h"
+#include "../Map/Map.h"
+#include "../Menu/Buttons/ItemButton.h"
 #include "../Menu/ImageWidgets/Background.h"
 #include "../Menu/ImageWidgets/ItemFocus.h"
-#include "../Menu/Buttons/ItemButton.h"
+#include "../Player/Inventory.h"
+#include "../Player/Player.h"
 #include "../Textures.h"
 #include "../Views.h"
-#include "../Controls.h"
 
 InventoryScene::InventoryScene(Map *_map) {
 	delay = 0;

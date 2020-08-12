@@ -2,23 +2,25 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
-#include <iostream>
 #include <iterator>
-#include <type_traits>
 
-#include "../Engine/AllEngine.h"
-#include "Blocks/DirtBlock.h"
-#include "Blocks/GrassBlock.h"
-#include "Blocks/MultiblockStructures/Lantern.h"
-#include "Blocks/MultiblockStructures/Multiblock.h"
-#include "Blocks/MultiblockStructures/StructureBlock.h"
-#include "Blocks/MultiblockStructures/Tree.h"
+#include "../../Engine/Colliders/Collider.h"
+#include "../../Engine/Colliders/SquareCollider.h"
+#include "../../Engine/Graphics/DrawData.h"
+#include "../../Engine/Graphics/GraphicManager.h"
+#include "../../Engine/Utility/Coordinate.h"
+#include "../Blocks/DirtBlock.h"
+#include "../Blocks/GrassBlock.h"
+#include "../Blocks/MultiblockStructures/Lantern.h"
+#include "../Blocks/MultiblockStructures/Multiblock.h"
+#include "../Blocks/MultiblockStructures/StructureBlock.h"
+#include "../Blocks/MultiblockStructures/Tree.h"
+#include "../Player/Player.h"
+#include "../Textures.h"
+#include "../Views.h"
 #include "Level.h"
-#include "Player/Player.h"
-#include "Textures.h"
-#include "Controls.h"
-#include "Views.h"
 
 class Multiblock;
 
@@ -81,8 +83,8 @@ void Map::Update() {
 	drawBackground();
 	drawWallblocks();
 	drawBlocks();
-	drawEntities();
 	drawMultiblocks();
+	drawEntities();
 }
 
 void Map::Destroy() {

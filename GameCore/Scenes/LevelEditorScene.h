@@ -1,17 +1,29 @@
 #pragma once
 
-#include "../../Engine/AllEngine.h"
-#include "../Menu/MenuWidget.h"
-
+#include "../Blocks/Block.h"
 #include "MenuScene.h"
+
+class Block;
+class Map;
 
 class LevelEditorScene : public MenuScene {
 public:
+	// Constructor and destructor
+	//----------------------------------------------
 	LevelEditorScene();
+	~LevelEditorScene();
+	//----------------------------------------------
 
+	// BASE
+	//----------------------------------------------
 	void Init() override;
 	void Update() override;
 	void Destroy() override;
+	//----------------------------------------------
 
-	~LevelEditorScene();
+private:
+
+	Map * currentMap = NULL;
+	Block* currentBlock = NULL;
+	char currentLayer = 0;
 };
