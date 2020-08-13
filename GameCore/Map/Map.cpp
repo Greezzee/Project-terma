@@ -211,8 +211,8 @@ void Map::drawBackground() {
 	info.position.x = player->GetPos().x;
 	info.position.y = player->GetPos().y;
 
-	info.size.x = 2000;
-	info.size.y = 1000;
+	info.size.x = 1600;
+	info.size.y = 900;
 
 	info.origin = { 0.5, 0.5 };
 

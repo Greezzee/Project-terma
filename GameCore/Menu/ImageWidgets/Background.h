@@ -5,7 +5,7 @@
 
 class Background : public ImageWidget
 {
-	unsigned view;
+	unsigned view = -1;
 public:
 	Background();
 

@@ -12,6 +12,9 @@ class MainMenuScene;
 
 void ProjectTerma::Init()
 {
+
+	GraphicManager::SetResolution(Vector2U(resolution.x, resolution.y));
+
 	printf("Game started!\n");
 	printf("Loading resources!\n");
 	Textures::LOAD_ALL_TEXTURES();
@@ -22,7 +25,6 @@ void ProjectTerma::Init()
 	printf("Loading controls!\n");
 	Controls::LOAD_ALL_GAMEKEYS();
 	printf("Controls loaded!\n");
-
 }
 
 void ProjectTerma::Update()

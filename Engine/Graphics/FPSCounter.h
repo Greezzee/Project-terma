@@ -13,7 +13,7 @@ namespace tge
 	private:
 		float _sec = 0;
 		unsigned _frames = 0;
-
+public:
 		bool is_active = false;
 
 		friend class GraphicManager;
