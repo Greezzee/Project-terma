@@ -23,7 +23,7 @@ std::vector<std::list<sf::Sprite>> GraphicManager::to_draw;
 unsigned GraphicManager::_sprites_count;
 std::vector<int> GraphicManager::_basic_shapes;
 unsigned GraphicManager::_engine_sprites_count;
-tge::FPSCounter GraphicManager::_fps_counter;
+FPSCounter GraphicManager::_fps_counter;
 
 std::vector<View> GraphicManager::views;
 const unsigned GraphicManager::LAYER_COUNT = 20;
