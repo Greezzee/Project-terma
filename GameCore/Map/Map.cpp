@@ -4,10 +4,12 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <iostream>
 #include <iterator>
 
 #include "../../Engine/Colliders/Collider.h"
 #include "../../Engine/Colliders/SquareCollider.h"
+#include "../../Engine/Debugger/Debugger.h"
 #include "../../Engine/Graphics/DrawData.h"
 #include "../../Engine/Graphics/GraphicManager.h"
 #include "../../Engine/Utility/Coordinate.h"
@@ -19,7 +21,6 @@
 #include "../Blocks/MultiblockStructures/Tree.h"
 #include "../Player/Player.h"
 #include "../Textures.h"
-#include "../Views.h"
 #include "Level.h"
 
 class Multiblock;
@@ -74,17 +75,23 @@ void Map::Init() {
 }
 
 void Map::Update() {
+
 	if (!is_paused) {
 		updateWallblocks();
 		updateBlocks();
 		updateEntities();
 	}
 
-	drawBackground();
+	if (mayDrawBackground)
+		drawBackground();
 	drawWallblocks();
 	drawBlocks();
 	drawMultiblocks();
 	drawEntities();
+
+	if (mayDrawGrid) {
+		drawGrid();
+	}
 }
 
 void Map::Destroy() {
@@ -147,7 +154,7 @@ void Map::removeEntity(Entity *entity) {
  */
 //! Рисует блоки, схема прорисовки в ИГРОВЫХ координатах выше.
 void Map::drawBlocks() {
-	View *camera = this->player->getCamera();
+	View *camera = GraphicManager::GetView(this->player->getCamera());
 	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
 			/ BLOCK_SIZE - 1;
 	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
@@ -191,11 +198,12 @@ void Map::drawBlocks() {
 			info.frame = 0;
 			info.layer = 0;
 
-			info.color.b = info.color.r = info.color.g = 255
-					* currBlock->getLightLevel();
+			if (!ignoreLight)
+				info.color.b = info.color.r = info.color.g = 255
+						* currBlock->getLightLevel();
 
 			info.spriteID = currBlock->getSpriteId();
-			GraphicManager::Draw(info, Views::PLAYER_CAM);
+			GraphicManager::Draw(info, this->player->getCamera());
 		}
 	}
 }
@@ -220,11 +228,11 @@ void Map::drawBackground() {
 	info.layer = 0;
 
 	info.spriteID = Textures::TEST_BACKGROUND;
-	GraphicManager::Draw(info, Views::PLAYER_CAM);
+	GraphicManager::Draw(info, this->player->getCamera());
 }
 
 void Map::updateBlocks() {
-	View *camera = this->player->getCamera();
+	View *camera = GraphicManager::GetView(this->player->getCamera());
 
 	//----------------------------------------------------------------------------
 	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
@@ -256,24 +264,24 @@ void Map::updateBlocks() {
 void Map::genTestStuff() {
 	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
-			addWallblock( { x, y }, new DirtBlock());
+			addWallblock(Vector2I(x, y), new DirtBlock());
 		}
 	}
 	for (int y = 0; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-			addBlock( { x, y }, new DirtBlock());
+			addBlock(Vector2I(x, y), new DirtBlock());
 		}
 	}
 	for (int y = 10; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 			int token = rand() % 3;
 			if (token == 1 || token == 2)
-				addBlock( { x, y }, new GrassBlock());
+				addBlock(Vector2I(x, y), new GrassBlock());
 		}
 	}
 	for (int y = 13; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-			addBlock( { x, y }, new GrassBlock());
+			addBlock(Vector2I(x, y), new GrassBlock());
 		}
 	}
 
@@ -317,8 +325,8 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 
 			// DEBUG
 			//------------------------------
-			//Debugger::DrawSquareCollider(bl, 10, 4, Views::PLAYER_CAM);
-			//Debugger::DrawLine(bl.getPos(), col->getPos(), 4, Views::PLAYER_CAM,
+			//Debugger::DrawSquareCollider(bl, 10, 4, this->player->getCamera());
+			//Debugger::DrawLine(bl.getPos(), col->getPos(), 4, this->player->getCamera(),
 			//		Color::Red());
 			//------------------------------
 
@@ -337,7 +345,7 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 }
 
 void Map::drawMultiblocks() {
-	View *camera = this->player->getCamera();
+	View *camera = GraphicManager::GetView(this->player->getCamera());
 	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
 			/ BLOCK_SIZE - 1;
 	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
@@ -374,20 +382,21 @@ void Map::drawMultiblocks() {
 
 			info.origin = { 0.5, 0.5 };
 
-			info.color.r =
-					info.color.g =
-							info.color.b =
-									255.0f
-											* getBlockFromMesh(
-													Vector2I(x, y)
-															+ currBlock->getSize()
-																	* 0.5)->getLightLevel();
+			if (!ignoreLight)
+				info.color.r =
+						info.color.g =
+								info.color.b =
+										255.0f
+												* getBlockFromMesh(
+														Vector2I(x, y)
+																+ currBlock->getSize()
+																		* 0.5)->getLightLevel();
 
 			info.frame = 0;
 			info.layer = 0;
 
 			info.spriteID = currBlock->getSpriteId();
-			GraphicManager::Draw(info, Views::PLAYER_CAM);
+			GraphicManager::Draw(info, this->player->getCamera());
 		}
 	}
 }
@@ -399,7 +408,7 @@ void Map::addMultiblock(Vector2I pos, Multiblock *block) {
 			if (x == 0 && y == 0) {
 				continue;
 			}
-			addBlock( { pos.x + x, pos.y + y }, new StructureBlock(block));
+			addBlock(Vector2I(pos.x + x, pos.y + y), new StructureBlock(block));
 		}
 	}
 }
@@ -466,7 +475,7 @@ void Map::updateEntities() {
 }
 
 void Map::drawWallblocks() {
-	View *camera = this->player->getCamera();
+	View *camera = GraphicManager::GetView(this->player->getCamera());
 
 	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
 			/ BLOCK_SIZE - 1;
@@ -511,17 +520,102 @@ void Map::drawWallblocks() {
 			info.frame = 0;
 			info.layer = 0;
 
-			info.color.b = info.color.r = info.color.g = 255.0f
-					* currBlock->getLightLevel() * 0.5f;
+			info.color.b = info.color.r = info.color.g = 255.0f * 0.5f;
+
+			if (!ignoreLight) {
+				info.color.r *= currBlock->getLightLevel();
+				info.color.g *= currBlock->getLightLevel();
+				info.color.b *= currBlock->getLightLevel();
+			}
 
 			info.spriteID = currBlock->getSpriteId();
-			GraphicManager::Draw(info, Views::PLAYER_CAM);
+			GraphicManager::Draw(info, this->player->getCamera());
 		}
 	}
 }
 
+void Map::setPlayersView(unsigned view) {
+	player->setCamera(view);
+}
+
+bool Map::isIgnoreLight() const {
+	return ignoreLight;
+}
+
+void Map::setIgnoreLight(bool ignoreLight) {
+	this->ignoreLight = ignoreLight;
+}
+
+void Map::drawGrid() {
+	View *camera = GraphicManager::GetView(this->player->getCamera());
+	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
+			/ BLOCK_SIZE - 1;
+	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
+			/ BLOCK_SIZE - 1;
+
+	int endx = (camera->virtual_position.x + camera->virtual_size.x / 2)
+			/ BLOCK_SIZE + 1;
+	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
+			/ BLOCK_SIZE + 1;
+
+	for (int x = startx; x < endx; x++) {
+		for (int y = starty; y < endy; y++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
+
+			Block *currBlock = blocks[x][y];
+
+			float x0 = x * BLOCK_SIZE;
+			float y0 = y * BLOCK_SIZE;
+
+			float x1 = (x + 1) * BLOCK_SIZE;
+			float y1 = (y + 1) * BLOCK_SIZE;
+
+			float th = 2;
+			Color co = { 0, 0, 0 };
+
+			if (currBlock != NULL && (dynamic_cast<StructureBlock*>(currBlock) != NULL || dynamic_cast<Multiblock*>(currBlock) != NULL)) {
+				co.r = 255;
+			}
+
+			Debugger::DrawLine( { x0, y0 }, { x0, y1 }, th,
+					this->player->getCamera(), co);
+			Debugger::DrawLine( { x0, y0 }, { x1, y0 }, th,
+					this->player->getCamera(), co);
+			Debugger::DrawLine( { x1, y1 }, { x0, y1 }, th,
+					this->player->getCamera(), co);
+			Debugger::DrawLine( { x1, y1 }, { x1, y0 }, th,
+					this->player->getCamera(), co);
+		}
+	}
+}
+
+void Map::addBlock(Vector2F pos, Block *block) {
+	Vector2I grid_pos = getGridCoords(pos);
+
+	if (grid_pos.x == -1) {
+		return;
+	}
+
+	if (getBlockFromMesh(grid_pos) != NULL) {
+		return;
+	}
+
+	addBlock(grid_pos, block);
+}
+
+Vector2I Map::getGridCoords(Vector2F pos) {
+	int x = pos.x / BLOCK_SIZE;
+	int y = pos.y / BLOCK_SIZE;
+	if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+		return {-1, -1};
+	}
+	return {x, y};
+}
+
 void Map::updateWallblocks() {
-	View *camera = this->player->getCamera();
+	View *camera = GraphicManager::GetView(this->player->getCamera());
 
 	//----------------------------------------------------------------------------
 	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
@@ -548,4 +642,20 @@ void Map::updateWallblocks() {
 		}
 	}
 	//----------------------------------------------------------------------------
+}
+
+bool Map::isMayDrawGrid() const {
+	return mayDrawGrid;
+}
+
+void Map::setMayDrawGrid(bool mayDrawGrid) {
+	this->mayDrawGrid = mayDrawGrid;
+}
+
+bool Map::isMayDrawBackground() const {
+	return mayDrawBackground;
+}
+
+void Map::setMayDrawBackground(bool mayDrawBackground) {
+	this->mayDrawBackground = mayDrawBackground;
 }

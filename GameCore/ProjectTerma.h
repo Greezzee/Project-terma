@@ -9,7 +9,7 @@
  */
 
 // Current resolution
-const Vector2F resolution = {1024, 576};
+const Vector2F resolution = {1920, 1080};
 
 class ProjectTerma: public Scene {
 

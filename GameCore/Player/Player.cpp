@@ -16,7 +16,7 @@
 #include "../Views.h"
 
 Player::Player() {
-	camera = GraphicManager::GetView(Views::PLAYER_CAM);
+	camera = Views::PLAYER_CAM;
 
 	texture_size = { 5 * BLOCK_SIZE, 5 * BLOCK_SIZE };
 	collider_size = { 1.7f * BLOCK_SIZE, 5 * BLOCK_SIZE };
@@ -29,7 +29,7 @@ Player::Player() {
 	weapon_equipped = nullptr;
 }
 
-View* Player::getCamera() {
+unsigned Player::getCamera() {
 	return camera;
 }
 
@@ -110,8 +110,8 @@ void Player::Update() {
 		speed.y = 1500;
 	}
 
-	camera->virtual_position.x = _pos.x;
-	camera->virtual_position.y = _pos.y;
+	GraphicManager::GetView(camera)->virtual_position.x = _pos.x;
+	GraphicManager::GetView(camera)->virtual_position.y = _pos.y;
 }
 
 void Player::Init(GameObject *owner) {
@@ -180,7 +180,7 @@ void Player::drawHealthBar() {
 
 		// DRAW
 		//----------------------------
-		GraphicManager::Draw(info, Views::PLAYER_CAM);
+		GraphicManager::Draw(info, camera);
 		//----------------------------
 	}
 }
@@ -214,7 +214,7 @@ void Player::drawPlayer() {
 
 	// DRAW
 	//----------------------------
-	GraphicManager::Draw(info, Views::PLAYER_CAM);
+	GraphicManager::Draw(info, camera);
 	//----------------------------
 
 }
@@ -251,4 +251,8 @@ bool Player::isEquipped()
 Item* Player::getEquippedWeapon()
 {
 	return weapon_equipped;
+}
+
+void Player::setCamera(unsigned camera) {
+	this->camera = camera;
 }

@@ -25,13 +25,16 @@ LevelEditorScene::LevelEditorScene() {
 void LevelEditorScene::Init() {
 	widgets = new std::vector<MenuWidget*>;
 	currentMap->setLevel(new EmptyLevel());
+
 	currentMap->Init();
+
+	currentMap->setMayDrawBackground(false);
+
+	currentMap->setPlayersView(Views::EDITOR_CAM);
+	currentMap->setIgnoreLight(true);
+	currentMap->setMayDrawGrid(true);
 	currentMap->Update();
 	currentMap->pauseGame();
-
-//	GraphicManager::GetView(Views::PLAYER_CAM)->real_size =
-//			GraphicManager::GetView(Views::PLAYER_CAM)->real_size * 0.7f;
-
 	printf("LevelEditorScene created!\n");
 }
 
@@ -44,6 +47,22 @@ void LevelEditorScene::Update() {
 		SceneManager::CloseScene(this);
 		return;
 	}
+	if (InputManager::IsDown(Controls::LEFT)) {
+		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_position.x += -1;
+	}
+	if (InputManager::IsDown(Controls::RIGHT)) {
+		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_position.x += 1;
+	}
+	if (InputManager::IsDown(Controls::JUMP)) {
+		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_position.y += 1;
+	}
+
+	if (InputManager::IsDown(MouseKey::Mouse_Left)) {
+		Vector2F pos = GraphicManager::ConvertRealToView(
+					InputManager::GetMousePos(), Views::EDITOR_CAM);
+		currentMap->addBlock(pos, (Block*)currentBlock->Clone());
+	}
+
 }
 
 void LevelEditorScene::Destroy() {
@@ -58,9 +77,6 @@ void LevelEditorScene::Destroy() {
 
 	printf("LevelEditorScene destroyed!\n");
 	std::cout.flush();
-
-	GraphicManager::GetView(Views::PLAYER_CAM)->real_size =
-			GraphicManager::GetView(Views::PLAYER_CAM)->real_size / 0.7f;
 }
 
 LevelEditorScene::~LevelEditorScene() {

@@ -35,7 +35,8 @@ public:
 	void unequipWeapon();
 	//! Returns true if some weapon is equipped, otherwise false
 	bool isEquipped();
-	View* getCamera();
+	unsigned getCamera();
+	void setCamera(unsigned camera);
 	//--------------------------------------------------------------------
 
 	// FRIENDS
@@ -54,7 +55,7 @@ private:
 
 	// Camera
 	//--------------------------------------------------------------------
-	View *camera;
+	unsigned camera;
 	//--------------------------------------------------------------------
 
 	bool lookingRight;

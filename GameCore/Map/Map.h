@@ -22,8 +22,6 @@ const int MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
  * Сей класс наследуется от GameField, тут будет вся инфа о текущих объектах в игре
  */
 class Map {
-	// Shows if the game is paused or not
-	bool is_paused;
 public:
 	// BASE
 	//------------------------
@@ -41,15 +39,19 @@ public:
 
 	// GETTERS|SETTERS
 	//------------------------
+	void setPlayersView(unsigned view);
 	void setLevel(Level *level);
 	Level* getLevel();
 	//! Возвращает блок по координатам В СЕТКЕ!!!
 	Block* getBlockFromMesh(Vector2I pos);
 	Block* getBlock(Vector2F pos);
 	Block* getWallblock(Vector2F pos);
-	Inventory* getInventory();
 	//! This function may invoke given function with every entity on map that is unasledovana from T
 	template<typename T> void collectEntities(void inv(T * ent));
+	bool isIgnoreLight() const;
+	void setIgnoreLight(bool ignoreLight = 0);
+	bool isMayDrawGrid() const;
+	void setMayDrawGrid(bool mayDrawGrid = 0);
 	//------------------------
 
 	// MAP EDITOR
@@ -59,6 +61,8 @@ public:
 	void addBlock(Vector2I pos, Block * block);
 	void addEntity(Vector2F pos, Entity * entity);
 	void removeEntity(Entity * entity);
+	void addBlock(Vector2F pos, Block * block);
+	Vector2I getGridCoords(Vector2F pos);
 	//------------------------
 
 	// TEST
@@ -74,6 +78,9 @@ public:
 	// LIGHT
 	//------------------------
 	void lightUpBlocks(int x, int y, int rad);
+	bool isMayDrawBackground() const;
+	void setMayDrawBackground(bool mayDrawBackground = 0);
+
 	//------------------------
 
 	friend class InventoryScene;
@@ -87,6 +94,7 @@ private:
 	void drawBackground();
 	void drawMultiblocks();
 	void drawWallblocks();
+	void drawGrid();
 	//------------------------
 
 	// UPDATE
@@ -102,6 +110,19 @@ private:
 	Block *wallblocks[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
 	std::vector<Entity*> entities;
 	SquareCollider *colliders_wireframe[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
+	//------------------------
+
+	// PAUSE
+	//------------------------
+	// Shows if the game is paused or not
+	bool is_paused;
+	//------------------------
+
+	// DEBUG
+	//------------------------
+	bool ignoreLight = 0;
+	bool mayDrawGrid = 0;
+	bool mayDrawBackground = 1;
 	//------------------------
 
 	// INIT blocks and entities (Level)

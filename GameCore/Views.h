@@ -14,6 +14,7 @@ public:
 
 	static unsigned MAIN_MENU;
 	static unsigned PLAYER_CAM;
+	static unsigned EDITOR_CAM;
 
 	static void LOAD_ALL_VIEWS();
 
