@@ -7,10 +7,8 @@ void Item::Draw()
 
 Item::Item()
 {
-	type = MELEE_WEAPON;
 	icon_id = -1;
 	size = {0 ,0};
-	is_equipped = false;
 }
 
 void Item::setIconID(unsigned _id)
@@ -33,25 +31,4 @@ Vector2F Item::getSize()
 	return size;
 }
 
-GameObject* Item::Clone() const
-{
-	return nullptr;
-}
-
-void Item::equip()
-{
-	is_equipped = true;
-}
-
-void Item::unequip()
-{
-	is_equipped = false;
-}
-
-Item::~Item() {
-}
-
-bool Item::isEquipped()
-{
-	return is_equipped;
-}
+Item::~Item() {}

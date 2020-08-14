@@ -10,7 +10,7 @@
 #include "../../Engine/Utility/Coordinate.h"
 #include "../Blocks/Block.h"
 #include "../Controls.h"
-#include "../Items/Sword.h"
+#include "../Items/LimbSword.h"
 #include "../Map/Map.h"
 #include "../Textures.h"
 #include "../Views.h"
@@ -122,10 +122,10 @@ void Player::Init(GameObject *owner) {
 
 	// TEST ITEMS
 	for (int i = 0; i < 19; i++) {
-		Sword *sword = new Sword();
-		sword->Init(nullptr);
+		LimbSword *limb_sword = new LimbSword();
+		limb_sword->Init(nullptr);
 		// sword->setName("Sword " + std::to_string(i));
-		inventory->addItem(sword);
+		inventory->addItem(limb_sword);
 	}
 	printf("Player created!\n");
 	printf("%d item(s) in the inventory!\n", inventory->getItemsNumber());
