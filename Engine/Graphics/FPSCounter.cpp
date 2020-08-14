@@ -1,6 +1,6 @@
 #include "FPSCounter.h"
 
-void tge::FPSCounter::Update()
+void FPSCounter::Update()
 {
 	_sec += TimeManager::GetDeltaTimeF();
 	_frames++;

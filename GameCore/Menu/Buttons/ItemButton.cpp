@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "../../../Engine/Utility/Coordinate.h"
+#include "../../Items/Equippable.h"
 #include "../../Map/Map.h"
 #include "../../Player/Player.h"
 #include "../../Scenes/InventoryScene.h"
@@ -20,24 +21,29 @@ void ItemButton::clickReact() {
 	// Equip this item (give the pointet to the player, indicate that other item is unequipped)
 
 	InventoryScene *_scene = dynamic_cast<InventoryScene*>(current_scene);
+	Equippable *_item = dynamic_cast<Equippable*>(item);
 
-	if (!item->isEquipped()) {
-		// If the item isn't equipped yet
+	if (_item != nullptr) {
+		if (!_item->isEquipped()) {
+			// If the item isn't equipped yet
 
-		if (_scene->gamefield->player->isEquipped()) {
-			// Some item is equipped at the moment
-			_scene->gamefield->player->weapon_equipped->unequip();
+			if (_scene->gamefield->player->isEquipped()) {
+				// Some item is equipped at the moment
+				Equippable *__item =
+						dynamic_cast<Equippable*>(_scene->gamefield->player->weapon_equipped);
+				__item->unequip();
+			}
+
+			_item->equip();
+			_scene->gamefield->player->equipWeapon(item);
+		} else {
+			// Unequip this item
+
+			printf("UNEQUIP!\n");
+
+			_item->unequip();
+			_scene->gamefield->player->unequipWeapon();
 		}
-
-		item->equip();
-		_scene->gamefield->player->equipWeapon(item);
-	} else {
-		// Unequip this item
-
-		printf("UNEQUIP!\n");
-
-		item->unequip();
-		_scene->gamefield->player->unequipWeapon();
 	}
 }
 
@@ -83,18 +89,19 @@ Vector2F ItemButton::getOriginalPos() {
 }
 
 void ItemButton::Update() {
-	// If the item is equipped, change button's position. If not, return its position
+	Equippable *_item = dynamic_cast<Equippable*>(item);
 
-	if (this->item->isEquipped()) {
-		// If this button's item is equipped, change it's position to the equipped icon
-		this->SetPos(weaponEquippedIcon);
-		this->item->SetPos(weaponEquippedIcon);
-	} else {
-		// Othewise return the original position
-		this->SetPos(this->getOriginalPos());
-		this->item->SetPos(this->getOriginalPos());
+	if (_item != nullptr) {
+		if (_item->isEquipped()) {
+			// If this button's item is equipped, change it's position to the equipped icon
+			SetPos(weaponEquippedIcon);
+			item->SetPos(weaponEquippedIcon);
+		} else {
+			// Othewise return the original position
+			SetPos(getOriginalPos());
+			item->SetPos(getOriginalPos());
+		}
 	}
-
 	if (isFocused())
 		focusReact();
 	else

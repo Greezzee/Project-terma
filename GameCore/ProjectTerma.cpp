@@ -16,6 +16,8 @@ void ProjectTerma::Init()
 	GraphicManager::SetResolution(Vector2U(resolution.x, resolution.y));
 
 	printf("Game started!\n");
+	GraphicManager::SetResolution(Vector2U(resolution.x, resolution.y));
+	printf("Current resolution is %g x %g\n", resolution.x, resolution.y);
 	printf("Loading resources!\n");
 	Textures::LOAD_ALL_TEXTURES();
 	printf("Textures loaded!\n");

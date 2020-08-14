@@ -151,7 +151,7 @@ private:
 
 	static unsigned _engine_sprites_count;
 
-	static tge::FPSCounter _fps_counter;
+	static FPSCounter _fps_counter;
 
 	friend class Debugger;
 };
