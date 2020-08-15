@@ -30,6 +30,8 @@ public:
 	void updateWidgets();
 	//! Sets the 'is_active' variable to false
 	void disableScene();
+	//! Destroys all widgets
+	void destroyWidgets();
 
 	//! The Init() method should include creating all widgets and putting them into the suitable vector
 	virtual void Init() = 0;

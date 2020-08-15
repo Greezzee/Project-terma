@@ -38,6 +38,7 @@ void MainOptionsScene::Init() {
 	back_options_button->SetPos( { 80, 820 });
 	back_options_button->SetSize( { 120, 120 });
 	back_options_button->SetGap( { 0, 0 });
+	back_options_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(back_options_button);
 
 	ControlsButton *controls_button = new ControlsButton();
@@ -47,6 +48,7 @@ void MainOptionsScene::Init() {
 	controls_button->SetPos( { 800, 600 });
 	controls_button->SetSize( { 760, 230 });
 	controls_button->SetGap( { 45, 55 });
+	controls_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(controls_button);
 
 	ResolutionButton *resolution_button = new ResolutionButton();
@@ -56,6 +58,7 @@ void MainOptionsScene::Init() {
 	resolution_button->SetPos( { 800, 400 });
 	resolution_button->SetSize( { 760, 230 });
 	resolution_button->SetGap( { 45, 55 });
+	resolution_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(resolution_button);
 
 	printf("MainOptionsScene created!\n");
@@ -79,12 +82,7 @@ void MainOptionsScene::Update() {
 }
 
 void MainOptionsScene::Destroy() {
-	for (auto widget : *widgets) {
-		widget->Destroy();
-		delete widget;
-	}
-	widgets->clear();
-	delete widgets;
+	destroyWidgets();
 
 	printf("MainOptionsScene destroyed!\n");
 	std::cout.flush();

@@ -53,7 +53,7 @@ void LevelEditorScene::Update() {
 	if (InputManager::IsDown(Controls::RIGHT)) {
 		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_position.x += 1;
 	}
-	if (InputManager::IsDown(Controls::JUMP)) {
+	if (InputManager::IsDown(Controls::UP)) {
 		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_position.y += 1;
 	}
 
@@ -72,8 +72,7 @@ void LevelEditorScene::Destroy() {
 	delete currentMap;
 	delete currentBlock;
 
-	widgets->clear();
-	delete widgets;
+	destroyWidgets();
 
 	printf("LevelEditorScene destroyed!\n");
 	std::cout.flush();

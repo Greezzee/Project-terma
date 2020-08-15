@@ -4,7 +4,9 @@ class ResolutionButton: public Button {
 public:
 	ResolutionButton();
 
-	void clickReact() override;
+	void rightClickReact() override;
+	void leftClickReact() override;
+
 	void focusReact() override;
 	void disfocusReact() override;
 	void Destroy() override;

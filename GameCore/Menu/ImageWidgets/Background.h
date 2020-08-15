@@ -5,11 +5,9 @@
 
 class Background : public ImageWidget
 {
-	unsigned view = -1;
 public:
 	Background();
 
-	void SetView(unsigned _view);
 	unsigned GetView();
 
 	void Init(GameObject* owner) override;

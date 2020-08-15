@@ -3,12 +3,11 @@
 #include "../../../Engine/AllEngine.h"
 #include "../../Views.h"
 
-Button::Button()
-{
-	_gap = {0, 0};
+Button::Button() {
+	_gap = { 0, 0 };
 }
 
-bool Button::isClicked() {
+bool Button::isLeftClicked() {
 	bool _click = InputManager::IsPressed(MouseKey::Mouse_Left);
 	Vector2F _mpos = GraphicManager::ConvertRealToView(
 			InputManager::GetMousePos(), Views::MAIN_MENU);
@@ -44,7 +43,7 @@ void Button::Draw() {
 	info.layer = 1;
 
 	info.spriteID = this->sprite_id;
-	GraphicManager::Draw(info, Views::MAIN_MENU);
+	GraphicManager::Draw(info, view_id);
 }
 
 void Button::Update() {
@@ -52,13 +51,27 @@ void Button::Update() {
 		focusReact();
 	else
 		disfocusReact();
-	if (isClicked())
-		clickReact();
+
+	if (isRightClicked())
+		rightClickReact();
+	else if (isLeftClicked())
+		leftClickReact();
 }
 
-void Button::SetGap(Vector2F __gap)
-{
+void Button::SetGap(Vector2F __gap) {
 	_gap = __gap;
 }
 
 Button::~Button() {}
+
+bool Button::isRightClicked() {
+	bool _click = InputManager::IsPressed(MouseKey::Mouse_Right);
+	Vector2F _mpos = GraphicManager::ConvertRealToView(
+			InputManager::GetMousePos(), Views::MAIN_MENU);
+	bool _res = (_mpos.x >= _pos.x - _size.x * 0.5 + _gap.x)
+			&& (_mpos.x <= 0.5 * _size.x + _pos.x - _gap.x)
+			&& (_mpos.y >= _pos.y - _size.y * 0.5 + _gap.y)
+			&& (_mpos.y <= 0.5 * _size.y + _pos.y - _gap.y) && _click;
+
+	return _res;
+}

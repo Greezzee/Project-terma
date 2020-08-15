@@ -8,7 +8,7 @@
 
 MenuLevelEditorButton::MenuLevelEditorButton() {}
 
-void MenuLevelEditorButton::clickReact()
+void MenuLevelEditorButton::leftClickReact()
 {
 	SceneManager::CreateScene(new LevelEditorScene());
 	current_scene->disableScene();
@@ -33,6 +33,11 @@ void MenuLevelEditorButton::Destroy()
 void MenuLevelEditorButton::Init(GameObject *owner)
 {
 	printf("MenuLevelEditorButton created!\n");
+}
+
+void MenuLevelEditorButton::rightClickReact()
+{
+	// Nothing for now
 }
 
 MenuLevelEditorButton::~MenuLevelEditorButton() {}

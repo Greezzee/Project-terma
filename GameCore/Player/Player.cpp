@@ -106,7 +106,7 @@ void Player::Update() {
 	}
 
 	// JUMPS
-	if (InputManager::IsDown(Controls::JUMP) && standsOnTheGround()) {
+	if (InputManager::IsDown(Controls::UP) && standsOnTheGround()) {
 		speed.y = 1500;
 	}
 

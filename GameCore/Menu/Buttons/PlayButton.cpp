@@ -8,7 +8,7 @@
 
 PlayButton::PlayButton() {}
 
-void PlayButton::clickReact()
+void PlayButton::leftClickReact()
 {
 	SceneManager::CreateScene(new GameplayScene());
 	current_scene->disableScene();
@@ -27,6 +27,11 @@ void PlayButton::Init(GameObject* owner)
 void PlayButton::disfocusReact()
 {
 	sprite_id = Textures::MAIN_MENU_PLAY_BUTTON;
+}
+
+void PlayButton::rightClickReact()
+{
+	// Nothing for now
 }
 
 void PlayButton::Destroy()

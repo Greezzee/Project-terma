@@ -6,27 +6,29 @@
 
 #include "../../../GameCore/Scenes/MainOptionsScene.h"
 
-BackOptionsButton::BackOptionsButton() {}
-
-void BackOptionsButton::clickReact()
-{
-	SceneManager::CreateScene(new MainMenuScene());
-	current_scene->disableScene();
+BackOptionsButton::BackOptionsButton() {
 }
 
-void BackOptionsButton::focusReact()
-{
+void BackOptionsButton::focusReact() {
 	// Nothing for now
 }
 
-void BackOptionsButton::Init(GameObject *owner)
-{
+void BackOptionsButton::Init(GameObject *owner) {
 	printf("BackOptionsButton created!\n");
 }
 
-void BackOptionsButton::disfocusReact()
+void BackOptionsButton::disfocusReact() {
+	// Nothing for now
+}
+
+void BackOptionsButton::rightClickReact()
 {
 	// Nothing for now
+}
+
+void BackOptionsButton::leftClickReact() {
+	SceneManager::CreateScene(new MainMenuScene());
+	current_scene->disableScene();
 }
 
 void BackOptionsButton::Destroy() {

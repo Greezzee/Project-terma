@@ -26,3 +26,12 @@ void MenuScene::disableScene() {
 
 MenuScene::~MenuScene() {
 }
+
+void MenuScene::destroyWidgets() {
+	for (auto widget : *widgets) {
+		widget->Destroy();
+		delete widget;
+	}
+	widgets->clear();
+	delete widgets;
+}

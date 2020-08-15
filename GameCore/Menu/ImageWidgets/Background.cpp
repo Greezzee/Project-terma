@@ -27,17 +27,13 @@ void Background::Draw() {
 	info.layer = 0;
 
 	info.spriteID = this->sprite_id;
-	GraphicManager::Draw(info, view);
+	GraphicManager::Draw(info, view_id);
 }
 
-void Background::SetView(unsigned _view)
-{
-	view = _view;
-}
 
 unsigned Background::GetView()
 {
-	return view;
+	return view_id;
 }
 
 void Background::Destroy() {

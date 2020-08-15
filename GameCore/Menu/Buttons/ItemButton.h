@@ -3,16 +3,17 @@
 #include "../../Items/Item.h"
 #include "Button.h"
 
-
 class ItemButton: public Button {
 	// Button's item
-	Item* item;
+	Item *item;
 	// Save the original position (in case it gets equipped and change its position)
 	Vector2F original_pos;
 public:
-	ItemButton(Item* _item);
+	ItemButton(Item *_item);
 
-	void clickReact() override;
+	void rightClickReact() override;
+	void leftClickReact() override;
+
 	void focusReact() override;
 	void disfocusReact() override;
 	void Destroy() override;

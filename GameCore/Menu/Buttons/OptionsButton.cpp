@@ -7,7 +7,7 @@
 
 OptionsButton::OptionsButton() {}
 
-void OptionsButton::clickReact() {
+void OptionsButton::leftClickReact() {
 	SceneManager::CreateScene(new MainOptionsScene());
 	current_scene->disableScene();
 }
@@ -15,6 +15,11 @@ void OptionsButton::clickReact() {
 void OptionsButton::focusReact()
 {
 	//! Nothing for now
+}
+
+void OptionsButton::rightClickReact()
+{
+	// Nothing for now
 }
 
 void OptionsButton::Init(GameObject *owner)

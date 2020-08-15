@@ -9,6 +9,7 @@ MenuWidget::MenuWidget()
 	current_scene = nullptr;
 	sprite_id = -1;
 	_size = {0, 0};
+	view_id = 0;
 }
 
 void MenuWidget::setScene(MenuScene* _scene)
@@ -34,6 +35,11 @@ void MenuWidget::SetSize(Vector2F __size) {
 
 Vector2F MenuWidget::GetSize() {
 	return _size;
+}
+
+void MenuWidget::SetView(unsigned id)
+{
+	view_id = id;
 }
 
 MenuWidget::~MenuWidget() {

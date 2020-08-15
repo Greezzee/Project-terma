@@ -6,7 +6,7 @@
 ResolutionButton::ResolutionButton() {
 }
 
-void ResolutionButton::clickReact() {
+void ResolutionButton::leftClickReact() {
 	// Nothing for now
 }
 
@@ -21,6 +21,9 @@ void ResolutionButton::disfocusReact() {
 void ResolutionButton::Destroy() {
 	printf("ResolutionButton destroyed!\n");
 	std::cout.flush();
+}
+
+void ResolutionButton::rightClickReact() {
 }
 
 void ResolutionButton::Init(GameObject *owner) {

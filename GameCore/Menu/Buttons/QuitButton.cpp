@@ -9,7 +9,7 @@
 
 QuitButton::QuitButton() {}
 
-void QuitButton::clickReact() {
+void QuitButton::leftClickReact() {
 	current_scene->disableScene();
 }
 
@@ -22,6 +22,11 @@ void QuitButton::Init(GameObject *owner) {
 }
 
 void QuitButton::disfocusReact()
+{
+	// Nothing for now
+}
+
+void QuitButton::rightClickReact()
 {
 	// Nothing for now
 }

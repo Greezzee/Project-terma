@@ -15,6 +15,9 @@ protected:
 
 	// Size of the sprite
 	Vector2F _size;
+
+	// View id where this button is situated
+	unsigned view_id;
 public:
 	MenuWidget();
 
@@ -32,6 +35,9 @@ public:
 	virtual void Destroy() = 0;
 
 	void debugPrint();
+
+	//! Sets the view where this button is situated
+	void SetView(unsigned id);
 
 	//! Useless function for menu widgets
 	GameObject* Clone() const override;

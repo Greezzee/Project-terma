@@ -6,7 +6,9 @@ class ControlsButton: public Button {
 public:
 	ControlsButton();
 
-	void clickReact() override;
+	void rightClickReact() override;
+	void leftClickReact() override;
+
 	void focusReact() override;
 	void disfocusReact() override;
 	void Destroy() override;

@@ -17,7 +17,7 @@ ItemButton::ItemButton(Item *_item) {
 
 const Vector2F weaponEquippedIcon = { 1021, 435 };
 
-void ItemButton::clickReact() {
+void ItemButton::leftClickReact() {
 	// Equip this item (give the pointet to the player, indicate that other item is unequipped)
 
 	InventoryScene *_scene = dynamic_cast<InventoryScene*>(current_scene);
@@ -106,8 +106,15 @@ void ItemButton::Update() {
 		focusReact();
 	else
 		disfocusReact();
-	if (isClicked())
-		clickReact();
+	if (isRightClicked())
+		rightClickReact();
+	else if (isLeftClicked())
+		leftClickReact();
+}
+
+void ItemButton::rightClickReact()
+{
+	// Nothing for now
 }
 
 ItemButton::~ItemButton() {

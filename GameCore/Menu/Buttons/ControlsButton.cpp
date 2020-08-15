@@ -5,11 +5,6 @@
 
 ControlsButton::ControlsButton() {}
 
-void ControlsButton::clickReact()
-{
-	// Create controls scene
-}
-
 void ControlsButton::focusReact()
 {
 	// Nothing for now
@@ -24,6 +19,16 @@ void ControlsButton::Destroy()
 {
 	printf("ControlsButton destroyed!\n");
 	std::cout.flush();
+}
+
+void ControlsButton::rightClickReact()
+{
+	// Nothing for now
+}
+
+void ControlsButton::leftClickReact()
+{
+	// Nothing for now
 }
 
 void ControlsButton::Init(GameObject *owner)

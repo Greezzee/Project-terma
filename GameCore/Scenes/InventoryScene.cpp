@@ -62,6 +62,7 @@ void InventoryScene::Init() {
 		_button->setOriginalPos(_button->GetPos());
 		_button->SetSize(itemIconSize);
 		_button->SetGap( { 0, 0 });
+		_button->SetView(Views::MAIN_MENU);
 		widgets->push_back(_button);
 
 		if (column >= maxColumns) {
@@ -84,6 +85,7 @@ void InventoryScene::Init() {
 	item_focus->setSpriteID(Textures::ITEM_FOCUS);
 	item_focus->SetPos({0, 0});
 	item_focus->SetSize(itemIconSize);
+	item_focus->SetView(Views::MAIN_MENU);
 	this->focused_item = item_focus;
 	widgets->push_back(item_focus);
 
@@ -103,13 +105,7 @@ void InventoryScene::Update() {
 }
 
 void InventoryScene::Destroy() {
-	for (auto widget : *widgets) {
-		widget->Destroy();
-		delete widget;
-	}
-	widgets->clear();
-
-	delete widgets;
+	destroyWidgets();
 
 	printf("InventoryScene destroyed!\n");
 	std::cout.flush();

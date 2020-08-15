@@ -5,14 +5,15 @@
 
 class GameObject;
 
-class PlayButton : public Button
-{
+class PlayButton: public Button {
 public:
 	PlayButton();
 
-	void clickReact() override;
+	void rightClickReact() override;
+	void leftClickReact() override;
+
 	void focusReact() override;
 	void disfocusReact() override;
-	void Init(GameObject* owner) override;
+	void Init(GameObject *owner) override;
 	void Destroy() override;
 };
