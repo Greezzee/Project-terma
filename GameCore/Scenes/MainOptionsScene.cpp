@@ -6,9 +6,10 @@
 #include <vector>
 
 #include "../Menu/Buttons/BackOptionsButton.h"
-#include "../Menu/Buttons/ControlsButton.h"
 #include "../Menu/Buttons/ResolutionButton.h"
 #include "../Menu/ImageWidgets/Background.h"
+#include "../Menu/ImageWidgets/ResolutionImage.h"
+
 #include "../Textures.h"
 #include "../Views.h"
 
@@ -41,23 +42,20 @@ void MainOptionsScene::Init() {
 	back_options_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(back_options_button);
 
-	ControlsButton *controls_button = new ControlsButton();
-	controls_button->Init(nullptr);
-	controls_button->setScene(this);
-	controls_button->setSpriteID(Textures::CONTROLS_BUTTON);
-	controls_button->SetPos( { 800, 600 });
-	controls_button->SetSize( { 760, 230 });
-	controls_button->SetGap( { 45, 55 });
-	controls_button->SetView(Views::MAIN_MENU);
-	widgets->push_back(controls_button);
+	ResolutionImage *resolution_image = new ResolutionImage();
+	resolution_image->Init(nullptr);
+	resolution_image->setScene(this);
+	resolution_image->setSpriteID(Textures::RESOLUTION_BUTTON);
+	resolution_image->SetPos({480, 550});
+	resolution_image->SetSize({760, 230});
+	resolution_image->SetView(Views::MAIN_MENU);
+	widgets->push_back(resolution_image);
 
 	ResolutionButton *resolution_button = new ResolutionButton();
 	resolution_button->Init(nullptr);
 	resolution_button->setScene(this);
-	resolution_button->setSpriteID(Textures::RESOLUTION_BUTTON);
-	resolution_button->SetPos( { 800, 400 });
-	resolution_button->SetSize( { 760, 230 });
-	resolution_button->SetGap( { 45, 55 });
+	resolution_button->SetPos({1120, 550});
+	resolution_button->SetSize({760, 230});
 	resolution_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(resolution_button);
 

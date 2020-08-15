@@ -39,6 +39,11 @@ public:
 	static int INVENTORY;
 	static int SWORD;
 
+	//! Resolutions
+	static int RES1920x1080;
+	static int RES1600x900;
+	static int RES1024x576;
+
 	static int ITEM_FOCUS;
 
 	//! Texture loader. LOAD EVERY TEXTURE HERE!!! BUT FIRST DEFINE IT IN THIS CLASS!!!

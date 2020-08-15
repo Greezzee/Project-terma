@@ -8,8 +8,8 @@
  * 	Теперь это СЦЕНА, которая запускается первой. Запуск смотреть в Main.cpp
  */
 
-// Current resolution
-const Vector2F resolution = {1024, 576};
+// Current_resolution
+const Vector2F cur_resolution = {1024, 576};
 
 class ProjectTerma: public Scene {
 

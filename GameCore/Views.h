@@ -16,6 +16,9 @@ public:
 	static unsigned PLAYER_CAM;
 	static unsigned EDITOR_CAM;
 
+	// Change the resolution of all views (DO IT YOURSELF)
+	static void SET_RESOLUTION(Vector2U new_size);
+
 	static void LOAD_ALL_VIEWS();
 
 	~Views() {}

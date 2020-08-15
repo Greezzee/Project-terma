@@ -51,3 +51,5 @@ void ItemFocus::focusItem(Item *_item) {
 void ItemFocus::disfocus() {
 	focused_item = nullptr;
 }
+
+ItemFocus::~ItemFocus() {}

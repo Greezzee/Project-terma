@@ -16,4 +16,6 @@ public:
 
 	void focusItem(Item *_item);
 	void disfocus();
+
+	~ItemFocus();
 };
