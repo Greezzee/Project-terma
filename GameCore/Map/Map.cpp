@@ -12,6 +12,7 @@
 #include "../../Engine/Debugger/Debugger.h"
 #include "../../Engine/Graphics/DrawData.h"
 #include "../../Engine/Graphics/GraphicManager.h"
+#include "../../Engine/Graphics/ShaderManagment/LightManager/LightManager.h"
 #include "../../Engine/Utility/Coordinate.h"
 #include "../Blocks/DirtBlock.h"
 #include "../Blocks/GrassBlock.h"
@@ -21,6 +22,7 @@
 #include "../Blocks/MultiblockStructures/Tree.h"
 #include "../Player/Player.h"
 #include "../Textures.h"
+#include "../Views.h"
 #include "Level.h"
 
 class Multiblock;
@@ -38,12 +40,6 @@ void Map::addBlock(Vector2I pos, Block *block) {
 		delete blocks[pos.x][pos.y];
 	}
 	this->blocks[pos.x][pos.y] = block;
-
-	// LIGHT
-	LightSource *sr = NULL;
-	if ((sr = dynamic_cast<LightSource*>(blocks[pos.x][pos.y])) != NULL) {
-		lightUpBlocks(pos.x, pos.y, sr->getLightRadius());
-	}
 }
 
 template<typename T>
@@ -71,24 +67,26 @@ void Map::Init() {
 	}
 
 	genTestStuff();
+	LightManager::SetView(this->player->getCamera());
 	printf("Map created!\n");
 }
 
 void Map::Update() {
-
 	if (!is_paused) {
 		updateWallblocks();
 		updateBlocks();
 		updateEntities();
 	}
-
-	if (mayDrawBackground)
+	if (!ignoreLight) {
+		drawLight();
+	}
+	if (mayDrawBackground) {
 		drawBackground();
+	}
 	drawWallblocks();
 	drawBlocks();
 	drawMultiblocks();
 	drawEntities();
-
 	if (mayDrawGrid) {
 		drawGrid();
 	}
@@ -195,12 +193,10 @@ void Map::drawBlocks() {
 
 			info.origin = { 0.5, 0.5 };
 
+			info.shader = &currentShader;
+
 			info.frame = 0;
 			info.layer = 0;
-
-			if (!ignoreLight)
-				info.color.b = info.color.r = info.color.g = 255
-						* currBlock->getLightLevel();
 
 			info.spriteID = currBlock->getSpriteId();
 			GraphicManager::Draw(info, this->player->getCamera());
@@ -223,6 +219,8 @@ void Map::drawBackground() {
 	info.size.y = 900;
 
 	info.origin = { 0.5, 0.5 };
+
+	info.shader = &currentShader;
 
 	info.frame = 0;
 	info.layer = 0;
@@ -356,8 +354,10 @@ void Map::drawMultiblocks() {
 	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
 			/ BLOCK_SIZE + 1;
 
-	for (int x = startx; x < endx; x++) {
-		for (int y = starty; y < endy; y++) {
+	for (int x = startx - MULTIBLOCK_STRUCTURE_SEARCH_RADIUS;
+			x < endx + MULTIBLOCK_STRUCTURE_SEARCH_RADIUS; x++) {
+		for (int y = starty - MULTIBLOCK_STRUCTURE_SEARCH_RADIUS;
+				y < endy + MULTIBLOCK_STRUCTURE_SEARCH_RADIUS; y++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}
@@ -382,15 +382,7 @@ void Map::drawMultiblocks() {
 
 			info.origin = { 0.5, 0.5 };
 
-			if (!ignoreLight)
-				info.color.r =
-						info.color.g =
-								info.color.b =
-										255.0f
-												* getBlockFromMesh(
-														Vector2I(x, y)
-																+ currBlock->getSize()
-																		* 0.5)->getLightLevel();
+			info.shader = &currentShader;
 
 			info.frame = 0;
 			info.layer = 0;
@@ -447,27 +439,6 @@ Block* Map::getWallblock(Vector2F pos) {
 	return wallblocks[x][y];
 }
 
-void Map::lightUpBlocks(int startx, int starty, int rad) {
-	float max_len = rad * rad;
-	for (int x = startx - rad; x < startx + rad; x++) {
-		for (int y = starty - rad; y < starty + rad; y++) {
-			float len_sq = (x - startx) * (x - startx)
-					+ (y - starty) * (y - starty);
-
-			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
-				continue;
-			}
-			if (len_sq < max_len) {
-				float factor = std::pow((max_len - len_sq) / max_len, 3);
-				if (blocks[x][y])
-					blocks[x][y]->addLightLevel(factor);
-				if (wallblocks[x][y])
-					wallblocks[x][y]->addLightLevel(factor);
-			}
-		}
-	}
-}
-
 void Map::updateEntities() {
 	for (Entity *ent : entities) {
 		ent->Update();
@@ -515,18 +486,16 @@ void Map::drawWallblocks() {
 			info.size.x = BLOCK_SIZE;
 			info.size.y = BLOCK_SIZE;
 
+			info.shader = &currentShader;
+
 			info.origin = { 0.5, 0.5 };
 
 			info.frame = 0;
 			info.layer = 0;
 
-			info.color.b = info.color.r = info.color.g = 255.0f * 0.5f;
-
-			if (!ignoreLight) {
-				info.color.r *= currBlock->getLightLevel();
-				info.color.g *= currBlock->getLightLevel();
-				info.color.b *= currBlock->getLightLevel();
-			}
+			// TODO
+			//info.color.b = info.color.r = info.color.g = 255.0f * 0.5f;
+			//????????
 
 			info.spriteID = currBlock->getSpriteId();
 			GraphicManager::Draw(info, this->player->getCamera());
@@ -575,7 +544,9 @@ void Map::drawGrid() {
 			float th = 2;
 			Color co = { 0, 0, 0 };
 
-			if (currBlock != NULL && (dynamic_cast<StructureBlock*>(currBlock) != NULL || dynamic_cast<Multiblock*>(currBlock) != NULL)) {
+			if (currBlock != NULL
+					&& (dynamic_cast<StructureBlock*>(currBlock) != NULL
+							|| dynamic_cast<Multiblock*>(currBlock) != NULL)) {
 				co.r = 255;
 			}
 
@@ -612,6 +583,47 @@ Vector2I Map::getGridCoords(Vector2F pos) {
 		return {-1, -1};
 	}
 	return {x, y};
+}
+
+void Map::drawLight() {
+	View *camera = GraphicManager::GetView(this->player->getCamera());
+	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
+			/ BLOCK_SIZE - 1;
+	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
+			/ BLOCK_SIZE - 1;
+
+	int endx = (camera->virtual_position.x + camera->virtual_size.x / 2)
+			/ BLOCK_SIZE + 1;
+	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
+			/ BLOCK_SIZE + 1;
+	LightManager::ClearLightSource();
+
+	for (int x = startx - LIGHT_SOURCE_SEARCH_RADIUS;
+			x < endx + LIGHT_SOURCE_SEARCH_RADIUS; x++) {
+		for (int y = starty - LIGHT_SOURCE_SEARCH_RADIUS;
+				y < endy + LIGHT_SOURCE_SEARCH_RADIUS; y++) {
+			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+				continue;
+			}
+
+			Block *currBlock = blocks[x][y];
+
+			if (currBlock == NULL) {
+				continue;
+			}
+
+			FAST_CAST(currBlock, LightSource, {
+					LightData data = {};
+					data.pos = Vector2F(x, y) * BLOCK_SIZE;
+					data.color = Color(255, 255, 255);
+					data.full_dist = casted->getLightRadius() * BLOCK_SIZE;
+					data.any_dist = 50;
+					data.softness = 1;
+					LightManager::AddLightSource(data);
+			});
+		}
+	}
+
 }
 
 void Map::updateWallblocks() {

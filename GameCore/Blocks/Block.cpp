@@ -7,11 +7,6 @@ int Block::getSpriteId() const {
 	return this->sprite_id;
 }
 
-void Block::addLightLevel(float add) {
-	lightLevel += add;
-	lightLevel = std::min(1.0f, std::max(0.0f, lightLevel));
-}
-
 void Block::setSpriteId(int id) {
 	this->sprite_id = id;
 }
@@ -34,12 +29,4 @@ bool Block::isPassable() const {
 
 void Block::setPassable(bool passable) {
 	this->passable = passable;
-}
-
-float Block::getLightLevel() const {
-	return lightLevel;
-}
-
-void Block::setLightLevel(float lightLevel) {
-	this->lightLevel = lightLevel;
 }

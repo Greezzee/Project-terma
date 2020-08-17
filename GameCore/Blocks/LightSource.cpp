@@ -20,3 +20,11 @@ int LightSource::getLightRadius() const {
 void LightSource::setLightRadius(int lightRadius) {
 	this->lightRadius = lightRadius;
 }
+
+int LightSource::getCurrentLightSourceId() const {
+	return currentLightSourceId;
+}
+
+void LightSource::setCurrentLightSourceId(int currentLightSourceId) {
+	this->currentLightSourceId = currentLightSourceId;
+}

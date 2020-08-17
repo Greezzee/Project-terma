@@ -44,6 +44,4 @@ protected:
 	int sprite_id = -1;
 	//! Можно ли через блок пройти
 	bool passable = 0;
-	//! current light level in [0, 1]
-	float lightLevel = 0.0f;
 };

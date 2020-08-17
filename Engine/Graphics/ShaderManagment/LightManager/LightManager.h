@@ -1,3 +1,4 @@
+#pragma once
 #include <SFML/Graphics/Glsl.hpp>
 #include <SFML/Graphics/Shader.hpp>
 
