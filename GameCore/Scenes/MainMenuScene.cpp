@@ -67,13 +67,14 @@ void MainMenuScene::Init() {
 	widgets->push_back(options_button);
 
 	//! Initializing the level editor button
-	MenuLevelEditorButton* menu_level_editor_button = new MenuLevelEditorButton();
+	MenuLevelEditorButton *menu_level_editor_button =
+			new MenuLevelEditorButton();
 	menu_level_editor_button->Init(nullptr);
 	menu_level_editor_button->setScene(this);
 	menu_level_editor_button->setSpriteID(Textures::MAIN_MENU_EDITOR);
-	menu_level_editor_button->SetPos({800, 800});
-	menu_level_editor_button->SetSize({400, 200});
-	menu_level_editor_button->SetGap({20, 27});
+	menu_level_editor_button->SetPos( { 800, 800 });
+	menu_level_editor_button->SetSize( { 400, 200 });
+	menu_level_editor_button->SetGap( { 20, 27 });
 	menu_level_editor_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(menu_level_editor_button);
 }
@@ -98,6 +99,9 @@ void MainMenuScene::Update() {
 
 void MainMenuScene::Destroy() {
 	destroyWidgets();
+	printf("Saving settings!\n");
+	Settings::SAVE_SETTINGS();
+	printf("Settings are saved!\n");
 
 	printf("MainMenuScene destroyed!\n");
 	std::cout.flush();
