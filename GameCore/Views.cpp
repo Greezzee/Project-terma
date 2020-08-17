@@ -1,5 +1,8 @@
 #include "Views.h"
 
+#include "../Engine/Graphics/DrawData.h"
+#include "../Engine/Graphics/GraphicManager.h"
+#include "../Engine/Utility/Coordinate.h"
 #include "ProjectTerma.h"
 
 // Define static variables

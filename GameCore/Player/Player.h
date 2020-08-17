@@ -65,7 +65,4 @@ private:
 	void drawHealthBar();
 	void drawPlayer();
 	//---------------------------
-
-	// LIGHT
-	void correctLight(DrawData &data);
 };

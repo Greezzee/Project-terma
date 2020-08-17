@@ -173,11 +173,6 @@ void Player::drawHealthBar() {
 		info.spriteID = Textures::RED_STAR;
 		//----------------------------
 
-		// LIGHT
-		//----------------------------
-		correctLight(info);
-		//----------------------------
-
 		// DRAW
 		//----------------------------
 		GraphicManager::Draw(info, camera);
@@ -207,30 +202,11 @@ void Player::drawPlayer() {
 	info.spriteID = Textures::PLAYER_STAND_TEXTURE;
 	//----------------------------
 
-	// LIGHT
-	//----------------------------
-	correctLight(info);
-	//----------------------------
-
 	// DRAW
 	//----------------------------
 	GraphicManager::Draw(info, camera);
 	//----------------------------
 
-}
-
-void Player::correctLight(DrawData &info) {
-	Block *cent1 = getMap()->getWallblock(_pos + collider_size / 2);
-	Block *cent2 = getMap()->getBlock(_pos + collider_size / 2);
-	if (cent1 != NULL) {
-		info.color.b = info.color.r = info.color.g = 255.0f
-				* cent1->getLightLevel();
-	}
-	if (cent2 != NULL) {
-		info.color.b = info.color.r = info.color.g = 255.0f
-				* cent2->getLightLevel();
-	}
-	//----------------------------
 }
 
 void Player::equipWeapon(Item *weapon)

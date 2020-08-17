@@ -1,7 +1,10 @@
 #pragma once
 
+#include <map>
 #include <vector>
 
+#include "../../Engine/Graphics/ShaderManagment/SmoothLightShader.h"
+#include "../Blocks/LightSource.h"
 #include "../Entities/Entity.h"
 
 class Block;
@@ -16,7 +19,8 @@ class Player;
 const int MAX_LEVEL_SIZE = 500;
 const int BLOCK_SIZE = 40;
 //! размер экрана как бы увеличивается на это число во время прорисовки мультиблоков
-const int MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
+const int MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
+const int LIGHT_SOURCE_SEARCH_RADIUS = 20;
 
 /*
  * Сей класс наследуется от GameField, тут будет вся инфа о текущих объектах в игре
@@ -77,10 +81,8 @@ public:
 
 	// LIGHT
 	//------------------------
-	void lightUpBlocks(int x, int y, int rad);
 	bool isMayDrawBackground() const;
 	void setMayDrawBackground(bool mayDrawBackground = 0);
-
 	//------------------------
 
 	friend class InventoryScene;
@@ -95,6 +97,7 @@ private:
 	void drawMultiblocks();
 	void drawWallblocks();
 	void drawGrid();
+	void drawLight();
 	//------------------------
 
 	// UPDATE
@@ -110,6 +113,12 @@ private:
 	Block *wallblocks[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
 	std::vector<Entity*> entities;
 	SquareCollider *colliders_wireframe[MAX_LEVEL_SIZE][MAX_LEVEL_SIZE];
+	std::map<LightSource*, int> allLightSources;
+	//------------------------
+
+	// SHADER
+	//------------------------
+	SmoothLightShader currentShader = {};
 	//------------------------
 
 	// PAUSE
