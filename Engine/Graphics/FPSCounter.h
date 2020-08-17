@@ -4,15 +4,18 @@
 
 class GraphicManager;
 
-class FPSCounter {
-public:
-	void Update();
-private:
-	float _sec = 0;
-	unsigned _frames = 0;
+namespace tge
+{
+	class FPSCounter
+	{
+	public:
+		void Update();
+		void SetActive(bool active);
+	private:
+		float _sec = 0;
+		unsigned _frames = 0;
 
-	bool is_active = false;
-
-	friend class GraphicManager;
-};
+		bool is_active = false;
+	};
+}
 
