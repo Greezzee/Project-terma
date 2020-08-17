@@ -356,8 +356,10 @@ void Map::drawMultiblocks() {
 	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
 			/ BLOCK_SIZE + 1;
 
-	for (int x = startx; x < endx; x++) {
-		for (int y = starty; y < endy; y++) {
+	for (int x = startx - MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS;
+			x < endx + MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS; x++) {
+		for (int y = starty - MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS;
+				y < endy + MAX_MULTIBLOCK_STRUCTURE_SEARCH_RADIUS; y++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}
@@ -575,7 +577,9 @@ void Map::drawGrid() {
 			float th = 2;
 			Color co = { 0, 0, 0 };
 
-			if (currBlock != NULL && (dynamic_cast<StructureBlock*>(currBlock) != NULL || dynamic_cast<Multiblock*>(currBlock) != NULL)) {
+			if (currBlock != NULL
+					&& (dynamic_cast<StructureBlock*>(currBlock) != NULL
+							|| dynamic_cast<Multiblock*>(currBlock) != NULL)) {
 				co.r = 255;
 			}
 
