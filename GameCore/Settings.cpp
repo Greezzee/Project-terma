@@ -15,8 +15,6 @@ Settings::Settings() {
 }
 
 void Settings::LOAD_SETTINGS() {
-	char temp_string[256] = {};
-
 	FILE *settings_file = freopen("./settings.cfg", "r", stdin);
 
 	if (settings_file == nullptr) {
@@ -25,7 +23,13 @@ void Settings::LOAD_SETTINGS() {
 	}
 
 	// RESOLUTION SETTINGS
-	scanf("RESOLUTION=%ux%u\n", &resolution.x, &resolution.y);
+	if (scanf("RESOLUTION=%ux%u\n", &resolution.x, &resolution.y) != 2) {
+		// ERROR
+		std::cerr << "Error loading resolution! Loading default settings...\n"
+				<< std::endl;
+		LOAD_DEFAULT();
+		return;
+	}
 	GraphicManager::SetResolution(resolution);
 	Views::SET_RESOLUTION(resolution);
 
@@ -35,7 +39,13 @@ void Settings::LOAD_SETTINGS() {
 		unsigned int game_key = 0;
 		unsigned int keyboard_key = 0;
 
-		scanf("%u=%u\n", &game_key, &keyboard_key);
+		if (scanf("%u=%u\n", &game_key, &keyboard_key) != 2) {
+			// ERROR
+			std::cerr << "Error loading controls! Loading default settings...\n" << std::endl;
+			LOAD_DEFAULT();
+			return;
+		}
+
 		Controls::linking[game_key] = static_cast<KeyboardKey>(keyboard_key);
 	}
 
@@ -55,11 +65,22 @@ void Settings::SAVE_SETTINGS() {
 	fprintf(settings_file, "RESOLUTION=%ux%u\n", resolution.x, resolution.y);
 
 	// CONTROLS
-	for (int i = 0; i < keys_number; i++) {
+	for (unsigned i = 0; i < keys_number; i++) {
 		fprintf(settings_file, "%u=%u\n", i, Controls::linking[i]);
 	}
 
 	fclose(settings_file);
+}
+
+void Settings::LOAD_DEFAULT() {
+	// RESOLUTION
+	GraphicManager::SetResolution(default_resolution);
+	Views::SET_RESOLUTION(default_resolution);
+
+	// CONTROLS
+	for (unsigned i = 0; i < keys_number; i++) {
+		Controls::linking[i] = default_linking[i];
+	}
 }
 
 Settings::~Settings() {

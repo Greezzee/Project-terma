@@ -9,6 +9,10 @@
 //! RIGHT[0=84] - RIGHT is the abstract name (for people, not for computer),
 //! "0" is the INDEX from the GAMEKEYS, "84" is the index from the ENGINE VIRTUAL KEYS
 
+// Default settings
+const Vector2U default_resolution = {1024, 576};
+const KeyboardKey default_linking[keys_number] = {KeyboardKey::RIGHT, KeyboardKey::LEFT,
+		KeyboardKey::UP, KeyboardKey::DOWN, KeyboardKey::E, KeyboardKey::ESC};
 
 class Settings {
 public:
@@ -16,7 +20,11 @@ public:
 
 	static Vector2U resolution;
 
+	// Loads all settings from the file "settings.cfg"
 	static void LOAD_SETTINGS();
+	// Loads default settings
+	static void LOAD_DEFAULT();
+	// Saves current settings into the file "settings.cfg"
 	static void SAVE_SETTINGS();
 
 	~Settings();
