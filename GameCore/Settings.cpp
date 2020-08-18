@@ -35,17 +35,22 @@ void Settings::LOAD_SETTINGS() {
 
 	// CONTROLS SETTINGS
 	scanf("CONTROLS:\n");
+
+	char junk[256] = { };
+
 	for (unsigned i = 0; i < keys_number; i++) {
 		unsigned int game_key = 0;
 		unsigned int keyboard_key = 0;
 
-		if (scanf("%u=%u\n", &game_key, &keyboard_key) != 2) {
+		if (scanf("%[^(](%u:=%u)\n", junk, &game_key, &keyboard_key) != 3) {
 			// ERROR
-			std::cerr << "Error loading controls! Loading default settings...\n" << std::endl;
+			std::cerr << "Error loading controls! Loading default settings...\n"
+					<< std::endl;
 			LOAD_DEFAULT();
 			return;
 		}
 
+		Controls::tags[i] = junk;
 		Controls::linking[game_key] = static_cast<KeyboardKey>(keyboard_key);
 	}
 
@@ -65,8 +70,9 @@ void Settings::SAVE_SETTINGS() {
 	fprintf(settings_file, "RESOLUTION=%ux%u\n", resolution.x, resolution.y);
 
 	// CONTROLS
+	fprintf(settings_file, "CONTROLS:\n");
 	for (unsigned i = 0; i < keys_number; i++) {
-		fprintf(settings_file, "%u=%u\n", i, Controls::linking[i]);
+		fprintf(settings_file, "%s(%u:=%u)\n", Controls::tags[i].c_str(), i, Controls::linking[i]);
 	}
 
 	fclose(settings_file);

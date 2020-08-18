@@ -17,6 +17,9 @@ public:
 	// Массив, где индекс - GAMEKEYS, а значение - ENGINE VIRTUAL KEY
 	static KeyboardKey linking[keys_number];
 
+	// Названия всех виртуальных кнопок (для файла с настройками)
+	static std::string tags[keys_number];
+
 	// Загрузить все клавиши (после загрузки всех кнопок в массив linking)
 	static void LOAD_ALL_GAMEKEYS();
 

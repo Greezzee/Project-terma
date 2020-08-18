@@ -1,6 +1,7 @@
 #include "Controls.h"
 
 KeyboardKey Controls::linking[keys_number] = {};
+std::string Controls::tags[keys_number] = {"RIGHT", "LEFT", "UP", "DOWN", "OPEN_INV", "BACK"};
 
 void Controls::LOAD_ALL_GAMEKEYS()
 {
