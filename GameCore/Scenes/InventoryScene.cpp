@@ -61,7 +61,6 @@ void InventoryScene::Init() {
 		item->SetPos(_button->GetPos());
 		_button->setOriginalPos(_button->GetPos());
 		_button->SetSize(itemIconSize);
-		_button->SetGap( { 0, 0 });
 		_button->SetView(Views::MAIN_MENU);
 		widgets->push_back(_button);
 

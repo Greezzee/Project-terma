@@ -14,11 +14,6 @@
 //!	   and delete it
 class Button : public MenuWidget
 {
-protected:
-	// Gap for each button for proper "click-zone"
-	// If the zone is too big, INcrease the gap
-	// If the zone is too small, DEcrease the gap
-	Vector2F _gap;
 public:
 	Button();
 	//! Returns true if the mouse is on the button (doesn't work)
@@ -27,8 +22,6 @@ public:
 	bool isRightClicked();
 	//! Returns true if the button was left-clicked
 	bool isLeftClicked();
-	//! Sets the button's gap (for proper drawing)
-	void SetGap(Vector2F __gap);
 
 	//! A virtual method that determines what is meant to happen when the button is out of focus
 	//! Paired with focusReact()

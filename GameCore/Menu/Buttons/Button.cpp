@@ -3,18 +3,16 @@
 #include "../../../Engine/AllEngine.h"
 #include "../../Views.h"
 
-Button::Button() {
-	_gap = { 0, 0 };
-}
+Button::Button() {}
 
 bool Button::isLeftClicked() {
 	bool _click = InputManager::IsPressed(MouseKey::Mouse_Left);
 	Vector2F _mpos = GraphicManager::ConvertRealToView(
 			InputManager::GetMousePos(), Views::MAIN_MENU);
-	bool _res = (_mpos.x >= _pos.x - _size.x * 0.5 + _gap.x)
-			&& (_mpos.x <= 0.5 * _size.x + _pos.x - _gap.x)
-			&& (_mpos.y >= _pos.y - _size.y * 0.5 + _gap.y)
-			&& (_mpos.y <= 0.5 * _size.y + _pos.y - _gap.y) && _click;
+	bool _res = (_mpos.x >= _pos.x - _size.x * 0.5)
+			&& (_mpos.x <= 0.5 * _size.x + _pos.x)
+			&& (_mpos.y >= _pos.y - _size.y * 0.5)
+			&& (_mpos.y <= 0.5 * _size.y + _pos.y) && _click;
 
 	return _res;
 }
@@ -22,10 +20,10 @@ bool Button::isLeftClicked() {
 bool Button::isFocused() {
 	Vector2F _mpos = GraphicManager::ConvertRealToView(
 			InputManager::GetMousePos(), Views::MAIN_MENU);
-	bool _res = (_mpos.x >= _pos.x - _size.x * 0.5 + _gap.x)
-			&& (_mpos.x <= 0.5 * _size.x + _pos.x - _gap.x)
-			&& (_mpos.y >= _pos.y - _size.y * 0.5 + _gap.y)
-			&& (_mpos.y <= 0.5 * _size.y + _pos.y - _gap.y);
+	bool _res = (_mpos.x >= _pos.x - _size.x * 0.5)
+			&& (_mpos.x <= 0.5 * _size.x + _pos.x)
+			&& (_mpos.y >= _pos.y - _size.y * 0.5)
+			&& (_mpos.y <= 0.5 * _size.y + _pos.y);
 
 	return _res;
 }
@@ -58,20 +56,16 @@ void Button::Update() {
 		leftClickReact();
 }
 
-void Button::SetGap(Vector2F __gap) {
-	_gap = __gap;
-}
-
 Button::~Button() {}
 
 bool Button::isRightClicked() {
 	bool _click = InputManager::IsPressed(MouseKey::Mouse_Right);
 	Vector2F _mpos = GraphicManager::ConvertRealToView(
 			InputManager::GetMousePos(), Views::MAIN_MENU);
-	bool _res = (_mpos.x >= _pos.x - _size.x * 0.5 + _gap.x)
-			&& (_mpos.x <= 0.5 * _size.x + _pos.x - _gap.x)
-			&& (_mpos.y >= _pos.y - _size.y * 0.5 + _gap.y)
-			&& (_mpos.y <= 0.5 * _size.y + _pos.y - _gap.y) && _click;
+	bool _res = (_mpos.x >= _pos.x - _size.x * 0.5)
+			&& (_mpos.x <= 0.5 * _size.x + _pos.x)
+			&& (_mpos.y >= _pos.y - _size.y * 0.5)
+			&& (_mpos.y <= 0.5 * _size.y + _pos.y) && _click;
 
 	return _res;
 }

@@ -68,7 +68,7 @@ void Textures::LOAD_ALL_TEXTURES() {
 
 	Textures::MAIN_MENU_OPTIONS_BUTTON = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/options_button.png",
-					Vector2F(760, 230), 1));
+					Vector2F(620, 130), 1));
 	Textures::MAIN_OPTIONS_MENU_BACK_BUTTON = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/back_button.png", Vector2F(280, 280),
 					1));
@@ -79,11 +79,11 @@ void Textures::LOAD_ALL_TEXTURES() {
 			GraphicPrefabData("./Resources/play_button_focus.png",
 					Vector2F(128, 32), 1));
 	Textures::MAIN_MENU_QUIT_BUTTON = GraphicManager::LoadSprite(
-			GraphicPrefabData("./Resources/quit_button.png", Vector2F(490, 190),
+			GraphicPrefabData("./Resources/quit_button.png", Vector2F(470, 170),
 					1));
 	Textures::MAIN_MENU_EDITOR = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/editor_button.png",
-					Vector2F(400, 200), 1));
+					Vector2F(330, 130), 1));
 
 	Textures::RED_STAR = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/RedStar.png", Vector2F(20, 19), 1));
@@ -95,13 +95,13 @@ void Textures::LOAD_ALL_TEXTURES() {
 					1));
 	Textures::CONTROLS_BUTTON = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/controls_button.png",
-					Vector2F(76, 23), 1));
+					Vector2F(62, 13), 1));
 	Textures::WHITE_BLOCK = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/WhiteBlock.png", Vector2F(32, 32),
 					1));
 	Textures::RESOLUTION_BUTTON = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/resolution_button.png",
-					Vector2F(76, 23), 1));
+					Vector2F(62, 13), 1));
 	Textures::SWORD = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/sword.png", Vector2F(300, 320), 1));
 
@@ -109,12 +109,12 @@ void Textures::LOAD_ALL_TEXTURES() {
 			GraphicPrefabData("./Resources/item_focus.png", Vector2F(300, 320),
 					1));
 	Textures::RES1024x576 = GraphicManager::LoadSprite(
-			GraphicPrefabData("./Resources/1024x576.png", Vector2F(76, 23),
+			GraphicPrefabData("./Resources/1024x576.png", Vector2F(62, 13),
 					1));
 	Textures::RES1600x900 = GraphicManager::LoadSprite(
-				GraphicPrefabData("./Resources/1600x900.png", Vector2F(76, 23),
+				GraphicPrefabData("./Resources/1600x900.png", Vector2F(62, 13),
 						1));
 	Textures::RES1920x1080 = GraphicManager::LoadSprite(
-				GraphicPrefabData("./Resources/1920x1080.png", Vector2F(76, 23),
+				GraphicPrefabData("./Resources/1920x1080.png", Vector2F(62, 13),
 						1));
 }
