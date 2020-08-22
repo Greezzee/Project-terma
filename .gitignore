@@ -244,3 +244,7 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+# Eclipse Settings File
+.cproject
+.project
+.settings/

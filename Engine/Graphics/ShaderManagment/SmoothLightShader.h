@@ -3,12 +3,13 @@
 
 //! Шейдер гладкого освещения
 //! Источники света контролирует LightManager
-class SmoothLightShader : public tge::Shader
+class SmoothLightShader : public Shader
 {
 public:
 	SmoothLightShader();
 	~SmoothLightShader();
 
 private:
-	void ApplyParameters(sf::Shader* shader) override;
+	static sf::Shader my_shader;
+	friend class ShaderManager;
 };

@@ -7,7 +7,7 @@ class DirtBlock : public Block {
 public:
 	DirtBlock() : Block() {
 		this->setSpriteId(Textures::DIRT_BLOCK_TEXTURE);
-		this->SetID(11);
+		setID(11);
 	}
 
 	~DirtBlock() {

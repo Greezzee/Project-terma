@@ -3,7 +3,7 @@
 #include "../Graphics/GraphicManager.h"
 #include "../Colliders/Collider.h"
 #include <cmath>
-bool Debugger::DrawPoint(Vector2F pos, float size, unsigned view_id, Color color, unsigned layer, tge::Shader* shader)
+bool Debugger::DrawPoint(Vector2F pos, float size, unsigned view_id, Color color, unsigned layer, Shader* shader)
 {
 	DrawData point;
 	point.origin = { 0.5, 0.5 };
@@ -61,6 +61,21 @@ bool Debugger::DrawCollider(const CircleCollider& col, unsigned view_id, Color c
 	circle.position = col.GetPos();
 	circle.layer = layer;
 	circle.rotation = 0;
+	circle.frame = 0;
+	circle.color = color;
+	return GraphicManager::Draw(circle, view_id);
+}
+
+bool Debugger::DrawCollider(const EllipseCollider& col, unsigned view_id, Color color, unsigned layer)
+{
+	DrawData circle;
+	circle.origin = { 0.5, 0.5 };
+	circle.spriteID = GraphicManager::_basic_shapes[tge::BasicShapes::Circle];
+	Vector2F s = col.GetSize();
+	circle.size = { s.x * 2, s.y * 2 };
+	circle.position = col.GetPos();
+	circle.layer = layer;
+	circle.rotation = col.GetAngle() / 3.1415926f * 180;
 	circle.frame = 0;
 	circle.color = color;
 	return GraphicManager::Draw(circle, view_id);

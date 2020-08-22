@@ -1,11 +1,8 @@
 #pragma once
-#include <SFML/Graphics/Glsl.hpp>
-#include <SFML/Graphics/Shader.hpp>
 
+#include "SFML/Graphics.hpp"
+#include "../../GraphicManager.h"
 #include "../../../Utility/Coordinate.h"
-#include "../../DrawData.h"
-#include "../ShaderManager.h"
-
 /*
 uniform int source_count;
 uniform vec2 pos[128];
@@ -49,7 +46,7 @@ public:
 	static void SetView(unsigned id);
 
 	//! Устанавливает цвет глобального освещения
-	static void SetGlobalLight(Color& glc);
+	static void SetGlobalLight(const Color& glc);
 private:
 
 	static void ApplyLight(sf::Shader* shader);
@@ -68,5 +65,7 @@ private:
 	static float pixel_size;
 	static sf::Glsl::Vec4 global_light_color;
 
-	friend class tge::ShaderManager;
+	friend class ShaderManager;
+
+	static bool is_change;
 };

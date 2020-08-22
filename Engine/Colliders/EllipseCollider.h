@@ -1,6 +1,7 @@
 #pragma once
 #include "../Gameplay/GameObject.h"
 #include "../Utility/Coordinate.h"
+#include "UniversalCollider.h"
 /*!
 * Коллайдер в виде эллипса
 * Хранить можно либо как свойство Gameobject, либо просто как отдельный объект
@@ -11,10 +12,11 @@
 * IsCollide() НЕ ТРОГАТЬ
 * Остальное СИСТЕМНОЕ
 */
-class EllipseCollider
+class EllipseCollider : public UniversalCollider
 {
 public:
 
+	EllipseCollider();
 	virtual ~EllipseCollider() {};
 
 	/*!
@@ -29,6 +31,15 @@ public:
 	* size - длины полуосей
 	*/
 	void Init(Vector2F pos, float angle, Vector2F size);
+
+	Vector2F GetPos() const;
+	Vector2F GetSize() const;
+	float GetAngle() const;
+
+	void SetPos(const Vector2F& pos);
+	void SetSize(const Vector2F& size);
+	void SetAngle(float angle);
+
 protected:
 	Vector2F _pos, _size;//! Позиция центра эллипса и длина его полуосей
 	float _angle;        //! Угол поворота эллипса относительно центра против часовой стрелки в радианах

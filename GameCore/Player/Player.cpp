@@ -194,7 +194,7 @@ void Player::drawPlayer() {
 	//----------------------------
 	info.origin = { 0.5, 0.5 };
 	info.frame = 0;
-	info.layer = 0;
+	info.layer = 1;
 	//----------------------------
 
 	// SET TEXTURE

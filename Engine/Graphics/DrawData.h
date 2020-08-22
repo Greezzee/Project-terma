@@ -1,7 +1,8 @@
 #pragma once
+#include <list>
+#include "SFML/Graphics.hpp"
 #include "../Utility/Coordinate.h"
 #include "ShaderManagment/Shader.h"
-#include "SFML/Graphics.hpp"
 /*!
 * Система "точек зрения" View отдалённо напоминает систему камер.
 * 
@@ -82,14 +83,28 @@ struct DrawData
 
 	Color color; //! глобальный цвет спрайта ("прибавляется" к цветам спрайта), по умолчанию белый (никак не влияет на цвет спрайта)
 
-	tge::Shader* shader; //! шейдер, который использует данный спрайт
+	Shader* shader; //! шейдер, который использует данный спрайт
 };
 
 namespace tge
 {
+	struct Text
+	{
+		sf::Text text;
+		Shader* shader = nullptr;
+	};
+
 	struct Sprite
 	{
 		sf::Sprite sprite;
-		tge::Shader* shader;
+		Shader* shader = nullptr;
+	};
+
+	struct GraphicLayer
+	{
+		std::vector<tge::Sprite> layer_sprites;
+		std::vector<tge::Text> layer_text;
+		Shader* layer_shader = nullptr;
+		sf::RenderTexture* buffer = nullptr;
 	};
 }

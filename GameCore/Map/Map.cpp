@@ -57,6 +57,8 @@ void Map::Init() {
 	player->Init(nullptr);
 	this->addEntity( { 1500, 800 }, this->player);
 
+	GraphicManager::SetLayerShader(1, &currentShader);
+
 	// WIREFRAME
 	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
@@ -93,6 +95,7 @@ void Map::Update() {
 }
 
 void Map::Destroy() {
+	LightManager::ClearLightSource();
 	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
 			delete colliders_wireframe[x][y];
@@ -193,10 +196,9 @@ void Map::drawBlocks() {
 
 			info.origin = { 0.5, 0.5 };
 
-			info.shader = &currentShader;
+			info.layer = 1;
 
 			info.frame = 0;
-			info.layer = 0;
 
 			info.spriteID = currBlock->getSpriteId();
 			GraphicManager::Draw(info, this->player->getCamera());
@@ -220,10 +222,8 @@ void Map::drawBackground() {
 
 	info.origin = { 0.5, 0.5 };
 
-	info.shader = &currentShader;
-
 	info.frame = 0;
-	info.layer = 0;
+	info.layer = 1;
 
 	info.spriteID = Textures::TEST_BACKGROUND;
 	GraphicManager::Draw(info, this->player->getCamera());
@@ -382,10 +382,8 @@ void Map::drawMultiblocks() {
 
 			info.origin = { 0.5, 0.5 };
 
-			info.shader = &currentShader;
-
 			info.frame = 0;
-			info.layer = 0;
+			info.layer = 1;
 
 			info.spriteID = currBlock->getSpriteId();
 			GraphicManager::Draw(info, this->player->getCamera());
@@ -486,12 +484,10 @@ void Map::drawWallblocks() {
 			info.size.x = BLOCK_SIZE;
 			info.size.y = BLOCK_SIZE;
 
-			info.shader = &currentShader;
-
 			info.origin = { 0.5, 0.5 };
 
 			info.frame = 0;
-			info.layer = 0;
+			info.layer = 1;
 
 			// TODO
 			//info.color.b = info.color.r = info.color.g = 255.0f * 0.5f;
@@ -613,14 +609,15 @@ void Map::drawLight() {
 			}
 
 			FAST_CAST(currBlock, LightSource, {
-					LightData data = {};
-					data.pos = Vector2F(x, y) * BLOCK_SIZE;
-					data.color = Color(255, 255, 255);
-					data.full_dist = casted->getLightRadius() * BLOCK_SIZE;
-					data.any_dist = 50;
-					data.softness = 1;
-					LightManager::AddLightSource(data);
-			});
+					if (casted->getLightRadius() != 0) {
+						LightData data = {};
+						data.pos = Vector2F(x, y) * BLOCK_SIZE;
+						data.color = Color(255, 255, 255);
+						data.full_dist = casted->getLightRadius() * BLOCK_SIZE;
+						data.any_dist = 50;
+						data.softness = 1;
+						LightManager::AddLightSource(data);
+			}});
 		}
 	}
 
