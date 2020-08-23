@@ -81,7 +81,7 @@ void GraphicManager::Init()
 	views[0] = { {0, 0}, {1280, 720}, {0, 0}, {0, 0}, {1280, 720}, {0, 0}, {1, 1} };
 
 	ShaderManager::Init();
-
+	ShowFPS(true);
 }
 
 bool GraphicManager::Update()
@@ -98,11 +98,13 @@ bool GraphicManager::Update()
 		to_draw[i].buffer->clear(sf::Color(0, 0, 0, 0));
 		for (auto obj = to_draw[i].layer_sprites.begin(); obj != to_draw[i].layer_sprites.end(); obj++) {
 			obj->shader ? to_draw[i].buffer->draw((*obj).sprite, ShaderManager::GetShader((*obj).shader)) : to_draw[i].buffer->draw((*obj).sprite);
+			//to_draw[i].buffer->draw((*obj).sprite);
 		}
 		to_draw[i].layer_sprites.clear();
 		to_draw[i].buffer->display();
 		sf::Sprite layer;
 		layer.setTexture(to_draw[i].buffer->getTexture());
+		//window.draw(layer);
 		to_draw[i].layer_shader ? window.draw(layer, ShaderManager::GetShader(to_draw[i].layer_shader)) : window.draw(layer);
 	}
 	

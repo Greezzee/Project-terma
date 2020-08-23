@@ -20,7 +20,18 @@ public:
 		setID(33);
 		setSpriteId(Textures::LANTERN);
 		setPassable(1);
-		setLightRadius(12);
+		setLightRadius(100);
+	}
+
+	void Update() override
+	{
+		LightData data = {};
+		data.pos = _pos;
+		data.color = Color(255, 255, 255);
+		data.full_dist = getLightRadius();
+		data.any_dist = 500;
+		data.softness = 1;
+		LightManager::AddLightSource(data);
 	}
 
 	GameObject* Clone() const {

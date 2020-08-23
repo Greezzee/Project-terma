@@ -6,7 +6,7 @@
 class Multiblock : public Block {
 public:
 	Multiblock();
-	void Update();
+	virtual void Update();
 	const Vector2I& getSize() const;
 	void setSize(const Vector2I &size);
 

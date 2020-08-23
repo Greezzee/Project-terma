@@ -4,6 +4,7 @@ Multiblock::Multiblock() {
 }
 
 void Multiblock::Update() {
+
 }
 
 const Vector2I& Multiblock::getSize() const {

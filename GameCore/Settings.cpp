@@ -1,6 +1,6 @@
 #include "Settings.h"
 
-#include <bits/types/FILE.h>
+//#include <bits/types/FILE.h>
 #include <cstdio>
 #include <iostream>
 

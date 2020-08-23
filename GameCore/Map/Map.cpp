@@ -74,13 +74,13 @@ void Map::Init() {
 }
 
 void Map::Update() {
+	if (!ignoreLight) {
+		drawLight();
+	}
 	if (!is_paused) {
 		updateWallblocks();
 		updateBlocks();
 		updateEntities();
-	}
-	if (!ignoreLight) {
-		drawLight();
 	}
 	if (mayDrawBackground) {
 		drawBackground();
@@ -252,6 +252,7 @@ void Map::updateBlocks() {
 				continue;
 			}
 			if (blocks[x][y]) {
+				blocks[x][y]->SetPos(Vector2F(x, y) * BLOCK_SIZE);
 				blocks[x][y]->Update();
 			}
 		}
@@ -593,7 +594,7 @@ void Map::drawLight() {
 	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
 			/ BLOCK_SIZE + 1;
 	LightManager::ClearLightSource();
-
+	/*
 	for (int x = startx - LIGHT_SOURCE_SEARCH_RADIUS;
 			x < endx + LIGHT_SOURCE_SEARCH_RADIUS; x++) {
 		for (int y = starty - LIGHT_SOURCE_SEARCH_RADIUS;
@@ -607,7 +608,7 @@ void Map::drawLight() {
 			if (currBlock == NULL) {
 				continue;
 			}
-
+			
 			FAST_CAST(currBlock, LightSource, {
 					if (casted->getLightRadius() != 0) {
 						LightData data = {};
@@ -618,9 +619,10 @@ void Map::drawLight() {
 						data.softness = 1;
 						LightManager::AddLightSource(data);
 			}});
+			
 		}
 	}
-
+	*/
 }
 
 void Map::updateWallblocks() {
