@@ -65,7 +65,7 @@ void InventoryScene::Init() {
 		}
 
 		// Go to the next cell anyway
-		if (column >= maxColumns) {
+		if (column >= maxColumns - 1) {
 			column = 0;
 			row++;
 		} else {

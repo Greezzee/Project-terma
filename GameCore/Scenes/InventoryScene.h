@@ -8,8 +8,8 @@ class Map;
 
 // Constant vectors for item buttons
 const Vector2F itemIconSize = { 75, 80 };
-const Vector2F itemStartPos = { 110, 610 };
-const unsigned maxColumns = 8;
+const Vector2F itemStartPos = { 114, 612 };
+const unsigned maxColumns = 9;
 const unsigned maxRows = 7;
 
 class InventoryScene: public MenuScene {

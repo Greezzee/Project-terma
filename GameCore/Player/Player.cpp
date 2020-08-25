@@ -51,8 +51,8 @@ void Player::Update() {
 	// Print the equipped item
 
 	if (isEquipped())
-		std::cout << "Player is holding " << weapon_equipped->getName() << std::endl;
-
+		std::cout << "Player is holding " << weapon_equipped->getName()
+				<< std::endl;
 
 	// X
 	char going_to = -10;
@@ -134,14 +134,15 @@ void Player::Init(GameObject *owner) {
 
 void Player::Destroy() {
 	// Clear and destroy inventory
-	for (auto item : *(inventory->getItems())) {
-		item->Destroy();
-		delete item;
+	for (auto item : *(inventory->items)) {
+		if (item != nullptr) {
+			item->Destroy();
+			delete item;
+		}
 	}
 
 	inventory->Destroy();
 	delete inventory;
-
 
 	printf("Player destroyed!\n");
 	std::cout.flush();
@@ -210,23 +211,19 @@ void Player::drawPlayer() {
 
 }
 
-void Player::equipWeapon(Item *weapon)
-{
+void Player::equipWeapon(Item *weapon) {
 	weapon_equipped = weapon;
 }
 
-void Player::unequipWeapon()
-{
+void Player::unequipWeapon() {
 	weapon_equipped = nullptr;
 }
 
-bool Player::isEquipped()
-{
+bool Player::isEquipped() {
 	return (weapon_equipped == nullptr) ? false : true;
 }
 
-Item* Player::getEquippedWeapon()
-{
+Item* Player::getEquippedWeapon() {
 	return weapon_equipped;
 }
 

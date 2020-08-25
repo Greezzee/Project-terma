@@ -155,7 +155,10 @@ void ItemButton::leftButtonReleaseReact() {
 
 	is_dragged = false;
 
-	Vector2F calculate = {_pos.x - itemStartPos.x, _pos.y - itemStartPos.y};
+	Vector2F calculate = { _pos.x - (itemStartPos.x - itemIconSize.x / 2),
+			(itemStartPos.y + itemIconSize.y / 2) - _pos.y };
+
+	printf("calculate: x = %g, y = %g\n", calculate.x, calculate.y);
 
 	// If the button got to the equipping icon, its good
 	if (_pos.x >= weaponEquippedIcon.x - _size.x / 2
@@ -171,14 +174,46 @@ void ItemButton::leftButtonReleaseReact() {
 
 		_item->equip();
 		_scene->gamefield->player->equipWeapon(item);
-	} else if (_pos.x >= getOriginalPos().x - _size.x / 2
-			&& _pos.x <= getOriginalPos().x + _size.x / 2
-			&& _pos.y >= getOriginalPos().y - _size.y / 2
-			&& _pos.y <= getOriginalPos().y + _size.y / 2) {
-		// Unequip and put back
-		_item->unequip();
-		_scene->gamefield->player->unequipWeapon();
-		SetPos(getOriginalPos());
+
+	} else if (calculate.x >= 0 && calculate.y >= 0) {
+		// Item is in the inventory bar
+
+		Vector2F cell = { static_cast<float>(static_cast<int>(calculate.x)
+				/ static_cast<int>(itemIconSize.x)),
+				static_cast<float>(static_cast<int>(calculate.y)
+						/ static_cast<int>(itemIconSize.y)) };
+
+		printf("cell: x = %g, y = %g\n", cell.x, cell.y);
+
+		if (cell.x < maxColumns + 1 && cell.y < maxRows) {
+			_item->unequip();
+			_scene->gamefield->player->unequipWeapon();
+
+			// Change item's position in the inventory
+			_scene->gamefield->player->inventory->getItems()->at(cell.y * maxColumns + cell.x)
+					= _scene->gamefield->player->inventory->getItems()->at(
+							(itemStartPos.y - getOriginalPos().y) / itemIconSize.y * maxColumns
+							+ (getOriginalPos().x - itemStartPos.x) / itemIconSize.x);
+			_scene->gamefield->player->inventory->getItems()->at(
+										(itemStartPos.y - getOriginalPos().y) / itemIconSize.y * maxColumns
+										+ (getOriginalPos().x - itemStartPos.x) / itemIconSize.x) = nullptr;
+
+			setOriginalPos(
+					Vector2F(itemStartPos.x + cell.x * itemIconSize.x,
+							itemStartPos.y - cell.y * itemIconSize.y));
+
+		}
+
+		/* else if (_pos.x >= getOriginalPos().x - _size.x / 2
+		 && _pos.x <= getOriginalPos().x + _size.x / 2
+		 && _pos.y >= getOriginalPos().y - _size.y / 2
+		 && _pos.y <= getOriginalPos().y + _size.y / 2) {
+		 // Unequip and put back
+		 _item->unequip();
+		 _scene->gamefield->player->unequipWeapon();
+		 SetPos(getOriginalPos());
+		 }
+		 */
 	}
 }
 

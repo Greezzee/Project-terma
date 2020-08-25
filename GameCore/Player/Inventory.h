@@ -8,7 +8,7 @@
 
 class Player;
 
-const unsigned inventorySize = 56;
+const unsigned inventorySize = 63;
 
 class Inventory {
 	std::vector<Item*>* items;
