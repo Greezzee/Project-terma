@@ -5,7 +5,7 @@
 
 class Multiblock;
 
-class StructureBlock : public Block, public LightSource {
+class StructureBlock : public Block {
 public:
 	StructureBlock(Multiblock * parent);
 	void update();

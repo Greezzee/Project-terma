@@ -42,8 +42,8 @@ GameObject* Player::Clone() const {
 	return new Player();
 }
 
-const float base_acceleration = 2000; // this will be used if players will matches current speed direction
-const float stop_acceleration = 4000; // this will be used if players will is not matching current speed direction
+const float base_acceleration = 2000 / 40 * BLOCK_SIZE; // this will be used if players will matches current speed direction
+const float stop_acceleration = 4000 / 40 * BLOCK_SIZE; // this will be used if players will is not matching current speed direction
 
 void Player::Update() {
 	SolidEntity::Update();
@@ -107,7 +107,7 @@ void Player::Update() {
 
 	// JUMPS
 	if (InputManager::IsDown(Controls::UP) && standsOnTheGround()) {
-		speed.y = 1500;
+		speed.y = 1500 / 40 * BLOCK_SIZE;
 	}
 
 	GraphicManager::GetView(camera)->virtual_position.x = _pos.x;

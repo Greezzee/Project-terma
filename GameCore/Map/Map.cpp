@@ -55,7 +55,7 @@ void Map::Init() {
 	this->level->generate(this);
 	this->player = new Player();
 	player->Init(nullptr);
-	this->addEntity( { 1500, 800 }, this->player);
+	this->addEntity( { 1500 / 40 * BLOCK_SIZE, 800 / 40 * BLOCK_SIZE }, this->player);
 
 	GraphicManager::SetLayerShader(1, &currentShader);
 
@@ -74,9 +74,8 @@ void Map::Init() {
 }
 
 void Map::Update() {
-	if (!ignoreLight) {
-		drawLight();
-	}
+	LightManager::ClearLightSource();
+
 	if (!is_paused) {
 		updateWallblocks();
 		updateBlocks();
@@ -236,14 +235,14 @@ void Map::updateBlocks() {
 
 	//----------------------------------------------------------------------------
 	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
-			/ BLOCK_SIZE - 1;
+			/ BLOCK_SIZE - 1 - BLOCKS_UPDATE_SEARCH_RADIUS;
 	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
-			/ BLOCK_SIZE - 1;
+			/ BLOCK_SIZE - 1 - BLOCKS_UPDATE_SEARCH_RADIUS;
 
 	int endx = (camera->virtual_position.x + camera->virtual_size.x / 2)
-			/ BLOCK_SIZE + 1;
+			/ BLOCK_SIZE + 1 + BLOCKS_UPDATE_SEARCH_RADIUS;
 	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
-			/ BLOCK_SIZE + 1;
+			/ BLOCK_SIZE + 1 + BLOCKS_UPDATE_SEARCH_RADIUS;
 	//----------------------------------------------------------------------------
 
 	// UPDATE
@@ -253,12 +252,31 @@ void Map::updateBlocks() {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
 				continue;
 			}
+
 			if (blocks[x][y]) {
-				blocks[x][y]->SetPos(Vector2F(x, y) * BLOCK_SIZE);
+				LightSource *lgt = dynamic_cast<LightSource*>(blocks[x][y]);
+				if (lgt != NULL && lgt->getLightRadius() != 0) {
+					LightData data = { };
+					data.pos = Vector2F(x, y);
+
+					Multiblock *mlt = dynamic_cast<Multiblock*>(blocks[x][y]);
+					if (mlt != NULL) {
+						Vector2F size = mlt->getSize().to2F();
+						data.pos += ((size) / 2.0f);
+					}
+
+					data.pos = data.pos * BLOCK_SIZE;
+					data.color = Color(255, 255, 255);
+					data.full_dist = lgt->getLightRadius() * BLOCK_SIZE / 2;
+					data.any_dist = lgt->getLightRadius() * BLOCK_SIZE;
+					data.softness = 1;
+					LightManager::AddLightSource(data);
+				}
 				blocks[x][y]->Update();
 			}
 		}
 	}
+
 	//----------------------------------------------------------------------------
 }
 
@@ -582,49 +600,6 @@ Vector2I Map::getGridCoords(Vector2F pos) {
 		return {-1, -1};
 	}
 	return {x, y};
-}
-
-void Map::drawLight() {
-	View *camera = GraphicManager::GetView(this->player->getCamera());
-	int startx = (camera->virtual_position.x - camera->virtual_size.x / 2)
-			/ BLOCK_SIZE - 1;
-	int starty = (camera->virtual_position.y - camera->virtual_size.y / 2)
-			/ BLOCK_SIZE - 1;
-
-	int endx = (camera->virtual_position.x + camera->virtual_size.x / 2)
-			/ BLOCK_SIZE + 1;
-	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
-			/ BLOCK_SIZE + 1;
-	LightManager::ClearLightSource();
-	/*
-	for (int x = startx - LIGHT_SOURCE_SEARCH_RADIUS;
-			x < endx + LIGHT_SOURCE_SEARCH_RADIUS; x++) {
-		for (int y = starty - LIGHT_SOURCE_SEARCH_RADIUS;
-				y < endy + LIGHT_SOURCE_SEARCH_RADIUS; y++) {
-			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
-				continue;
-			}
-
-			Block *currBlock = blocks[x][y];
-
-			if (currBlock == NULL) {
-				continue;
-			}
-			
-			FAST_CAST(currBlock, LightSource, {
-					if (casted->getLightRadius() != 0) {
-						LightData data = {};
-						data.pos = Vector2F(x, y) * BLOCK_SIZE;
-						data.color = Color(255, 255, 255);
-						data.full_dist = casted->getLightRadius() * BLOCK_SIZE;
-						data.any_dist = 50;
-						data.softness = 1;
-						LightManager::AddLightSource(data);
-			}});
-			
-		}
-	}
-	*/
 }
 
 void Map::updateWallblocks() {
