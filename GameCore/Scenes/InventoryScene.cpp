@@ -41,6 +41,7 @@ void InventoryScene::Init() {
 	background->setScene(this);
 	background->setSpriteID(Textures::INVENTORY);
 	background->SetView(Views::MAIN_MENU);
+	background->setLayer(1);
 	background->SetPos( { 800, 450 });
 	background->SetSize( { 1600, 900 });
 	widgets->push_back(background);

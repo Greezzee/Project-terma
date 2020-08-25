@@ -18,6 +18,9 @@ protected:
 
 	// View id where this button is situated
 	unsigned view_id;
+
+	// Layer(=0 by default)
+	unsigned layer;
 public:
 	MenuWidget();
 
@@ -43,4 +46,8 @@ public:
 	GameObject* Clone() const override;
 
 	virtual ~MenuWidget();
+
+	void setLayer(unsigned layer) {
+		this->layer = layer;
+	}
 };
