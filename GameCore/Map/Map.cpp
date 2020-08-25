@@ -113,6 +113,8 @@ void Map::Destroy() {
 	}
 	entities.clear();
 	player = NULL;
+
+	GraphicManager::SetLayerShader(1, NULL);
 }
 
 void Map::addEntity(Vector2F pos, Entity *entity) {

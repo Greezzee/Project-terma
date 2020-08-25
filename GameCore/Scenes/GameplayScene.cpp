@@ -46,6 +46,8 @@ void GameplayScene::Destroy() {
 	gamefield->Destroy();
 	delete gamefield;
 	delete currentLevel;
+	gamefield = NULL;
+	currentLevel = NULL;
 	printf("GameplayScene Destroyed\n");
 	std::cout.flush();
 }
