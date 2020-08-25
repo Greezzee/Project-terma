@@ -3,7 +3,10 @@
 #include "../../../Engine/AllEngine.h"
 #include "../../Views.h"
 
-Button::Button() {}
+Button::Button()
+{
+	layer = 1;
+}
 
 bool Button::isLeftClicked() {
 	bool _click = InputManager::IsPressed(MouseKey::Mouse_Left);
@@ -38,7 +41,7 @@ void Button::Draw() {
 	info.origin = { 0.5, 0.5 };
 
 	info.frame = 0;
-	info.layer = 1;
+	info.layer = layer;
 
 	info.spriteID = this->sprite_id;
 	GraphicManager::Draw(info, view_id);

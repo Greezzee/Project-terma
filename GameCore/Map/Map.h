@@ -21,7 +21,7 @@ const int MAX_LEVEL_SIZE = 500;
 const int BLOCK_SIZE = 40;
 //! размер экрана как бы увеличивается на это число во время прорисовки мультиблоков
 const int MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
-const int BLOCKS_UPDATE_SEARCH_RADIUS = 8;
+const int BLOCKS_UPDATE_SEARCH_RADIUS = 11;
 
 /*
  * Сей класс наследуется от GameField, тут будет вся инфа о текущих объектах в игре

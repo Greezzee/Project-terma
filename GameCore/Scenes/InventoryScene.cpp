@@ -41,7 +41,7 @@ void InventoryScene::Init() {
 	background->setScene(this);
 	background->setSpriteID(Textures::INVENTORY);
 	background->SetView(Views::MAIN_MENU);
-	background->setLayer(1);
+	background->setLayer(2);
 	background->SetPos( { 800, 450 });
 	background->SetSize( { 1600, 900 });
 	widgets->push_back(background);
@@ -60,6 +60,7 @@ void InventoryScene::Init() {
 				{ itemStartPos.x + column * itemIconSize.x, itemStartPos.y
 						- row * itemIconSize.y });
 		item->SetPos(_button->GetPos());
+		_button->setLayer(2);
 		_button->setOriginalPos(_button->GetPos());
 		_button->SetSize(itemIconSize);
 		_button->SetView(Views::MAIN_MENU);
