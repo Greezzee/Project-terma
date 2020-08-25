@@ -10,6 +10,7 @@ MenuWidget::MenuWidget()
 	sprite_id = -1;
 	_size = {0, 0};
 	view_id = 0;
+	layer = 0;
 }
 
 void MenuWidget::setScene(MenuScene* _scene)

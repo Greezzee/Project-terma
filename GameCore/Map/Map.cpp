@@ -57,7 +57,7 @@ void Map::Init() {
 	player->Init(nullptr);
 	this->addEntity( { 1500, 800 }, this->player);
 
-	GraphicManager::SetLayerShader(1, &currentShader);
+	// GraphicManager::SetLayerShader(1, &currentShader);
 
 	// WIREFRAME
 	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {

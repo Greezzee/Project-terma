@@ -24,7 +24,7 @@ void Background::Draw() {
 	info.origin = { 0.5, 0.5 };
 
 	info.frame = 0;
-	info.layer = 0;
+	info.layer = this->layer;
 
 	info.spriteID = this->sprite_id;
 	GraphicManager::Draw(info, view_id);

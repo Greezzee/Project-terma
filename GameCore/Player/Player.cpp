@@ -49,10 +49,10 @@ void Player::Update() {
 	SolidEntity::Update();
 
 	// Print the equipped item
-	/*
+
 	if (isEquipped())
 		std::cout << "Player is holding " << weapon_equipped->getName() << std::endl;
-	*/
+
 
 	// X
 	char going_to = -10;
@@ -124,7 +124,7 @@ void Player::Init(GameObject *owner) {
 	for (int i = 0; i < 19; i++) {
 		LimbSword *limb_sword = new LimbSword();
 		limb_sword->Init(nullptr);
-		// sword->setName("Sword " + std::to_string(i));
+		limb_sword->setName("Sword " + std::to_string(i));
 		inventory->addItem(limb_sword);
 	}
 	printf("Player created!\n");

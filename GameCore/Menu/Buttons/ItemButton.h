@@ -4,6 +4,8 @@
 #include "Button.h"
 
 class ItemButton: public Button {
+	// If the button is being dragged
+	bool is_dragged;
 	// Button's item
 	Item *item;
 	// Save the original position (in case it gets equipped and change its position)
@@ -13,6 +15,8 @@ public:
 
 	void rightClickReact() override;
 	void leftClickReact() override;
+	void leftButtonReleaseReact();
+
 
 	void focusReact() override;
 	void disfocusReact() override;
@@ -25,6 +29,9 @@ public:
 	void setOriginalPos(Vector2F original);
 	// Get the original position
 	Vector2F getOriginalPos();
+
+	void setDragged();
+	bool isDragged();
 
 	~ItemButton();
 

@@ -8,6 +8,8 @@ protected:
 	unsigned icon_id;
 	// Size of the object
 	Vector2F size;
+	// Item's name
+	std::string name;
 public:
 	Item();
 
@@ -23,4 +25,12 @@ public:
 	virtual GameObject* Clone() const = 0;
 
 	virtual ~Item();
+
+	const std::string& getName() const {
+		return name;
+	}
+
+	void setName(const std::string &name) {
+		this->name = name;
+	}
 };
