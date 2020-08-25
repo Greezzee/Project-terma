@@ -125,8 +125,9 @@ void Player::Init(GameObject *owner) {
 		LimbSword *limb_sword = new LimbSword();
 		limb_sword->Init(nullptr);
 		limb_sword->setName("Sword " + std::to_string(i));
-		inventory->addItem(limb_sword);
+		inventory->items->at(i) = limb_sword;
 	}
+
 	printf("Player created!\n");
 	printf("%d item(s) in the inventory!\n", inventory->getItemsNumber());
 }

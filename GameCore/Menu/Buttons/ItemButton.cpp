@@ -24,7 +24,6 @@ const Vector2F weaponEquippedIcon = { 1021, 435 };
 void ItemButton::leftClickReact() {
 	// Equip this item (give the pointer to the player, indicate that other item is unequipped)
 
-	InventoryScene *_scene = dynamic_cast<InventoryScene*>(current_scene);
 	Equippable *_item = dynamic_cast<Equippable*>(item);
 
 	if (_item != nullptr) {
@@ -155,6 +154,8 @@ void ItemButton::leftButtonReleaseReact() {
 	Equippable *_item = dynamic_cast<Equippable*>(item);
 
 	is_dragged = false;
+
+	Vector2F calculate = {_pos.x - itemStartPos.x, _pos.y - itemStartPos.y};
 
 	// If the button got to the equipping icon, its good
 	if (_pos.x >= weaponEquippedIcon.x - _size.x / 2
