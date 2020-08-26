@@ -5,11 +5,13 @@
 #include "MenuScene.h"
 #include "../Menu/ImageWidgets/EditorPanel.h"
 #include "../Menu/ImageWidgets/EditorCurrentBlock.h"
+#include "../Menu/Buttons/EditorChooseBlock.h"
 
 class Block;
 class Map;
 
 class LevelEditorScene : public MenuScene {
+	EditorCurrentBlock *block_button;
 public:
 	// Constructor and destructor
 	//----------------------------------------------
@@ -27,6 +29,6 @@ public:
 private:
 
 	Map * currentMap = NULL;
-	Block* currentBlock = NULL;
+	Block* currentBlock;
 	char currentLayer = 0;
 };

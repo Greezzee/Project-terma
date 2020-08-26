@@ -20,7 +20,8 @@
 
 LevelEditorScene::LevelEditorScene() {
 	currentMap = new Map();
-	currentBlock = (Block*) DIRT_BLOCK->Clone();
+	block_button = nullptr;
+	currentBlock = nullptr;
 }
 
 void LevelEditorScene::Init() {
@@ -49,15 +50,38 @@ void LevelEditorScene::Init() {
 	EditorCurrentBlock *cur_block = new EditorCurrentBlock();
 	cur_block->Init(nullptr);
 	cur_block->setScene(this);
-	cur_block->setBlock(currentBlock);
 	cur_block->SetView(Views::MAIN_MENU);
 	cur_block->SetPos( { 90, 470 });
 	cur_block->SetSize( { BLOCK_SIZE * 4, BLOCK_SIZE * 4 });
 	cur_block->setLayer(4);
+	block_button = cur_block;
 	widgets->push_back(cur_block);
 
-	currentMap->setLevel(new EmptyLevel());
+	EditorChooseBlock *dirt_block = new EditorChooseBlock(cur_block);
+	dirt_block->Init(nullptr);
+	dirt_block->setScene(this);
+	dirt_block->setBlock(dynamic_cast<Block*>(DIRT_BLOCK->Clone()));
+	dirt_block->SetView(Views::MAIN_MENU);
+	dirt_block->SetPos( { 60, 820 });
+	dirt_block->SetSize( { BLOCK_SIZE * 2, BLOCK_SIZE * 2});
+	dirt_block->setLayer(4);
+	widgets->push_back(dirt_block);
 
+	EditorChooseBlock *grass_block = new EditorChooseBlock(cur_block);
+	grass_block->Init(nullptr);
+	grass_block->setScene(this);
+	grass_block->setBlock(dynamic_cast<Block*>(GRASS_BLOCK->Clone()));
+	grass_block->SetView(Views::MAIN_MENU);
+	grass_block->SetPos( { 120, 820 });
+	grass_block->SetSize( { BLOCK_SIZE * 2, BLOCK_SIZE * 2 });
+	grass_block->setLayer(4);
+	widgets->push_back(grass_block);
+
+	// CURRENT BLOCK HERE
+	currentBlock = dirt_block->getBlock();
+	cur_block->setBlock(currentBlock);
+
+	currentMap->setLevel(new EmptyLevel());
 	currentMap->Init();
 
 	currentMap->setPlayersView(Views::EDITOR_CAM);
@@ -72,6 +96,7 @@ void LevelEditorScene::Init() {
 
 void LevelEditorScene::Update() {
 	currentMap->Update();
+	currentBlock = block_button->getBlock();
 
 	if (InputManager::IsPressed(Controls::BACK)) {
 		SceneManager::CreateScene(new MainMenuScene());
@@ -129,11 +154,10 @@ void LevelEditorScene::Update() {
 }
 
 void LevelEditorScene::Destroy() {
-	currentMap->Destroy();
-	currentBlock->Destroy();
+	delete currentMap->getLevel();
 
+	currentMap->Destroy();
 	delete currentMap;
-	delete currentBlock;
 
 	destroyWidgets();
 

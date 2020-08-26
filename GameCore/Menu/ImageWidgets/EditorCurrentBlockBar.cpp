@@ -30,7 +30,7 @@ void EditorCurrentBlockBar::Draw() {
 }
 
 void EditorCurrentBlockBar::Destroy() {
-	printf("EditorCurrentBlock destroyed!\n");
+	printf("EditorCurrentBlockBar destroyed!\n");
 	std::cout.flush();
 }
 
