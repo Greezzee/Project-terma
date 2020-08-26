@@ -8,6 +8,8 @@
 
 class Player;
 
+const unsigned inventorySize = 63;
+
 class Inventory {
 	std::vector<Item*>* items;
 public:
@@ -18,10 +20,11 @@ public:
 	unsigned getItemsNumber();
 	std::vector<Item*>* getItems();
 
-
 	void Init();
 	void Update();
 	void Destroy();
+
+	friend class Player;
 private:
 	Player * player = NULL;
 };

@@ -26,12 +26,6 @@ InventoryScene::InventoryScene(Map *_map) {
 	focused_item = nullptr;
 }
 
-// Constant vectors for item buttons
-const Vector2F itemIconSize = { 75, 80 };
-const Vector2F itemStartPos = { 110, 610 };
-const unsigned maxColumns = 8;
-const unsigned maxRows = 7;
-
 void InventoryScene::Init() {
 	widgets = new std::vector<MenuWidget*>;
 
@@ -51,22 +45,27 @@ void InventoryScene::Init() {
 	unsigned row = 0;
 
 	std::vector<Item*> *items = inventory->getItems();
-	for (auto item : *items) {
-		ItemButton *_button = new ItemButton(item);
-		_button->Init(nullptr);
-		_button->setScene(this);
-		_button->setSpriteID(item->getIconID());
-		_button->SetPos(
-				{ itemStartPos.x + column * itemIconSize.x, itemStartPos.y
-						- row * itemIconSize.y });
-		item->SetPos(_button->GetPos());
-		_button->setLayer(2);
-		_button->setOriginalPos(_button->GetPos());
-		_button->SetSize(itemIconSize);
-		_button->SetView(Views::MAIN_MENU);
-		widgets->push_back(_button);
+	for (unsigned i = 0; i < inventorySize; i++) {
+		// Check if this item exists
+		if (items->at(i) != nullptr) {
 
-		if (column >= maxColumns) {
+			ItemButton *_button = new ItemButton(items->at(i));
+			_button->Init(nullptr);
+			_button->setScene(this);
+			_button->setSpriteID(items->at(i)->getIconID());
+			_button->SetPos(
+					{ itemStartPos.x + column * itemIconSize.x, itemStartPos.y
+							- row * itemIconSize.y });
+			items->at(i)->SetPos(_button->GetPos());
+			_button->setLayer(2);
+			_button->setOriginalPos(_button->GetPos());
+			_button->SetSize(itemIconSize);
+			_button->SetView(Views::MAIN_MENU);
+			widgets->push_back(_button);
+		}
+
+		// Go to the next cell anyway
+		if (column >= maxColumns - 1) {
 			column = 0;
 			row++;
 		} else {
@@ -80,11 +79,11 @@ void InventoryScene::Init() {
 	}
 
 	// Create focus item image widget
-	ItemFocus* item_focus = new ItemFocus();
+	ItemFocus *item_focus = new ItemFocus();
 	item_focus->Init(nullptr);
 	item_focus->setScene(this);
 	item_focus->setSpriteID(Textures::ITEM_FOCUS);
-	item_focus->SetPos({0, 0});
+	item_focus->SetPos( { 0, 0 });
 	item_focus->SetSize(itemIconSize);
 	item_focus->SetView(Views::MAIN_MENU);
 	this->focused_item = item_focus;
@@ -112,7 +111,6 @@ void InventoryScene::Destroy() {
 	std::cout.flush();
 }
 
-void InventoryScene::setItemFocus(ItemFocus *_item)
-{
+void InventoryScene::setItemFocus(ItemFocus *_item) {
 	focused_item = _item;
 }

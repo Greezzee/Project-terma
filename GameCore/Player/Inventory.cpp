@@ -17,6 +17,7 @@ void Inventory::Init()
 {
 	// TODO Read items from the save file
 	items = new std::vector<Item*>;
+	items->resize(inventorySize, nullptr);
 
 	printf("Inventory created!\n");
 }

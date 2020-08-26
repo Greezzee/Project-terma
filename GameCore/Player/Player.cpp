@@ -79,17 +79,20 @@ void Player::Init(GameObject *owner) {
 		LimbSword *limb_sword = new LimbSword();
 		limb_sword->Init(nullptr);
 		limb_sword->setName("Sword " + std::to_string(i));
-		inventory->addItem(limb_sword);
+		inventory->items->at(i) = limb_sword;
 	}
+
 	printf("Player created!\n");
 	printf("%d item(s) in the inventory!\n", inventory->getItemsNumber());
 }
 
 void Player::Destroy() {
 	// Clear and destroy inventory
-	for (auto item : *(inventory->getItems())) {
-		item->Destroy();
-		delete item;
+	for (auto item : *(inventory->items)) {
+		if (item != nullptr) {
+			item->Destroy();
+			delete item;
+		}
 	}
 
 	inventory->Destroy();
