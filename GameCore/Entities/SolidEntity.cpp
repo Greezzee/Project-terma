@@ -104,3 +104,7 @@ SolidEntity::~SolidEntity() {
 void SolidEntity::setMass(float mass) {
 	this->mass = mass;
 }
+
+const SquareCollider* SolidEntity::getCollider() const {
+	return collider;
+}

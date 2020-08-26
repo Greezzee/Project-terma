@@ -10,6 +10,8 @@ public:
 	StructureBlock(Multiblock * parent);
 	void update();
 	GameObject * Clone() const;
+	const Multiblock* getParent() const;
+
 private:
 	Multiblock * parent;
 };

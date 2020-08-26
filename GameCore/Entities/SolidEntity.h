@@ -24,6 +24,8 @@ public:
 	//----------------------------------
 	bool standsOnTheGround();
 	void setMass(float mass = 1);
+	const SquareCollider* getCollider() const;
+
 	//----------------------------------
 
 protected:

@@ -1,12 +1,13 @@
-#include "../Engine/AllEngine.h"
-
 #include "ProjectTerma.h"
 
 #include <cstdio>
+#include <iostream>
+#include <string>
 
+#include "../Engine/SceneManagment/SceneManager.h"
+#include "Controls.h"
 #include "Scenes/MainMenuScene.h"
 #include "Views.h"
-#include "Controls.h"
 
 class MainMenuScene;
 
@@ -33,4 +34,10 @@ void ProjectTerma::Update() {
 
 void ProjectTerma::Destroy() {
 	printf("Start scene is terminated!\n");
+}
+
+void ProjectTerma::report_error(std::string mes) {
+	std::cout << "Error reported!\n";
+	std::cout << mes << "\n";
+	exit(-2);
 }

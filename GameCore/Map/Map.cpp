@@ -21,6 +21,7 @@
 #include "../Blocks/MultiblockStructures/StructureBlock.h"
 #include "../Blocks/MultiblockStructures/Tree.h"
 #include "../Player/Player.h"
+#include "../ProjectTerma.h"
 #include "../Textures.h"
 #include "../Views.h"
 #include "Level.h"
@@ -33,13 +34,6 @@ void Map::setLevel(Level *level) {
 
 Level* Map::getLevel() {
 	return this->level;
-}
-
-void Map::addBlock(Vector2I pos, Block *block) {
-	if (blocks[pos.x][pos.y] != NULL) {
-		delete blocks[pos.x][pos.y];
-	}
-	this->blocks[pos.x][pos.y] = block;
 }
 
 template<typename T>
@@ -55,7 +49,8 @@ void Map::Init() {
 	this->level->generate(this);
 	this->player = new Player();
 	player->Init(nullptr);
-	this->addEntity( { 1500 / 40 * BLOCK_SIZE, 800 / 40 * BLOCK_SIZE }, this->player);
+	this->addEntity( { 1500 / 40 * BLOCK_SIZE, 800 / 40 * BLOCK_SIZE },
+			this->player);
 
 	GraphicManager::SetLayerShader(1, &currentShader);
 
@@ -69,18 +64,21 @@ void Map::Init() {
 	}
 
 	genTestStuff();
-	LightManager::SetView(this->player->getCamera());
+	setPlayersView(Views::PLAYER_CAM);
 	printf("Map created!\n");
 }
 
 void Map::Update() {
-	LightManager::ClearLightSource();
-
-	if (!is_paused) {
-		updateWallblocks();
-		updateBlocks();
-		updateEntities();
+	if (!ignoreLight) {
+		LightManager::ClearLightSource();
+	} else {
+		LightManager::SetGlobalLight(Color(255, 255, 255));
 	}
+
+	updateWallblocks();
+	updateBlocks();
+	updateEntities();
+
 	if (mayDrawBackground) {
 		drawBackground();
 	}
@@ -210,6 +208,11 @@ void Map::drawBlocks() {
 void Map::drawEntities() {
 	for (Entity *ent : entities) {
 		ent->Draw();
+		SolidEntity *sent = NULL;
+		if (mayDrawColliders && (sent = dynamic_cast<SolidEntity*>(ent)) != NULL) {
+			Debugger::DrawCollider(*sent->getCollider(), 2, 2,
+					player->getCamera(), Color(0, 255, 0), 2);
+		}
 	}
 }
 
@@ -270,9 +273,13 @@ void Map::updateBlocks() {
 					data.full_dist = lgt->getLightRadius() * BLOCK_SIZE / 2;
 					data.any_dist = lgt->getLightRadius() * BLOCK_SIZE;
 					data.softness = 1;
-					LightManager::AddLightSource(data);
+					if (!ignoreLight) {
+						LightManager::AddLightSource(data);
+					}
 				}
-				blocks[x][y]->Update();
+				if (!is_paused) {
+					blocks[x][y]->Update();
+				}
 			}
 		}
 	}
@@ -283,24 +290,24 @@ void Map::updateBlocks() {
 void Map::genTestStuff() {
 	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
-			addWallblock(Vector2I(x, y), new DirtBlock());
+			placeWallblock(Vector2I(x, y), new DirtBlock());
 		}
 	}
 	for (int y = 0; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-			addBlock(Vector2I(x, y), new DirtBlock());
+			placeBlock(Vector2I(x, y), new DirtBlock());
 		}
 	}
 	for (int y = 10; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 			int token = rand() % 3;
 			if (token == 1 || token == 2)
-				addBlock(Vector2I(x, y), new GrassBlock());
+				replaceWithBlock(Vector2I(x, y), new GrassBlock());
 		}
 	}
 	for (int y = 13; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
-			addBlock(Vector2I(x, y), new GrassBlock());
+			replaceWithBlock(Vector2I(x, y), new GrassBlock());
 		}
 	}
 
@@ -308,9 +315,9 @@ void Map::genTestStuff() {
 	for (int x = 0; x < MAX_LEVEL_SIZE - 20; x++) {
 		if (x % 15 == 0) {
 			if (x % 2 == 0) {
-				addMultiblock( { x, 14 }, new Lantern());
+				replaceWithMultiblock( { x, 14 }, new Lantern());
 			} else {
-				addMultiblock( { x, 14 }, new Tree());
+				replaceWithMultiblock( { x, 14 }, new Tree());
 			}
 		}
 	}
@@ -319,6 +326,11 @@ void Map::genTestStuff() {
 float Map::testCollision(SquareCollider *col, Vector2F dir) {
 	float dir_len = dir.Magnitude();
 	float result = 10000000.0f;
+
+	if (mayDrawColliders) {
+		Debugger::DrawLine(player->GetPos(), player->GetPos() + dir.Normalized() * 4 *  BLOCK_SIZE, 5,
+				player->getCamera(), Color(0, 0, 255), 3);
+	}
 
 	for (int y = (col->GetPos().y - 1 * col->GetSize().y - dir_len) / BLOCK_SIZE
 			- 1;
@@ -342,19 +354,20 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 				continue;
 			}
 
-			// DEBUG
-			//------------------------------
-			//Debugger::DrawSquareCollider(bl, 10, 4, this->player->getCamera());
-			//Debugger::DrawLine(bl.getPos(), col->getPos(), 4, this->player->getCamera(),
-			//		Color::Red());
-			//------------------------------
-
 			float dist = Collider::DistanceBetween(col,
 					colliders_wireframe[x][y], dir);
 
 			if (!std::isnan(dist)) {
 				if (dist >= 0.0f) {
 					result = std::min(result, dist);
+					// DEBUG
+					//------------------------------
+					if (mayDrawColliders) {
+						Debugger::DrawCollider(*colliders_wireframe[x][y], 10,
+								4, this->player->getCamera(), Color(255, 0, 0),
+								3);
+					}
+					//------------------------------
 				}
 			}
 		}
@@ -412,18 +425,6 @@ void Map::drawMultiblocks() {
 	}
 }
 
-void Map::addMultiblock(Vector2I pos, Multiblock *block) {
-	addBlock(pos, block);
-	for (int x = 0; x < block->getSize().x; x++) {
-		for (int y = 0; y < block->getSize().y; y++) {
-			if (x == 0 && y == 0) {
-				continue;
-			}
-			addBlock(Vector2I(pos.x + x, pos.y + y), new StructureBlock(block));
-		}
-	}
-}
-
 void Map::pauseGame() {
 	is_paused = true;
 }
@@ -434,10 +435,6 @@ void Map::unpauseGame() {
 
 bool Map::isPaused() {
 	return is_paused;
-}
-
-void Map::addWallblock(Vector2I pos, Block *block) {
-	this->wallblocks[pos.x][pos.y] = block;
 }
 
 Block* Map::getBlock(Vector2F pos) {
@@ -459,6 +456,9 @@ Block* Map::getWallblock(Vector2F pos) {
 }
 
 void Map::updateEntities() {
+	if (is_paused) {
+		return;
+	}
 	for (Entity *ent : entities) {
 		ent->Update();
 	}
@@ -522,6 +522,7 @@ void Map::drawWallblocks() {
 
 void Map::setPlayersView(unsigned view) {
 	player->setCamera(view);
+	LightManager::SetView(this->player->getCamera());
 }
 
 bool Map::isIgnoreLight() const {
@@ -543,7 +544,7 @@ void Map::drawGrid() {
 			/ BLOCK_SIZE + 1;
 	int endy = (camera->virtual_position.y + camera->virtual_size.y / 2)
 			/ BLOCK_SIZE + 1;
-
+	int h = 0;
 	for (int x = startx; x < endx; x++) {
 		for (int y = starty; y < endy; y++) {
 			if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
@@ -565,6 +566,7 @@ void Map::drawGrid() {
 					&& (dynamic_cast<StructureBlock*>(currBlock) != NULL
 							|| dynamic_cast<Multiblock*>(currBlock) != NULL)) {
 				co.r = 255;
+				h++;
 			}
 
 			Debugger::DrawLine( { x0, y0 }, { x0, y1 }, th,
@@ -577,32 +579,199 @@ void Map::drawGrid() {
 					this->player->getCamera(), co);
 		}
 	}
-}
-
-void Map::addBlock(Vector2F pos, Block *block) {
-	Vector2I grid_pos = getGridCoords(pos);
-
-	if (grid_pos.x == -1) {
-		return;
-	}
-
-	if (getBlockFromMesh(grid_pos) != NULL) {
-		return;
-	}
-
-	addBlock(grid_pos, block);
+	std::cout << h << "\n";
 }
 
 Vector2I Map::getGridCoords(Vector2F pos) {
 	int x = pos.x / BLOCK_SIZE;
 	int y = pos.y / BLOCK_SIZE;
-	if (x < 0 || x >= MAX_LEVEL_SIZE || y < 0 || y >= MAX_LEVEL_SIZE) {
+	if (!ensureInGrid( { x, y })) {
 		return {-1, -1};
 	}
 	return {x, y};
 }
 
+bool Map::placeMultiblock(Vector2I pos, Multiblock *block) {
+	if (!ensureInGrid(pos) || blocks[pos.x][pos.y] != NULL) {
+		return 0;
+	}
+
+	for (int x = 0; x < block->getSize().x; x++) {
+		for (int y = 0; y < block->getSize().y; y++) {
+			if (blocks[pos.x + x][pos.y + y] != NULL
+					|| !ensureInGrid(pos + Vector2I(x, y))) {
+				return 0;
+			}
+		}
+	}
+
+	blocks[pos.x][pos.y] = block;
+
+	for (int x = 0; x < block->getSize().x; x++) {
+		for (int y = 0; y < block->getSize().y; y++) {
+			if (x == 0 && y == 0) {
+				continue;
+			}
+
+			blocks[x + pos.x][y + pos.y] = new StructureBlock(block);
+		}
+	}
+
+	return 1;
+}
+
+bool Map::placeWallblock(Vector2I pos, Block *block) {
+	if (!ensureInGrid(pos) || wallblocks[pos.x][pos.y] != NULL) {
+		return 0;
+	}
+
+	wallblocks[pos.x][pos.y] = block;
+	return 1;
+}
+
+bool Map::placeBlock(Vector2I pos, Block *block) {
+	if (!ensureInGrid(pos) || blocks[pos.x][pos.y] != NULL) {
+		return 0;
+	}
+
+	blocks[pos.x][pos.y] = block;
+	return 1;
+}
+
+bool Map::replaceWithBlock(Vector2I pos, Block *block) {
+	if (!ensureInGrid(pos)) {
+		return 0;
+	}
+
+	if (blocks[pos.x][pos.y] != NULL) {
+		delete blocks[pos.x][pos.y];
+	}
+	blocks[pos.x][pos.y] = block;
+	return 1;
+}
+
+bool Map::replaceWithMultiblock(Vector2I pos, Multiblock *block) {
+	if (!ensureInGrid(pos) || !ensureInGrid(pos + block->getSize())) {
+		return 0;
+	}
+	for (int x = 0; x < block->getSize().x; x++) {
+		for (int y = 0; y < block->getSize().y; y++) {
+			removeBlock(pos + Vector2I(x, y));
+		}
+	}
+
+	return placeMultiblock(pos, block);
+}
+
+bool Map::replaceWithWallBlock(Vector2I pos, Block *block) {
+	if (!ensureInGrid(pos)) {
+		return 0;
+	}
+
+	if (wallblocks[pos.x][pos.y] != NULL) {
+		delete wallblocks[pos.x][pos.y];
+	}
+	wallblocks[pos.x][pos.y] = block;
+	return 1;
+}
+
+bool Map::removeBlock(Vector2I pos) {
+	if (!ensureInGrid(pos) || !blocks[pos.x][pos.y]) {
+		return 0;
+	}
+
+	if (dynamic_cast<Multiblock*>(blocks[pos.x][pos.y]) != NULL) {
+		return flushMutliblockStructure(pos);
+	}
+
+	delete blocks[pos.x][pos.y];
+	blocks[pos.x][pos.y] = NULL;
+	return 1;
+}
+
+bool Map::removeWallBlock(Vector2I pos) {
+	if (!ensureInGrid(pos) || !blocks[pos.x][pos.y]) {
+		return 0;
+	}
+	delete blocks[pos.x][pos.y];
+	blocks[pos.x][pos.y] = NULL;
+	return 1;
+}
+
+bool Map::ensureInGrid(Vector2I pos) {
+	return (pos.x >= 0 && pos.y >= 0 && pos.x < MAX_LEVEL_SIZE
+			&& pos.y < MAX_LEVEL_SIZE);
+}
+
+bool Map::flushMutliblockStructure(Vector2I pos) {
+	if (!ensureInGrid(pos) || !blocks[pos.x][pos.y]) {
+		return 0;
+	}
+
+	Multiblock *mblock = dynamic_cast<Multiblock*>(blocks[pos.x][pos.y]);
+
+	if (mblock == NULL) {
+		return 0;
+	}
+
+	for (int x = 0; x < mblock->getSize().x; x++) {
+		for (int y = 0; y < mblock->getSize().y; y++) {
+			if (x == 0 && y == 0) {
+				continue;
+			}
+
+			StructureBlock *sblock = dynamic_cast<StructureBlock*>(blocks[pos.x
+					+ x][pos.y + y]);
+			if (sblock == NULL) {
+				ProjectTerma::report_error(
+						"No structure block found in multiblock structure!");
+			}
+			delete sblock;
+			blocks[x + pos.x][y + pos.y] = NULL;
+		}
+	}
+
+	delete mblock;
+
+	return 1;
+}
+
+Vector2I Map::findStructureblockParent(Vector2I pos) {
+	if (!ensureInGrid(pos) || !blocks[pos.x][pos.y]) {
+		return {-1, -1};
+	}
+
+	StructureBlock *start = dynamic_cast<StructureBlock*>(blocks[pos.x][pos.y]);
+
+	if (start == NULL) {
+		return {-1, -1};
+	}
+
+	Block *curr = start;
+	StructureBlock *scurr = start;
+	int x = pos.x;
+	int y = pos.y;
+	for (;
+			((curr = blocks[x][y]) != NULL) && ((scurr =
+					dynamic_cast<StructureBlock*>(curr)) != NULL)
+					&& scurr->getParent() == start->getParent(); x++) {
+	}
+	x--;
+	for (;
+			((curr = blocks[x][y]) != NULL) && ((scurr =
+					dynamic_cast<StructureBlock*>(curr)) != NULL)
+					&& scurr->getParent() == start->getParent(); y++) {
+	}
+	y--;
+
+	return {x, y};
+}
+
 void Map::updateWallblocks() {
+	if (is_paused) {
+		return;
+	}
+
 	View *camera = GraphicManager::GetView(this->player->getCamera());
 
 	//----------------------------------------------------------------------------
@@ -646,4 +815,12 @@ bool Map::isMayDrawBackground() const {
 
 void Map::setMayDrawBackground(bool mayDrawBackground) {
 	this->mayDrawBackground = mayDrawBackground;
+}
+
+bool Map::isMayDrawColliders() const {
+	return mayDrawColliders;
+}
+
+void Map::setMayDrawColliders(bool mayDrawColliders) {
+	this->mayDrawColliders = mayDrawColliders;
 }
