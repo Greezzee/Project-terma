@@ -54,9 +54,14 @@ public:
 	//! This function may invoke given function with every entity on map that is unasledovana from T
 	template<typename T> void collectEntities(void inv(T *ent));
 	bool isIgnoreLight() const;
-	void setIgnoreLight(bool ignoreLight = 0);
+	void setIgnoreLight(bool ignoreLight);
 	bool isMayDrawGrid() const;
-	void setMayDrawGrid(bool mayDrawGrid = 0);
+	void setMayDrawGrid(bool mayDrawGrid);
+	bool isMayDrawBackground() const;
+	void setMayDrawBackground(bool mayDrawBackground);
+	bool isMayDrawColliders() const;
+	void setMayDrawColliders(bool mayDrawColliders);
+
 	//------------------------
 
 	// MAP EDITOR
@@ -85,15 +90,6 @@ public:
 	// COLLISIONS
 	//------------------------
 	float testCollision(SquareCollider *col, Vector2F dir);
-	//------------------------
-
-	// LIGHT
-	//------------------------
-	bool isMayDrawBackground() const;
-	void setMayDrawBackground(bool mayDrawBackground = 0);
-	bool isMayDrawColliders() const;
-	void setMayDrawColliders(bool mayDrawColliders = 0);
-
 	//------------------------
 
 	friend class InventoryScene;
