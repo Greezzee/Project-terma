@@ -17,4 +17,8 @@ class ProjectTerma: public Scene {
 
 	void Destroy();
 
+public:
+
+	static void report_error(std::string mes);
+
 };

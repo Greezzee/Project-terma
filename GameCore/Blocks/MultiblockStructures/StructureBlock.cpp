@@ -17,3 +17,7 @@ void StructureBlock::update() {
 GameObject* StructureBlock::Clone() const {
 	return new StructureBlock(parent);
 }
+
+const Multiblock* StructureBlock::getParent() const {
+	return parent;
+}

@@ -28,18 +28,17 @@ void LevelEditorScene::Init() {
 
 	currentMap->Init();
 
-	currentMap->setMayDrawBackground(false);
-
 	currentMap->setPlayersView(Views::EDITOR_CAM);
+	currentMap->setMayDrawBackground(false);
 	currentMap->setIgnoreLight(true);
 	currentMap->setMayDrawGrid(true);
+	currentMap->setMayDrawColliders(true);
 	currentMap->Update();
 	currentMap->pauseGame();
 	printf("LevelEditorScene created!\n");
 }
 
 void LevelEditorScene::Update() {
-
 	currentMap->Update();
 
 	if (InputManager::IsPressed(Controls::BACK)) {
@@ -60,7 +59,7 @@ void LevelEditorScene::Update() {
 	if (InputManager::IsDown(MouseKey::Mouse_Left)) {
 		Vector2F pos = GraphicManager::ConvertRealToView(
 					InputManager::GetMousePos(), Views::EDITOR_CAM);
-		currentMap->addBlock(pos, (Block*)currentBlock->Clone());
+		currentMap->replaceWithBlock(currentMap->getGridCoords(pos), (Block*)currentBlock->Clone());
 	}
 
 }
