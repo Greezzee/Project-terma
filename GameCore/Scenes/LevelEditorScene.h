@@ -1,7 +1,10 @@
 #pragma once
 
 #include "../Blocks/Block.h"
+#include "../Menu/ImageWidgets/EditorCurrentBlockBar.h"
 #include "MenuScene.h"
+#include "../Menu/ImageWidgets/EditorPanel.h"
+#include "../Menu/ImageWidgets/EditorCurrentBlock.h"
 
 class Block;
 class Map;

@@ -24,7 +24,7 @@ public:
 	// Background
 	static int TEST_BACKGROUND;
 
-	// TEST BUTTON
+	// MENU BUTTONS
 	static int MAIN_MENU_PLAY_BUTTON;
 	static int MAIN_MENU_PLAY_BUTTON_FOCUS;
 	static int MAIN_MENU_QUIT_BUTTON;
@@ -45,6 +45,10 @@ public:
 	static int RES1024x576;
 
 	static int ITEM_FOCUS;
+
+	// EDITOR
+	static int EDITOR_PANEL;
+	static int EDITOR_CURRENT_BLOCK;
 
 	//! Texture loader. LOAD EVERY TEXTURE HERE!!! BUT FIRST DEFINE IT IN THIS CLASS!!!
 	static void LOAD_ALL_TEXTURES();

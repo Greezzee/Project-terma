@@ -3,7 +3,7 @@
 #include "../Engine/AllEngine.h"
 
 //  олличество игровых клавиш
-const unsigned keys_number = 6;
+const unsigned keys_number = 8;
 
 //  ласс дл€ управлени€ и загрузки клави управлени€
 class Controls {
@@ -12,7 +12,7 @@ public:
 
 	// «десь перечисл€ть все используемые клавиши в игре
 	enum GameKeys {
-		RIGHT, LEFT, UP, DOWN, OPEN_INV, BACK
+		RIGHT, LEFT, UP, DOWN, OPEN_INV, BACK, PLUS, MINUS
 	};
 	// ћассив, где индекс - GAMEKEYS, а значение - ENGINE VIRTUAL KEY
 	static KeyboardKey linking[keys_number];

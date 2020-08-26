@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MenuScene.h"
+#include "../Menu/Cell.h"
 
 class Inventory;
 class ItemFocus;
@@ -8,7 +9,7 @@ class Map;
 
 // Constant vectors for item buttons
 const Vector2F itemIconSize = { 75, 80 };
-const Vector2F itemStartPos = { 114, 612 };
+const Vector2F itemStartPos = { 117, 610 };
 const unsigned maxColumns = 9;
 const unsigned maxRows = 7;
 
@@ -17,6 +18,8 @@ class InventoryScene: public MenuScene {
 	Map *gamefield;
 	// Inventory of the main character
 	Inventory* inventory;
+	// cellNet
+	Cell cells[maxColumns * maxRows];
 	// The widget that appears when some item is focused
 	ItemFocus* focused_item;
 public:

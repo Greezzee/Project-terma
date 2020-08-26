@@ -10,9 +10,10 @@
 //! "0" is the INDEX from the GAMEKEYS, "84" is the index from the ENGINE VIRTUAL KEYS
 
 // Default settings
-const Vector2U default_resolution = {1024, 576};
-const KeyboardKey default_linking[keys_number] = {KeyboardKey::RIGHT, KeyboardKey::LEFT,
-		KeyboardKey::UP, KeyboardKey::DOWN, KeyboardKey::E, KeyboardKey::ESC};
+const Vector2U default_resolution = { 1024, 576 };
+const KeyboardKey default_linking[keys_number] = { KeyboardKey::RIGHT,
+		KeyboardKey::LEFT, KeyboardKey::UP, KeyboardKey::DOWN, KeyboardKey::E,
+		KeyboardKey::ESC, KeyboardKey::EQUAL, KeyboardKey::MINUS };
 
 class Settings {
 public:

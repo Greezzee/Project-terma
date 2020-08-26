@@ -22,6 +22,7 @@ public:
 	void disfocusReact() override;
 	void Destroy() override;
 	void Init(GameObject *owner) override;
+	void Draw() override;
 
 	void Update() override;
 

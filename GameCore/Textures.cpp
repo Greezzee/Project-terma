@@ -29,6 +29,8 @@ int Textures::MAIN_MENU_EDITOR = -1;
 int Textures::RES1920x1080 = -1;
 int Textures::RES1600x900 = -1;
 int Textures::RES1024x576 = -1;
+int Textures::EDITOR_PANEL = -1;
+int Textures::EDITOR_CURRENT_BLOCK = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
 	GraphicManager::SetSpritesMaxCount(200);
@@ -117,4 +119,10 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::RES1920x1080 = GraphicManager::LoadSprite(
 				GraphicPrefabData("./Resources/1920x1080.png", Vector2F(62, 13),
 						1));
+	Textures::EDITOR_PANEL = GraphicManager::LoadSprite(
+			GraphicPrefabData("./Resources/editor_panel.png", Vector2F(130, 330),
+					1));
+	Textures::EDITOR_CURRENT_BLOCK = GraphicManager::LoadSprite(
+			GraphicPrefabData("./Resources/editor_current_block.png", Vector2F(17, 17),
+					1));
 }

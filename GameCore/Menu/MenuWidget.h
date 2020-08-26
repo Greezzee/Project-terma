@@ -16,7 +16,7 @@ protected:
 	// Size of the sprite
 	Vector2F _size;
 
-	// View id where this button is situated
+	// View id where this widget is situated
 	unsigned view_id;
 
 	// Layer(=0 by default)

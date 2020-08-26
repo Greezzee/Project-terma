@@ -62,6 +62,7 @@ void InventoryScene::Init() {
 			_button->SetSize(itemIconSize);
 			_button->SetView(Views::MAIN_MENU);
 			widgets->push_back(_button);
+			cells[row * maxColumns + column].setButton(_button);
 		}
 
 		// Go to the next cell anyway
@@ -72,7 +73,7 @@ void InventoryScene::Init() {
 			column++;
 		}
 
-		if (row >= maxRows) {
+		if (row >= maxRows || column >= maxColumns) {
 			printf("Error! Too many items!\n");
 			break;
 		}
@@ -85,6 +86,7 @@ void InventoryScene::Init() {
 	item_focus->setSpriteID(Textures::ITEM_FOCUS);
 	item_focus->SetPos( { 0, 0 });
 	item_focus->SetSize(itemIconSize);
+	item_focus->setLayer(3);
 	item_focus->SetView(Views::MAIN_MENU);
 	this->focused_item = item_focus;
 	widgets->push_back(item_focus);

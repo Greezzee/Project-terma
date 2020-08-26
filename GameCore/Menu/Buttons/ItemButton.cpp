@@ -158,7 +158,7 @@ void ItemButton::leftButtonReleaseReact() {
 				static_cast<float>(static_cast<int>(calculate.y)
 						/ static_cast<int>(itemIconSize.y)) };
 
-		if (cell.x < maxColumns + 1 && cell.y < maxRows) {
+		if (cell.x < maxColumns + 1 && cell.y < maxRows && _scene->cells[static_cast<int>(cell.y * maxColumns + cell.x)].getButton() == nullptr) {
 			_item->unequip();
 			_scene->gamefield->player->unequipWeapon();
 
@@ -167,9 +167,12 @@ void ItemButton::leftButtonReleaseReact() {
 					= _scene->gamefield->player->inventory->getItems()->at(
 							(itemStartPos.y - getOriginalPos().y) / itemIconSize.y * maxColumns
 							+ (getOriginalPos().x - itemStartPos.x) / itemIconSize.x);
+			 _scene->cells[static_cast<int>(cell.y * maxColumns + cell.x)].setButton(this);
 			_scene->gamefield->player->inventory->getItems()->at(
 										(itemStartPos.y - getOriginalPos().y) / itemIconSize.y * maxColumns
 										+ (getOriginalPos().x - itemStartPos.x) / itemIconSize.x) = nullptr;
+			_scene->cells[static_cast<int>((itemStartPos.y - getOriginalPos().y) / itemIconSize.y * maxColumns
+		+ (getOriginalPos().x - itemStartPos.x) / itemIconSize.x)].setButton(nullptr);
 
 			setOriginalPos(
 					Vector2F(itemStartPos.x + cell.x * itemIconSize.x,
@@ -192,4 +195,20 @@ void ItemButton::leftButtonReleaseReact() {
 
 ItemButton::~ItemButton() {
 	item = nullptr;
+}
+
+void ItemButton::Draw() {
+	DrawData info = { };
+
+	info.position = _pos;
+
+	info.size = _size;
+
+	info.origin = { 0.5, 0.5 };
+
+	info.frame = 1;
+	info.layer = (this->is_dragged) ?  layer + 1 : layer;
+
+	info.spriteID = this->sprite_id;
+	GraphicManager::Draw(info, view_id);
 }
