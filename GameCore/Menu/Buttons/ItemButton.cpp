@@ -28,29 +28,6 @@ void ItemButton::leftClickReact() {
 
 	if (_item != nullptr) {
 		this->setDragged();
-
-		/*
-		 if (!_item->isEquipped()) {
-		 // If the item isn't equipped yet
-
-		 if (_scene->gamefield->player->isEquipped()) {
-		 // Some item is equipped at the moment
-		 Equippable *__item =
-		 dynamic_cast<Equippable*>(_scene->gamefield->player->weapon_equipped);
-		 __item->unequip();
-		 }
-
-		 _item->equip();
-		 _scene->gamefield->player->equipWeapon(item);
-		 } else {
-		 // Unequip this item
-
-		 printf("UNEQUIP!\n");
-
-		 _item->unequip();
-		 _scene->gamefield->player->unequipWeapon();
-		 }
-		 */
 	}
 }
 
@@ -158,8 +135,6 @@ void ItemButton::leftButtonReleaseReact() {
 	Vector2F calculate = { _pos.x - (itemStartPos.x - itemIconSize.x / 2),
 			(itemStartPos.y + itemIconSize.y / 2) - _pos.y };
 
-	printf("calculate: x = %g, y = %g\n", calculate.x, calculate.y);
-
 	// If the button got to the equipping icon, its good
 	if (_pos.x >= weaponEquippedIcon.x - _size.x / 2
 			&& _pos.x <= weaponEquippedIcon.x + _size.x / 2
@@ -182,8 +157,6 @@ void ItemButton::leftButtonReleaseReact() {
 				/ static_cast<int>(itemIconSize.x)),
 				static_cast<float>(static_cast<int>(calculate.y)
 						/ static_cast<int>(itemIconSize.y)) };
-
-		printf("cell: x = %g, y = %g\n", cell.x, cell.y);
 
 		if (cell.x < maxColumns + 1 && cell.y < maxRows) {
 			_item->unequip();

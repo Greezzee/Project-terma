@@ -48,12 +48,6 @@ const float stop_acceleration = 4000 / 40 * BLOCK_SIZE; // this will be used if 
 void Player::Update() {
 	SolidEntity::Update();
 
-	// Print the equipped item
-
-	if (isEquipped())
-		std::cout << "Player is holding " << weapon_equipped->getName()
-				<< std::endl;
-
 	// X
 	char going_to = -10;
 	if (speed.x > 0) {
