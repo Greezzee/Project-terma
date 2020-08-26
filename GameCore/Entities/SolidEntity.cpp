@@ -23,12 +23,6 @@ void SolidEntity::Update() {
 	// UPDATE COLLIDER
 	collider->Init(this->_pos, this->collider_size * 0.5);
 
-	// DEBUG
-	//------------------------------------------------------------------
-	//Debugger::DrawSquareCollider(*collider, 10, 0, Views::PLAYER_CAM);
-	//Debugger::DrawPoint(_pos, 20, Views::PLAYER_CAM);
-	//------------------------------------------------------------------
-
 	// ADDING OTHER FORCES
 	//------------------------------------------------------------------
 	// SET ACCELERATION TO g
@@ -43,7 +37,7 @@ void SolidEntity::Update() {
 
 	// POSITION UPDATE
 	//------------------------------------------------------------------
-	float dt = TimeManager::GetDeltaTimeF();
+	float dt = TimeManager::GetDeltaTimeF() * 2.0f;
 
 	speed += acceleration * dt;
 	Vector2F ds = speed * dt;

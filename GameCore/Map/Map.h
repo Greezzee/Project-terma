@@ -18,7 +18,7 @@ class Player;
 
 //! ћаксимальна€ длинна сетки блоков и блоков стен
 const int MAX_LEVEL_SIZE = 500;
-const int BLOCK_SIZE = 20;
+const int BLOCK_SIZE = 50;
 //! размер экрана как бы увеличиваетс€ на это число во врем€ прорисовки мультиблоков
 const int MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
 const int BLOCKS_UPDATE_SEARCH_RADIUS = 5;
@@ -144,7 +144,7 @@ private:
 	bool ignoreLight = 0;
 	bool mayDrawGrid = 0;
 	bool mayDrawBackground = 1;
-	bool mayDrawColliders = 0;
+	bool mayDrawColliders = 1;
 	//------------------------
 
 	// INIT blocks and entities (Level)
