@@ -105,7 +105,7 @@ void LevelEditorScene::Update() {
 	}
 
 	unsigned move_dist =
-			GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x * 0.005;
+			GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x * 0.0000005 * TimeManager::GetDeltaTime();
 
 	if (InputManager::IsDown(Controls::LEFT)) {
 		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_position.x -=
@@ -127,17 +127,17 @@ void LevelEditorScene::Update() {
 			&& GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x > 128
 			&& GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y
 					> 72) {
-		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x += -0.01
-				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x;
-		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y += -0.01
-				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y;
+		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x += -0.0000005
+				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x * TimeManager::GetDeltaTime();
+		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y += -0.0000005
+				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y  * TimeManager::GetDeltaTime();
 	}
 	if (InputManager::IsDown(Controls::MINUS)) {
-		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x += 0.01
-				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x;
+		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x += 0.0000005
+				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x * TimeManager::GetDeltaTime();
 		;
-		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y += 0.01
-				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y;
+		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y += 0.0000005
+				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y * TimeManager::GetDeltaTime();
 		;
 	}
 
