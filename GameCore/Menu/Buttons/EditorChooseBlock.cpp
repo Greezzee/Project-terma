@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <iostream>
 
+#include "../../Blocks/Blocks.h"
+
 EditorChooseBlock::EditorChooseBlock(EditorCurrentBlock* _block)
 {
 	block = nullptr;
@@ -65,7 +67,7 @@ void EditorChooseBlock::Init(GameObject *owner)
 	printf("EditorChooseBlock created!\n");
 }
 
-Block* EditorChooseBlock::getBlock() const {
+Block* EditorChooseBlock::getBlock() {
 	return block;
 }
 

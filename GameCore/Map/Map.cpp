@@ -65,6 +65,7 @@ void Map::Init() {
 
 	genTestStuff();
 	setPlayersView(Views::PLAYER_CAM);
+	LightManager::SetGlobalLight(Color(0, 0, 0));
 	printf("Map created!\n");
 }
 

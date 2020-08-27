@@ -14,7 +14,6 @@ enum BLOCK_SITUATION {
 class EditorCurrentBlock: public ImageWidget {
 	Block *current_block;
 	enum BLOCK_TYPE block_type;
-	enum BLOCK_SITUATION block_situation;
 public:
 	EditorCurrentBlock();
 

@@ -9,7 +9,6 @@
 EditorCurrentBlock::EditorCurrentBlock() {
 	current_block = nullptr;
 	block_type = NONE;
-	block_situation = FRONT;
 }
 
 void EditorCurrentBlock::Init(GameObject *owner) {
@@ -55,17 +54,7 @@ Block* EditorCurrentBlock::getBlock() {
 	return current_block;
 }
 
-EditorCurrentBlock::~EditorCurrentBlock() {
-}
-
-enum BLOCK_SITUATION EditorCurrentBlock::getBlockSituation() const {
-	return block_situation;
-}
-
-void EditorCurrentBlock::setBlockSituation(
-		enum BLOCK_SITUATION blockSituation) {
-	block_situation = blockSituation;
-}
+EditorCurrentBlock::~EditorCurrentBlock() {}
 
 enum BLOCK_TYPE EditorCurrentBlock::getBlockType() const {
 	return block_type;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "../Textures.h"
 #include "Block.h"
 

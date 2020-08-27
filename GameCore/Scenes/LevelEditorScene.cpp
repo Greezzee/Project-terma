@@ -18,6 +18,8 @@
 #include "MainMenuScene.h"
 #include "../Map/Map.h"
 
+const unsigned editor_block_size = 20;
+
 LevelEditorScene::LevelEditorScene() {
 	currentMap = new Map();
 	block_button = nullptr;
@@ -62,7 +64,7 @@ void LevelEditorScene::Init() {
 	cur_block->setScene(this);
 	cur_block->SetView(Views::MAIN_MENU);
 	cur_block->SetPos(block_bar->GetPos());
-	cur_block->SetSize( { BLOCK_SIZE * 4, BLOCK_SIZE * 4 });
+	cur_block->SetSize( { editor_block_size * 4, editor_block_size * 4 });
 	cur_block->setLayer(4);
 	block_button = cur_block;
 	widgets->push_back(cur_block);
@@ -70,33 +72,35 @@ void LevelEditorScene::Init() {
 	EditorChooseBlock *dirt_block = new EditorChooseBlock(cur_block);
 	dirt_block->Init(nullptr);
 	dirt_block->setScene(this);
-	dirt_block->setBlock(dynamic_cast<Block*>(DIRT_BLOCK->Clone()));
+	dirt_block->setBlock(
+			dynamic_cast<Block*>(Blocks::ALL_BLOCKS[Blocks::DIRT_BLOCK->getID()]->Clone()));
 	dirt_block->SetView(Views::MAIN_MENU);
 	dirt_block->SetPos( { 60, 820 });
-	dirt_block->SetSize( { BLOCK_SIZE * 2, BLOCK_SIZE * 2 });
+	dirt_block->SetSize( { editor_block_size * 2, editor_block_size * 2 });
 	dirt_block->setLayer(4);
 	widgets->push_back(dirt_block);
 
 	EditorChooseBlock *grass_block = new EditorChooseBlock(cur_block);
 	grass_block->Init(nullptr);
 	grass_block->setScene(this);
-	grass_block->setBlock(dynamic_cast<Block*>(GRASS_BLOCK->Clone()));
+	grass_block->setBlock(
+			dynamic_cast<Block*>(Blocks::ALL_BLOCKS[Blocks::GRASS_BLOCK->getID()]->Clone()));
 	grass_block->SetView(Views::MAIN_MENU);
 	grass_block->SetPos( { 120, 820 });
-	grass_block->SetSize( { BLOCK_SIZE * 2, BLOCK_SIZE * 2 });
+	grass_block->SetSize( { editor_block_size * 2, editor_block_size * 2 });
 	grass_block->setLayer(4);
 	widgets->push_back(grass_block);
 
 	EditorChooseBlock *tree = new EditorChooseBlock(cur_block);
 	tree->Init(nullptr);
 	tree->setScene(this);
-	tree->setBlock(dynamic_cast<Block*>(TREE->Clone()));
+	tree->setBlock(
+			dynamic_cast<Block*>(Blocks::ALL_BLOCKS[Blocks::TREE->getID()]->Clone()));
 	tree->SetView(Views::MAIN_MENU);
-	tree->SetPos({90, 400});
-	tree->SetSize({4 * BLOCK_SIZE, 4 * BLOCK_SIZE});
+	tree->SetPos( { 90, 400 });
+	tree->SetSize( { 4 * editor_block_size, 4 * editor_block_size });
 	tree->setLayer(4);
 	widgets->push_back(tree);
-
 
 	// CURRENT BLOCK HERE
 	currentBlock = dirt_block->getBlock();
@@ -173,19 +177,27 @@ void LevelEditorScene::Update() {
 	if (InputManager::IsDown(MouseKey::Mouse_Left)) {
 		Vector2F pos = GraphicManager::ConvertRealToView(
 				InputManager::GetMousePos(), Views::EDITOR_CAM);
-		switch (block_button->getBlockType()) {
-		case NONE:
-			std::cerr << "Error! Block type is NONE!\n";
-			break;
-		case STANDART:
-			currentMap->replaceWithBlock(currentMap->getGridCoords(pos),
-							(Block*) currentBlock->Clone());
-			break;
-		case MULTI:
-			currentMap->replaceWithMultiblock(currentMap->getGridCoords(pos),
-							(Multiblock*) currentBlock->Clone());
-			break;
-		}
+
+		Vector2F _pos = GraphicManager::ConvertRealToView(
+				InputManager::GetMousePos(), Views::MAIN_MENU);
+
+		printf("Y = %g", _pos.y);
+
+		if (!((_pos.x <= 160 && _pos.x >= 20) && (_pos.y <= 880 &&  _pos.y >= 50)))
+			switch (block_button->getBlockType()) {
+			case NONE:
+				std::cerr << "Error! Block type is NONE!\n";
+				break;
+			case STANDART:
+				currentMap->replaceWithBlock(currentMap->getGridCoords(pos),
+						(Block*) currentBlock->Clone());
+				break;
+			case MULTI:
+				currentMap->replaceWithMultiblock(
+						currentMap->getGridCoords(pos),
+						(Multiblock*) currentBlock->Clone());
+				break;
+			}
 	}
 }
 

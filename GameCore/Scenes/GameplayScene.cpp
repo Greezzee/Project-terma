@@ -5,6 +5,7 @@
 
 #include "../../Engine/Control/InputManager.h"
 #include "../../Engine/SceneManagment/SceneManager.h"
+#include "../Blocks/Blocks.h"
 #include "../Controls.h"
 #include "../Map/Map.h"
 #include "../Testing/TestLevel.h"

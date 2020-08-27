@@ -1,9 +1,9 @@
 #include "Block.h"
 
-#include <algorithm>
+#include "Blocks.h"
+
 
 Block::Block() {
-	id = 0;
 }
 
 int Block::getSpriteId() const {
@@ -30,12 +30,15 @@ bool Block::isPassable() const {
 	return passable;
 }
 
-unsigned int Block::getID() const {
+int Block::getID() const {
 	return id;
 }
 
-void Block::setID(unsigned int id) {
+void Block::setID(int id) {
 	this->id = id;
+	if (Blocks::isBlocksInitPhaseInProgres()) {
+		Blocks::registerBlock(id, this);
+	}
 }
 
 void Block::setPassable(bool passable) {

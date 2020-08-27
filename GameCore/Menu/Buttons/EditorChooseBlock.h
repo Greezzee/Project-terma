@@ -5,7 +5,7 @@
 #include "../ImageWidgets/EditorCurrentBlock.h"
 
 class EditorChooseBlock: public Button {
-	Block *block;
+	Block* block;
 	EditorCurrentBlock* current_block;
 public:
 	EditorChooseBlock(EditorCurrentBlock* _block);
@@ -20,6 +20,6 @@ public:
 	void Update() override;
 
 	~EditorChooseBlock();
-	Block* getBlock() const;
+	Block* getBlock();
 	void setBlock(Block *block);
 };
