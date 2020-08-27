@@ -570,13 +570,13 @@ void Map::drawGrid() {
 			}
 
 			Debugger::DrawLine( { x0, y0 }, { x0, y1 }, th,
-					this->player->getCamera(), co, 3);
+					this->player->getCamera(), co, 2);
 			Debugger::DrawLine( { x0, y0 }, { x1, y0 }, th,
-					this->player->getCamera(), co, 3);
+					this->player->getCamera(), co, 2);
 			Debugger::DrawLine( { x1, y1 }, { x0, y1 }, th,
-					this->player->getCamera(), co, 3);
+					this->player->getCamera(), co, 2);
 			Debugger::DrawLine( { x1, y1 }, { x1, y0 }, th,
-					this->player->getCamera(), co, 3);
+					this->player->getCamera(), co, 2);
 		}
 	}
 	std::cout << h << "\n";

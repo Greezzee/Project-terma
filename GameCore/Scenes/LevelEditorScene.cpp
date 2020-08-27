@@ -37,12 +37,22 @@ void LevelEditorScene::Init() {
 	editor_panel->SetSize( { 130, 330 });
 	widgets->push_back(editor_panel);
 
+	EditorPanel *editor_str_panel = new EditorPanel();
+	editor_str_panel->Init(nullptr);
+	editor_str_panel->setScene(this);
+	editor_str_panel->setSpriteID(Textures::EDITOR_PANEL);
+	editor_str_panel->SetView(Views::MAIN_MENU);
+	editor_str_panel->setLayer(3);
+	editor_str_panel->SetPos( { 90, 360 });
+	editor_str_panel->SetSize( { 130, 330 });
+	widgets->push_back(editor_str_panel);
+
 	EditorCurrentBlockBar *block_bar = new EditorCurrentBlockBar();
 	block_bar->Init(nullptr);
 	block_bar->setScene(this);
 	block_bar->setSpriteID(Textures::EDITOR_CURRENT_BLOCK);
 	block_bar->SetView(Views::MAIN_MENU);
-	block_bar->SetPos( { 90, 470 });
+	block_bar->SetPos( { 90, 120 });
 	block_bar->setLayer(3);
 	block_bar->SetSize( { 119, 119 });
 	widgets->push_back(block_bar);
@@ -51,7 +61,7 @@ void LevelEditorScene::Init() {
 	cur_block->Init(nullptr);
 	cur_block->setScene(this);
 	cur_block->SetView(Views::MAIN_MENU);
-	cur_block->SetPos( { 90, 470 });
+	cur_block->SetPos(block_bar->GetPos());
 	cur_block->SetSize( { BLOCK_SIZE * 4, BLOCK_SIZE * 4 });
 	cur_block->setLayer(4);
 	block_button = cur_block;
@@ -63,7 +73,7 @@ void LevelEditorScene::Init() {
 	dirt_block->setBlock(dynamic_cast<Block*>(DIRT_BLOCK->Clone()));
 	dirt_block->SetView(Views::MAIN_MENU);
 	dirt_block->SetPos( { 60, 820 });
-	dirt_block->SetSize( { BLOCK_SIZE * 2, BLOCK_SIZE * 2});
+	dirt_block->SetSize( { BLOCK_SIZE * 2, BLOCK_SIZE * 2 });
 	dirt_block->setLayer(4);
 	widgets->push_back(dirt_block);
 
@@ -76,6 +86,17 @@ void LevelEditorScene::Init() {
 	grass_block->SetSize( { BLOCK_SIZE * 2, BLOCK_SIZE * 2 });
 	grass_block->setLayer(4);
 	widgets->push_back(grass_block);
+
+	EditorChooseBlock *tree = new EditorChooseBlock(cur_block);
+	tree->Init(nullptr);
+	tree->setScene(this);
+	tree->setBlock(dynamic_cast<Block*>(TREE->Clone()));
+	tree->SetView(Views::MAIN_MENU);
+	tree->SetPos({90, 400});
+	tree->SetSize({4 * BLOCK_SIZE, 4 * BLOCK_SIZE});
+	tree->setLayer(4);
+	widgets->push_back(tree);
+
 
 	// CURRENT BLOCK HERE
 	currentBlock = dirt_block->getBlock();
@@ -95,6 +116,9 @@ void LevelEditorScene::Init() {
 }
 
 void LevelEditorScene::Update() {
+	updateWidgets();
+	drawWidgets();
+
 	currentMap->Update();
 	currentBlock = block_button->getBlock();
 
@@ -105,7 +129,8 @@ void LevelEditorScene::Update() {
 	}
 
 	unsigned move_dist =
-			GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x * 0.0000005 * TimeManager::GetDeltaTime();
+			GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x
+					* 0.0000005 * TimeManager::GetDeltaTime();
 
 	if (InputManager::IsDown(Controls::LEFT)) {
 		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_position.x -=
@@ -128,29 +153,40 @@ void LevelEditorScene::Update() {
 			&& GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y
 					> 72) {
 		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x += -0.0000005
-				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x * TimeManager::GetDeltaTime();
+				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x
+				* TimeManager::GetDeltaTime();
 		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y += -0.0000005
-				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y  * TimeManager::GetDeltaTime();
+				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y
+				* TimeManager::GetDeltaTime();
 	}
 	if (InputManager::IsDown(Controls::MINUS)) {
 		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x += 0.0000005
-				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x * TimeManager::GetDeltaTime();
+				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.x
+				* TimeManager::GetDeltaTime();
 		;
 		GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y += 0.0000005
-				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y * TimeManager::GetDeltaTime();
+				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y
+				* TimeManager::GetDeltaTime();
 		;
 	}
 
 	if (InputManager::IsDown(MouseKey::Mouse_Left)) {
 		Vector2F pos = GraphicManager::ConvertRealToView(
 				InputManager::GetMousePos(), Views::EDITOR_CAM);
-		currentMap->replaceWithBlock(currentMap->getGridCoords(pos),
-				(Block*) currentBlock->Clone());
+		switch (block_button->getBlockType()) {
+		case NONE:
+			std::cerr << "Error! Block type is NONE!\n";
+			break;
+		case STANDART:
+			currentMap->replaceWithBlock(currentMap->getGridCoords(pos),
+							(Block*) currentBlock->Clone());
+			break;
+		case MULTI:
+			currentMap->replaceWithMultiblock(currentMap->getGridCoords(pos),
+							(Multiblock*) currentBlock->Clone());
+			break;
+		}
 	}
-
-	updateWidgets();
-	drawWidgets();
-
 }
 
 void LevelEditorScene::Destroy() {

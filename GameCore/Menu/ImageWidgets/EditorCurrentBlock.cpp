@@ -3,17 +3,20 @@
 #include <cstdio>
 #include <iostream>
 
-EditorCurrentBlock::EditorCurrentBlock()
-{
+#include "../../Blocks/Block.h"
+#include "../../Blocks/MultiblockStructures/Multiblock.h"
+
+EditorCurrentBlock::EditorCurrentBlock() {
 	current_block = nullptr;
+	block_type = NONE;
+	block_situation = FRONT;
 }
 
 void EditorCurrentBlock::Init(GameObject *owner) {
 	printf("EditorCurrentBlock created!\n");
 }
 
-void EditorCurrentBlock::Update()
-{
+void EditorCurrentBlock::Update() {
 	sprite_id = (current_block == nullptr) ? -1 : current_block->getSpriteId();
 }
 
@@ -38,14 +41,36 @@ void EditorCurrentBlock::Destroy() {
 	std::cout.flush();
 }
 
-void EditorCurrentBlock::setBlock(Block *_block)
-{
+void EditorCurrentBlock::setBlock(Block *_block) {
 	current_block = _block;
+
+	// If this is a multiblock structure
+	if (dynamic_cast<Multiblock*>(current_block) != nullptr) {
+		block_type = MULTI;
+	} else
+		block_type = STANDART;
 }
 
-Block* EditorCurrentBlock::getBlock()
-{
+Block* EditorCurrentBlock::getBlock() {
 	return current_block;
 }
 
-EditorCurrentBlock::~EditorCurrentBlock() {}
+EditorCurrentBlock::~EditorCurrentBlock() {
+}
+
+enum BLOCK_SITUATION EditorCurrentBlock::getBlockSituation() const {
+	return block_situation;
+}
+
+void EditorCurrentBlock::setBlockSituation(
+		enum BLOCK_SITUATION blockSituation) {
+	block_situation = blockSituation;
+}
+
+enum BLOCK_TYPE EditorCurrentBlock::getBlockType() const {
+	return block_type;
+}
+
+void EditorCurrentBlock::setBlockType(enum BLOCK_TYPE blockType) {
+	block_type = blockType;
+}
