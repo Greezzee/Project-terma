@@ -9,7 +9,7 @@ class SquareCollider;
 
 class Block : public GameObject {
 protected:
-	unsigned int id;
+	int id = 0;
 public:
 
 	// CONSTRUCTOR AND DESTRUCTOR
@@ -37,8 +37,8 @@ public:
 	float getLightLevel() const;
 	void setLightLevel(float lightLevel = 1.0f);
 	void addLightLevel(float add);
-	unsigned int getID() const;
-	void setID(unsigned int id);
+	int getID() const;
+	void setID(int id);
 
 	//--------------------------------------
 

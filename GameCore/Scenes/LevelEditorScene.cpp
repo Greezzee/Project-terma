@@ -19,7 +19,7 @@
 
 LevelEditorScene::LevelEditorScene() {
 	currentMap = new Map();
-	currentBlock = (Block*) DIRT_BLOCK->Clone();
+	currentBlock = (Block*) Blocks::DIRT_BLOCK->Clone();
 }
 
 void LevelEditorScene::Init() {

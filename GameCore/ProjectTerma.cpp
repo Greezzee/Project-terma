@@ -1,10 +1,12 @@
 #include "ProjectTerma.h"
 
 #include <cstdio>
+#include <cstdlib>
 #include <iostream>
 #include <string>
 
 #include "../Engine/SceneManagment/SceneManager.h"
+#include "Blocks/Blocks.h"
 #include "Controls.h"
 #include "Scenes/MainMenuScene.h"
 #include "Views.h"
@@ -25,6 +27,9 @@ void ProjectTerma::Init() {
 	printf("Loading controls!\n");
 	Controls::LOAD_ALL_GAMEKEYS();
 	printf("Controls loaded!\n");
+	printf("Loading blocks!\n");
+	Blocks::LOAD_ALL_BLOCKS();
+	printf("Blocks loaded!\n");
 }
 
 void ProjectTerma::Update() {

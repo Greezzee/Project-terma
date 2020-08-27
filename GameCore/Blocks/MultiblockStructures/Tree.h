@@ -11,6 +11,7 @@ public:
 			Multiblock() {
 		setSize( { 10, 10 });
 		setSpriteId(Textures::TREE);
+		setID(4567);
 		setPassable(1);
 	}
 
