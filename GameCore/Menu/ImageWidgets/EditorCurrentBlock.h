@@ -7,10 +7,6 @@ enum BLOCK_TYPE {
 	NONE, STANDART, MULTI
 };
 
-enum BLOCK_SITUATION {
-	FRONT, WALL
-};
-
 class EditorCurrentBlock: public ImageWidget {
 	Block *current_block;
 	enum BLOCK_TYPE block_type;
@@ -26,8 +22,6 @@ public:
 	void Destroy() override;
 
 	~EditorCurrentBlock();
-	enum BLOCK_SITUATION getBlockSituation() const;
-	void setBlockSituation(enum BLOCK_SITUATION blockSituation);
 	enum BLOCK_TYPE getBlockType() const;
 	void setBlockType(enum BLOCK_TYPE blockType);
 };

@@ -49,6 +49,8 @@ public:
 	// EDITOR
 	static int EDITOR_PANEL;
 	static int EDITOR_CURRENT_BLOCK;
+	static int EDITOR_MODE_DISACTIVE;
+	static int EDITOR_MODE_ACTIVE;
 
 	//! Texture loader. LOAD EVERY TEXTURE HERE!!! BUT FIRST DEFINE IT IN THIS CLASS!!!
 	static void LOAD_ALL_TEXTURES();

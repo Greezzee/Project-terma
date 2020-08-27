@@ -31,6 +31,8 @@ int Textures::RES1600x900 = -1;
 int Textures::RES1024x576 = -1;
 int Textures::EDITOR_PANEL = -1;
 int Textures::EDITOR_CURRENT_BLOCK = -1;
+int Textures::EDITOR_MODE_DISACTIVE = -1;
+int Textures::EDITOR_MODE_ACTIVE = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
 	GraphicManager::SetSpritesMaxCount(200);
@@ -125,4 +127,10 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::EDITOR_CURRENT_BLOCK = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/editor_current_block.png", Vector2F(17, 17),
 					1));
+	Textures::EDITOR_MODE_DISACTIVE = GraphicManager::LoadSprite(
+			GraphicPrefabData("./Resources/editor_wallmode.png", Vector2F(17, 17),
+					1));
+	Textures::EDITOR_MODE_ACTIVE = GraphicManager::LoadSprite(
+				GraphicPrefabData("./Resources/editor_wallmode_active.png", Vector2F(17, 17),
+						1));
 }

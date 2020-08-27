@@ -24,6 +24,7 @@ LevelEditorScene::LevelEditorScene() {
 	currentMap = new Map();
 	block_button = nullptr;
 	currentBlock = nullptr;
+	mode = FRONT;
 }
 
 void LevelEditorScene::Init() {
@@ -69,41 +70,58 @@ void LevelEditorScene::Init() {
 	block_button = cur_block;
 	widgets->push_back(cur_block);
 
-	EditorChooseBlock *dirt_block = new EditorChooseBlock(cur_block);
-	dirt_block->Init(nullptr);
-	dirt_block->setScene(this);
-	dirt_block->setBlock(
-			dynamic_cast<Block*>(Blocks::ALL_BLOCKS[Blocks::DIRT_BLOCK->getID()]->Clone()));
-	dirt_block->SetView(Views::MAIN_MENU);
-	dirt_block->SetPos( { 60, 820 });
-	dirt_block->SetSize( { editor_block_size * 2, editor_block_size * 2 });
-	dirt_block->setLayer(4);
-	widgets->push_back(dirt_block);
+	EditorModeButton *mode_button = new EditorModeButton();
+	mode_button->Init(nullptr);
+	mode_button->setScene(this);
+	mode_button->SetView(Views::MAIN_MENU);
+	mode_button->SetPos( { 1530, 830 });
+	mode_button->setSpriteID(Textures::EDITOR_MODE_DISACTIVE);
+	mode_button->SetSize( { 119, 119 });
+	mode_button->setLayer(4);
+	widgets->push_back(mode_button);
 
-	EditorChooseBlock *grass_block = new EditorChooseBlock(cur_block);
-	grass_block->Init(nullptr);
-	grass_block->setScene(this);
-	grass_block->setBlock(
-			dynamic_cast<Block*>(Blocks::ALL_BLOCKS[Blocks::GRASS_BLOCK->getID()]->Clone()));
-	grass_block->SetView(Views::MAIN_MENU);
-	grass_block->SetPos( { 120, 820 });
-	grass_block->SetSize( { editor_block_size * 2, editor_block_size * 2 });
-	grass_block->setLayer(4);
-	widgets->push_back(grass_block);
+	// CYCLE HIT
+	unsigned column_block = 0;
+	unsigned row_block = 0;
+	unsigned row_multi = 0;
 
-	EditorChooseBlock *tree = new EditorChooseBlock(cur_block);
-	tree->Init(nullptr);
-	tree->setScene(this);
-	tree->setBlock(
-			dynamic_cast<Block*>(Blocks::ALL_BLOCKS[Blocks::TREE->getID()]->Clone()));
-	tree->SetView(Views::MAIN_MENU);
-	tree->SetPos( { 90, 400 });
-	tree->SetSize( { 4 * editor_block_size, 4 * editor_block_size });
-	tree->setLayer(4);
-	widgets->push_back(tree);
+	for (auto [id, block] : Blocks::ALL_BLOCKS) {
+		EditorChooseBlock *_block = new EditorChooseBlock(cur_block);
+		_block->Init(nullptr);
+		_block->setScene(this);
+		_block->setBlock(block);
+		_block->SetView(Views::MAIN_MENU);
+		_block->setLayer(4);
+
+		if (dynamic_cast<Multiblock*>(block) != nullptr) {
+			_block->SetPos(
+					Vector2F(90,
+							470 - 4 * (editor_block_size + 4) * row_multi));
+			_block->SetSize( { 4 * editor_block_size, 4 * editor_block_size });
+
+			row_multi++;
+		} else {
+			_block->SetPos(
+					Vector2F(60 + column_block * (editor_block_size + 9.5) * 2,
+							820 - row_block * (editor_block_size + 9.5) * 2));
+			_block->SetSize( { 2 * editor_block_size, 2 * editor_block_size });
+
+			if (column_block >= 1) {
+				column_block = 0;
+				row_block++;
+			} else {
+				column_block++;
+			}
+		}
+
+		if (id == Blocks::DIRT_BLOCK->getID()) {
+			currentBlock = block;
+		}
+
+		widgets->push_back(_block);
+	}
 
 	// CURRENT BLOCK HERE
-	currentBlock = dirt_block->getBlock();
 	cur_block->setBlock(currentBlock);
 
 	currentMap->setLevel(new EmptyLevel());
@@ -181,16 +199,24 @@ void LevelEditorScene::Update() {
 		Vector2F _pos = GraphicManager::ConvertRealToView(
 				InputManager::GetMousePos(), Views::MAIN_MENU);
 
-		printf("Y = %g", _pos.y);
-
-		if (!((_pos.x <= 160 && _pos.x >= 20) && (_pos.y <= 880 &&  _pos.y >= 50)))
+		if (!((_pos.x <= 160 && _pos.x >= 20) && (_pos.y <= 880 && _pos.y >= 50))
+				&& !(_pos.x >= 1472 && _pos.y >= 760))
 			switch (block_button->getBlockType()) {
 			case NONE:
 				std::cerr << "Error! Block type is NONE!\n";
 				break;
 			case STANDART:
-				currentMap->replaceWithBlock(currentMap->getGridCoords(pos),
-						(Block*) currentBlock->Clone());
+				switch (mode) {
+				case FRONT:
+					currentMap->replaceWithBlock(currentMap->getGridCoords(pos),
+							(Block*) currentBlock->Clone());
+					break;
+				case WALL:
+					currentMap->replaceWithWallBlock(
+							currentMap->getGridCoords(pos),
+							(Block*) currentBlock->Clone());
+					break;
+				}
 				break;
 			case MULTI:
 				currentMap->replaceWithMultiblock(
@@ -214,4 +240,12 @@ void LevelEditorScene::Destroy() {
 }
 
 LevelEditorScene::~LevelEditorScene() {
+}
+
+enum BLOCK_SITUATION LevelEditorScene::getMode() const {
+	return mode;
+}
+
+void LevelEditorScene::setMode(enum BLOCK_SITUATION mode) {
+	this->mode = mode;
 }
