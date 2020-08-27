@@ -51,6 +51,8 @@ public:
 	static int EDITOR_CURRENT_BLOCK;
 	static int EDITOR_MODE_DISACTIVE;
 	static int EDITOR_MODE_ACTIVE;
+	static int EDITOR_DELETE_ACTIVE;
+	static int EDITOR_DELETE_DISACTIVE;
 
 	//! Texture loader. LOAD EVERY TEXTURE HERE!!! BUT FIRST DEFINE IT IN THIS CLASS!!!
 	static void LOAD_ALL_TEXTURES();

@@ -25,6 +25,7 @@ LevelEditorScene::LevelEditorScene() {
 	block_button = nullptr;
 	currentBlock = nullptr;
 	mode = FRONT;
+	to_delete = NO;
 }
 
 void LevelEditorScene::Init() {
@@ -79,6 +80,16 @@ void LevelEditorScene::Init() {
 	mode_button->SetSize( { 119, 119 });
 	mode_button->setLayer(4);
 	widgets->push_back(mode_button);
+
+	EditorDeleteButton *delete_button = new EditorDeleteButton();
+	delete_button->Init(nullptr);
+	delete_button->setScene(this);
+	delete_button->SetView(Views::MAIN_MENU);
+	delete_button->SetPos({1530, 700});
+	delete_button->setSpriteID(Textures::EDITOR_DELETE_DISACTIVE);
+	delete_button->SetSize({119, 119});
+	delete_button->setLayer(4);
+	widgets->push_back(delete_button);
 
 	// CYCLE HIT
 	unsigned column_block = 0;
@@ -208,13 +219,27 @@ void LevelEditorScene::Update() {
 			case STANDART:
 				switch (mode) {
 				case FRONT:
-					currentMap->replaceWithBlock(currentMap->getGridCoords(pos),
-							(Block*) currentBlock->Clone());
+					switch (to_delete) {
+					case YES:
+						currentMap->removeBlock(currentMap->getGridCoords(pos));
+						break;
+					case NO:
+						currentMap->replaceWithBlock(currentMap->getGridCoords(pos),
+													(Block*) currentBlock->Clone());
+						break;
+					}
 					break;
 				case WALL:
-					currentMap->replaceWithWallBlock(
-							currentMap->getGridCoords(pos),
-							(Block*) currentBlock->Clone());
+					switch (to_delete) {
+					case YES:
+						currentMap->removeWallBlock(currentMap->getGridCoords(pos));
+						break;
+					case NO:
+						currentMap->replaceWithWallBlock(
+													currentMap->getGridCoords(pos),
+													(Block*) currentBlock->Clone());
+						break;
+					}
 					break;
 				}
 				break;
@@ -248,4 +273,19 @@ enum BLOCK_SITUATION LevelEditorScene::getMode() const {
 
 void LevelEditorScene::setMode(enum BLOCK_SITUATION mode) {
 	this->mode = mode;
+}
+
+void LevelEditorScene::toDelete()
+{
+	to_delete = YES;
+}
+
+void LevelEditorScene::toAdd()
+{
+	to_delete = NO;
+}
+
+enum BLOCK_DELETE LevelEditorScene::isDelete()
+{
+	return to_delete;
 }
