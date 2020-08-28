@@ -1,12 +1,14 @@
 #pragma once
 
 #include <map>
-#include <type_traits>
 #include <vector>
 
+#include "../../Engine/Colliders/SquareCollider.h"
 #include "../../Engine/Graphics/ShaderManagment/SmoothLightShader.h"
+#include "../../Engine/Utility/Coordinate.h"
 #include "../Blocks/LightSource.h"
 #include "../Entities/Entity.h"
+#include "../Views.h"
 
 class Block;
 class Inventory;
@@ -107,8 +109,15 @@ public:
 
 	//------------------------
 
+
 	friend class InventoryScene;
 	friend class ItemButton;
+
+	friend class EditorBackground;
+	friend class EditorLight;
+	friend class EditorGrid;
+	friend class EditorCross;
+	friend class EditorColliders;
 private:
 	// UTILITIES
 	//------------------------

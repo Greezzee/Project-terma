@@ -35,6 +35,12 @@ int Textures::EDITOR_MODE_DISACTIVE = -1;
 int Textures::EDITOR_MODE_ACTIVE = -1;
 int Textures::EDITOR_DELETE_ACTIVE = -1;
 int Textures::EDITOR_DELETE_DISACTIVE = -1;
+int Textures::EDITOR_DISPLAY_BAR = -1;
+int Textures::EDITOR_COLLIDERS = -1;
+int Textures::EDITOR_CROSS = -1;
+int Textures::EDITOR_BACKGROUND = -1;
+int Textures::EDITOR_GRID = -1;
+int Textures::EDITOR_LIGHT = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
 	Textures::LANTERN = GraphicManager::LoadSprite(
@@ -139,4 +145,22 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::EDITOR_DELETE_DISACTIVE = GraphicManager::LoadSprite(
 				GraphicPrefabData("./Resources/editor_delete_disactive.png", Vector2F(17, 17),
 						1));
+	Textures::EDITOR_DISPLAY_BAR = GraphicManager::LoadSprite(
+			GraphicPrefabData("./Resources/editor_display_bar.png", Vector2F(17, 64),
+					1));
+	Textures::EDITOR_COLLIDERS = GraphicManager::LoadSprite(
+			GraphicPrefabData("./Resources/editor_colliders.png", Vector2F(10, 10),
+					1));
+	Textures::EDITOR_CROSS = GraphicManager::LoadSprite(
+			GraphicPrefabData("./Resources/editor_cross.png", Vector2F(10, 10),
+					1));
+	Textures::EDITOR_BACKGROUND = GraphicManager::LoadSprite(
+			GraphicPrefabData("./Resources/editor_background.png", Vector2F(10, 10),
+					1));;
+	Textures::EDITOR_GRID = GraphicManager::LoadSprite(
+			GraphicPrefabData("./Resources/editor_grid.png", Vector2F(10, 10),
+					1));
+	Textures::EDITOR_LIGHT = GraphicManager::LoadSprite(
+			GraphicPrefabData("./Resources/editor_light.png", Vector2F(10, 10),
+					1));
 }

@@ -4,13 +4,19 @@
 #include "../Menu/ImageWidgets/EditorCurrentBlockBar.h"
 #include "MenuScene.h"
 #include "../Menu/ImageWidgets/EditorPanel.h"
+#include "../Menu/ImageWidgets/EditorDisplayBar.h"
 #include "../Menu/ImageWidgets/EditorCurrentBlock.h"
 #include "../Menu/Buttons/EditorChooseBlock.h"
 #include "../Menu/Buttons/EditorModeButton.h"
 #include "../Menu/Buttons/EditorDeleteButton.h"
+#include "../Menu/Buttons/EditorBackground.h"
 
 class Block;
 class Map;
+
+// Layers for widgets
+const unsigned EDITOR_BARS_LAYER = 15;
+const unsigned EDITOR_BUTTONS_LAYER = 16;
 
 enum BLOCK_SITUATION {
 	FRONT, WALL
@@ -32,6 +38,11 @@ public:
 	~LevelEditorScene();
 	//----------------------------------------------
 
+	// Initializers
+	//----------------------------------------------
+	void createWidgets();
+	//----------------------------------------------
+
 	// BASE
 	//----------------------------------------------
 	void Init() override;
@@ -50,4 +61,10 @@ private:
 	Map * currentMap = NULL;
 	Block* currentBlock;
 	char currentLayer = 0;
+
+	friend class EditorBackground;
+	friend class EditorLight;
+	friend class EditorGrid;
+	friend class EditorCross;
+	friend class EditorColliders;
 };

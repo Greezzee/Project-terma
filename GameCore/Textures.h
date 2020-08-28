@@ -53,6 +53,12 @@ public:
 	static int EDITOR_MODE_ACTIVE;
 	static int EDITOR_DELETE_ACTIVE;
 	static int EDITOR_DELETE_DISACTIVE;
+	static int EDITOR_DISPLAY_BAR;
+	static int EDITOR_COLLIDERS;
+	static int EDITOR_CROSS;
+	static int EDITOR_BACKGROUND;
+	static int EDITOR_GRID;
+	static int EDITOR_LIGHT;
 
 	//! Texture loader. LOAD EVERY TEXTURE HERE!!! BUT FIRST DEFINE IT IN THIS CLASS!!!
 	static void LOAD_ALL_TEXTURES();
