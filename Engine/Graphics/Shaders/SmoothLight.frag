@@ -20,11 +20,10 @@ void main() {
 	gl_FragColor += text_color * global_light_color;
 	for (int i = 0; i < source_count; i++) {
 		vec2 d = gl_FragCoord.xy - pos[i];
-		float dist = d.x * d.x + d.y * d.y;
-		if (dist < full_light_dist[i] * full_light_dist[i])
+		float dist = length(d);
+		if (dist < full_light_dist[i])
 			gl_FragColor += text_color * light_color[i];
 		else {
-			dist = sqrt(dist);
 			dist -= full_light_dist[i];
 			gl_FragColor += text_color * light_color[i] * pow(max(0.0, 1.0 - dist / any_light_dist[i]), softness[i]);
 		}

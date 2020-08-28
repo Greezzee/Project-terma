@@ -37,8 +37,6 @@ int Textures::EDITOR_DELETE_ACTIVE = -1;
 int Textures::EDITOR_DELETE_DISACTIVE = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
-	GraphicManager::SetSpritesMaxCount(200);
-
 	Textures::LANTERN = GraphicManager::LoadSprite(
 			GraphicPrefabData(std::string("./Resources/Lantern.png"),
 					Vector2F(38, 71), 1));

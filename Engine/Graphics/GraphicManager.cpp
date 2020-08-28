@@ -52,10 +52,11 @@ float GraphicManager::ConvertViewSizeToReal(float len, unsigned view_id)
 }
 
 sf::RenderWindow GraphicManager::window;
-std::vector<GraphicPrefab> GraphicManager::sprites;
-std::vector<tge::GraphicLayer> GraphicManager::to_draw;
-unsigned GraphicManager::_sprites_count;
+std::vector<TextureVertex> GraphicManager::textures;
+std::vector<Sprite> GraphicManager::sprites;
+std::vector<tge::GraphicLayer> GraphicManager::layers_to_draw;
 std::vector<int> GraphicManager::_basic_shapes;
+unsigned GraphicManager::_engine_textures_count;
 unsigned GraphicManager::_engine_sprites_count;
 tge::FPSCounter GraphicManager::_fps_counter;
 
@@ -67,13 +68,12 @@ void GraphicManager::Init()
 	window.create(sf::VideoMode(1280, 720), "Test", sf::Style::Titlebar | sf::Style::Close);
 	//window.setFramerateLimit(65);
 
-	_sprites_count = 0;
-	sprites.resize(_engine_sprites_count);
+	textures.resize(_engine_textures_count);
 	SetLayersCount(20);
+	_engine_textures_count = 2;
 	_engine_sprites_count = 2;
 	_basic_shapes.resize(2);
 
-	SetSpritesMaxCount(100);
 	_basic_shapes[BasicShapes::Square] = LoadSprite(GraphicPrefabData("./Engine/Debugger/DebugResourses/Square.png", { 32, 32 }, 1));
 	_basic_shapes[BasicShapes::Circle] = LoadSprite(GraphicPrefabData("./Engine/Debugger/DebugResourses/Circle.png", { 128, 128 }, 1));
 
@@ -81,7 +81,7 @@ void GraphicManager::Init()
 	views[0] = { {0, 0}, {1280, 720}, {0, 0}, {0, 0}, {1280, 720}, {0, 0}, {1, 1} };
 
 	ShaderManager::Init();
-	ShowFPS(true);
+
 }
 
 bool GraphicManager::Update()
@@ -94,18 +94,18 @@ bool GraphicManager::Update()
 	}
 
 	window.clear();
+	
 	for (unsigned i = 0; i < LAYER_COUNT; i++) {
-		to_draw[i].buffer->clear(sf::Color(0, 0, 0, 0));
-		for (auto obj = to_draw[i].layer_sprites.begin(); obj != to_draw[i].layer_sprites.end(); obj++) {
-			obj->shader ? to_draw[i].buffer->draw((*obj).sprite, ShaderManager::GetShader((*obj).shader)) : to_draw[i].buffer->draw((*obj).sprite);
-			//to_draw[i].buffer->draw((*obj).sprite);
+		layers_to_draw[i].buffer->clear(sf::Color(0, 0, 0, 0));
+
+		for (unsigned j = 0; j < GetTexturesCount(); j++) {
+			layers_to_draw[i].buffer->draw(textures[j].layer_vertex[i], &textures[j].texture);
+			textures[j].layer_vertex[i].resize(0);
 		}
-		to_draw[i].layer_sprites.clear();
-		to_draw[i].buffer->display();
+		layers_to_draw[i].buffer->display();
 		sf::Sprite layer;
-		layer.setTexture(to_draw[i].buffer->getTexture());
-		//window.draw(layer);
-		to_draw[i].layer_shader ? window.draw(layer, ShaderManager::GetShader(to_draw[i].layer_shader)) : window.draw(layer);
+		layer.setTexture(layers_to_draw[i].buffer->getTexture());
+		layers_to_draw[i].layer_shader ? window.draw(layer, ShaderManager::GetShader(layers_to_draw[i].layer_shader)) : window.draw(layer);
 	}
 	
 	window.display();
@@ -118,20 +118,24 @@ bool GraphicManager::Update()
 void GraphicManager::Exit()
 {
 	for (unsigned i = 0; i < LAYER_COUNT; i++) {
-		delete to_draw[i].buffer;
+		delete layers_to_draw[i].buffer;
 	}
-	to_draw.resize(0);
+	layers_to_draw.resize(0);
 	_basic_shapes.resize(0);
-	sprites.resize(0);
+	textures.resize(0);
 	views.resize(0);
 	window.close();
 	ShaderManager::Destroy();
 }
 
-bool GraphicManager::Draw(DrawData& data, unsigned view_id)
+bool GraphicManager::Draw(DrawData data, unsigned view_id)
 {
-	if (data.spriteID >= _sprites_count || view_id >= views.size())
+	if (data.spriteID >= sprites.size() || view_id >= views.size())
 		return false;
+	Sprite& spr = sprites[data.spriteID];
+	if (spr.texture_id >= textures.size())
+		return false;
+	TextureVertex& text_vert = textures[spr.texture_id];
 	SetView(data, view_id);
 
 	if (data.spriteID == -1)
@@ -140,15 +144,35 @@ bool GraphicManager::Draw(DrawData& data, unsigned view_id)
 	if (data.layer >= LAYER_COUNT)
 		return false;
 
-	GraphicPrefab& spr = sprites[data.spriteID];
+	
+	unsigned a = text_vert.layer_vertex[data.layer].getVertexCount();
+	text_vert.layer_vertex[data.layer].resize(a + 4);
 
-	spr.sprite.setPosition(sf::Vector2f(data.position.x, data.position.y));
-	spr.sprite.setRotation(data.rotation);
-	spr.sprite.setColor(sf::Color(data.color.r, data.color.g, data.color.b, data.color.a));
-	spr.sprite.setOrigin(sf::Vector2f(data.origin.x * spr.size.x, data.origin.y * spr.size.y));
-	spr.sprite.setScale(sf::Vector2f(data.size.x / spr.size.x, data.size.y / spr.size.y));
-	spr.sprite.setTextureRect(sf::IntRect((int)spr.size.x * (data.frame % spr.frames_count), 0, (int)spr.size.x, (int)spr.size.y));
-	to_draw[data.layer].layer_sprites.push_back({ sprites[data.spriteID].sprite, data.shader });
+	float ca = cosf(data.rotation / 180.f * PI);
+	float sa = sinf(data.rotation / 180.f * PI);
+	float x, old_x, y;
+	old_x = x = -data.size.x * data.origin.x;
+	y = -data.size.y * data.origin.y;
+	text_vert.layer_vertex[data.layer][a].position = sf::Vector2f(data.position.x + ca * x + sa * y, data.position.y - sa * x + ca * y);
+
+	x = data.size.x * (1 - data.origin.x);
+	text_vert.layer_vertex[data.layer][a + 1].position = sf::Vector2f(data.position.x + ca * x + sa * y, data.position.y - sa * x + ca * y);
+
+	y = data.size.y * (1 - data.origin.y);
+	text_vert.layer_vertex[data.layer][a + 2].position = sf::Vector2f(data.position.x + ca * x + sa * y, data.position.y - sa * x + ca * y);
+
+	x = old_x;
+	text_vert.layer_vertex[data.layer][a + 3].position = sf::Vector2f(data.position.x + ca * x + sa * y, data.position.y - sa * x + ca * y);
+
+
+
+	float frame_offset = spr.size.x * (data.frame % spr.frames_count);
+
+	text_vert.layer_vertex[data.layer][a].texCoords = sf::Vector2f(spr.sprite_pos.x + frame_offset, spr.sprite_pos.y);
+	text_vert.layer_vertex[data.layer][a + 1].texCoords = sf::Vector2f(spr.sprite_pos.x + frame_offset + spr.size.x, spr.sprite_pos.y);
+	text_vert.layer_vertex[data.layer][a + 2].texCoords = sf::Vector2f(spr.sprite_pos.x + frame_offset + spr.size.x, spr.sprite_pos.y + spr.size.y);
+	text_vert.layer_vertex[data.layer][a + 3].texCoords = sf::Vector2f(spr.sprite_pos.x + frame_offset, spr.sprite_pos.y + spr.size.y);
+
 	return true;
 }
 
@@ -182,56 +206,56 @@ View* GraphicManager::GetView(unsigned view_id)
 
 void GraphicManager::ClearSprites()
 {
-	_sprites_count = 0;
+	sprites.resize(_engine_sprites_count);
 }
 
 unsigned GraphicManager::GetSpritesCount()
 {
-	return _sprites_count;
-}
-
-unsigned GraphicManager::GetSpritesMaxCount()
-{
 	return sprites.size();
 }
 
-bool GraphicManager::SetSpritesMaxCount(unsigned count)
+int GraphicManager::LoadSprite(const GraphicPrefabData& data)
 {
-	if (count < _engine_sprites_count)
-		return false;
-	sprites.resize(count);
-	if (_sprites_count > count)
-		_sprites_count = count;
-	return true;
+	int text_id = data.texture_id;
+	if (text_id == -1)
+		text_id = LoadTexture(data.file);
+	if (text_id == -1)
+		return -1;
+
+	Sprite new_sprite;
+
+	new_sprite.frames_count = data.frames_count;
+	new_sprite.size = data.size;
+	new_sprite.sprite_pos = data.sprite_pos;
+	new_sprite.texture_id = text_id;
+
+	sprites.push_back(new_sprite);
+	return GetSpritesCount() - 1;
 }
 
-int GraphicManager::LoadSprite(GraphicPrefabData data)
+unsigned GraphicManager::GetTexturesCount()
 {
-	if (_sprites_count >= GetSpritesMaxCount())
-		return -1;
-	bool text_success = sprites[_sprites_count].texture.loadFromFile(data.file);
-	if (!text_success)
-		return -1;
-	sprites[_sprites_count].sprite.setTexture(sprites[_sprites_count].texture);
-	sprites[_sprites_count].size = data.size;
-	sprites[_sprites_count].sprite.setTextureRect(sf::IntRect(0, 0, (int)data.size.x, (int)data.size.y));
-	sprites[_sprites_count].frames_count = data.frames_count;
-	_sprites_count++;
-	return _sprites_count - 1;
+	return textures.size();
 }
 
-bool GraphicManager::LoadSprite(GraphicPrefabData& data, unsigned id)
+void GraphicManager::ClearTextures()
 {
-	if (id >= GetSpritesMaxCount() || id < _engine_sprites_count)
-		return false;
-	bool text_success = sprites[id].texture.loadFromFile(data.file);
-	if (!text_success)
-		return false;
-	sprites[id].sprite.setTexture(sprites[id].texture);
-	sprites[id].size = data.size;
-	sprites[_sprites_count].sprite.setTextureRect(sf::IntRect(0, 0, (int)data.size.x, (int)data.size.y));
-	sprites[_sprites_count].frames_count = data.frames_count;
-	return true;
+	textures.resize(_engine_textures_count);
+}
+
+int GraphicManager::LoadTexture(const std::string& path)
+{
+	TextureVertex new_vertex;
+	bool is_loaded = new_vertex.texture.loadFromFile(path);
+	if (!is_loaded)
+		return -1;
+	new_vertex.layer_vertex.resize(LAYER_COUNT);
+	for (unsigned i = 0; i < LAYER_COUNT; i++) {
+		new_vertex.layer_vertex[i].setPrimitiveType(sf::Quads);
+		new_vertex.layer_vertex[i].resize(0);
+	}
+	textures.push_back(new_vertex);
+	return GetTexturesCount() - 1;
 }
 
 sf::RenderWindow* GraphicManager::GetWindow()
@@ -259,8 +283,8 @@ void GraphicManager::SetResolution(Vector2U new_size)
 	views[0].virtual_size = views[0].real_size;
 
 	for (unsigned i = 0; i < LAYER_COUNT; i++) {
-		to_draw[i].buffer->clear(sf::Color(0, 0, 0, 0));
-		to_draw[i].buffer->create(GetResolution().x, GetResolution().y);
+		layers_to_draw[i].buffer->clear(sf::Color(0, 0, 0, 0));
+		layers_to_draw[i].buffer->create(GetResolution().x, GetResolution().y);
 	}
 }
 
@@ -279,25 +303,27 @@ void GraphicManager::SetLayerShader(unsigned layer, Shader* shader)
 {
 	if (layer >= LAYER_COUNT)
 		return;
-	to_draw[layer].layer_shader = shader;
+	layers_to_draw[layer].layer_shader = shader;
 }
 
 void GraphicManager::SetLayersCount(unsigned count)
 {
 	if (count > LAYER_COUNT) {
-		to_draw.resize(count);
+		layers_to_draw.resize(count);
 		for (unsigned i = LAYER_COUNT; i < count; i++) {
-			to_draw[i].buffer = new sf::RenderTexture;
-			to_draw[i].buffer->create(GetResolution().x, GetResolution().y);
-			to_draw[i].layer_shader = nullptr;
+			layers_to_draw[i].buffer = new sf::RenderTexture;
+			layers_to_draw[i].buffer->create(GetResolution().x, GetResolution().y);
+			layers_to_draw[i].layer_shader = nullptr;
 		}
 		LAYER_COUNT = count;
 	}
 	else if (count < LAYER_COUNT) {
 		for (unsigned i = count; i < LAYER_COUNT; i++) {
-			delete to_draw[i].buffer;
+			delete layers_to_draw[i].buffer;
 		}
 		LAYER_COUNT = count;
-		to_draw.resize(LAYER_COUNT);
+		layers_to_draw.resize(LAYER_COUNT);
 	}
+	for (unsigned i = 0; i < GetTexturesCount(); i++)
+		textures[i].layer_vertex.resize(LAYER_COUNT);
 }

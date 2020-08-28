@@ -23,6 +23,18 @@ const int BLOCK_SIZE = 50;
 const int MULTIBLOCK_STRUCTURE_SEARCH_RADIUS = 20;
 const int BLOCKS_UPDATE_SEARCH_RADIUS = 5;
 
+// LAYERS
+const int BLOCKS_LAYER = 3;
+const int WALLBLOCKS_LAYER = 2;
+const int MULTIBLOCKS_LAYER = 3;
+const int ENTITIES_LAYER = 4;
+const int BACKGROUND_LAYER = 1;
+const int GRID_LAYER = 5;
+const int MULTIBLOCKS_GRID_LAYER = 6;
+const int WALLBLOCKS_CROSSES_LAYER = WALLBLOCKS_LAYER + 1;
+const int COLLIDERS_LAYER = 7;
+const int MAX_LAYER = 8;
+
 /*
  * Сей класс наследуется от GameField, тут будет вся инфа о текущих объектах в игре
  */
@@ -90,6 +102,9 @@ public:
 	// COLLISIONS
 	//------------------------
 	float testCollision(SquareCollider *col, Vector2F dir);
+	bool isMayDrawWallBlockCrosses() const;
+	void setMayDrawWallBlockCrosses(bool mayDrawWallBlockCrosses = 0);
+
 	//------------------------
 
 	friend class InventoryScene;
@@ -144,7 +159,8 @@ private:
 	bool ignoreLight = 0;
 	bool mayDrawGrid = 0;
 	bool mayDrawBackground = 1;
-	bool mayDrawColliders = 1;
+	bool mayDrawColliders = 0;
+	bool mayDrawWallBlockCrosses = 0;
 	//------------------------
 
 	// INIT blocks and entities (Level)

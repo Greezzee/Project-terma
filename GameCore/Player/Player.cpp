@@ -56,7 +56,7 @@ void Player::Update() {
 		externalForce.x -= base_acceleration;
 		lookingRight = 0;
 	} else if (standsOnTheGround()) {
-		externalForce.x -= speed.x * BLOCK_SIZE;
+	//	externalForce.x -= speed.x * BLOCK_SIZE;
 	}
 
 	// JUMPS
@@ -121,7 +121,7 @@ void Player::drawHealthBar() {
 		//----------------------------
 		info.origin = { 0, 0 };
 		info.frame = 0;
-		info.layer = 0;
+		info.layer = ENTITIES_LAYER;
 		//----------------------------
 
 		// SET TEXTURE
@@ -150,7 +150,7 @@ void Player::drawPlayer() {
 	//----------------------------
 	info.origin = { 0.5, 0.5 };
 	info.frame = 0;
-	info.layer = 1;
+	info.layer = ENTITIES_LAYER;
 	//----------------------------
 
 	// SET TEXTURE
