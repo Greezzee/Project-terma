@@ -5,9 +5,9 @@
 
 #include "../../Engine/Control/InputManager.h"
 #include "../../Engine/SceneManagment/SceneManager.h"
-#include "../Blocks/Blocks.h"
 #include "../Controls.h"
 #include "../Map/Map.h"
+#include "../PTC.h"
 #include "../Testing/TestLevel.h"
 #include "InventoryScene.h"
 #include "MainMenuScene.h"
@@ -16,7 +16,6 @@ GameplayScene::GameplayScene() {
 }
 
 void GameplayScene::Init() {
-	printf("GameplayScene Created\n");
 	gamefield = new Map();
 
 	// TODO в будущем нужно, чтобы значение этого поля приходило из gui (после выбора игроком)
@@ -24,6 +23,8 @@ void GameplayScene::Init() {
 	//
 
 	gamefield->Init();
+
+	PTC::sayCreated("GameplayScene");
 }
 
 void GameplayScene::Update() {
@@ -49,7 +50,6 @@ void GameplayScene::Destroy() {
 	delete currentLevel;
 	gamefield = NULL;
 	currentLevel = NULL;
-	printf("GameplayScene Destroyed\n");
-	std::cout.flush();
+	PTC::sayDestroyed("GameplayScene");
 }
 

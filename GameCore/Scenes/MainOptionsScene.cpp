@@ -1,18 +1,19 @@
-#include "../../Engine/AllEngine.h"
 #include "MainOptionsScene.h"
 
 #include <cstdio>
 #include <iostream>
 #include <vector>
 
+#include "../../Engine/Control/InputManager.h"
+#include "../../Engine/SceneManagment/SceneManager.h"
+#include "../../Engine/Utility/Coordinate.h"
 #include "../Menu/Buttons/BackOptionsButton.h"
 #include "../Menu/Buttons/ResolutionButton.h"
 #include "../Menu/ImageWidgets/Background.h"
 #include "../Menu/ImageWidgets/ResolutionImage.h"
-
+#include "../PTC.h"
 #include "../Textures.h"
 #include "../Views.h"
-
 #include "MainMenuScene.h"
 
 MainOptionsScene::MainOptionsScene() {
@@ -58,7 +59,7 @@ void MainOptionsScene::Init() {
 	resolution_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(resolution_button);
 
-	printf("MainOptionsScene created!\n");
+	PTC::sayCreated("MainOptionsScene");
 }
 
 void MainOptionsScene::Update() {
@@ -81,6 +82,5 @@ void MainOptionsScene::Update() {
 void MainOptionsScene::Destroy() {
 	destroyWidgets();
 
-	printf("MainOptionsScene destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("MainOptionsScene");
 }

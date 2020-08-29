@@ -3,11 +3,15 @@
 #include <cstdio>
 #include <iostream>
 
+#include "../../../Engine/Graphics/DrawData.h"
+#include "../../../Engine/Graphics/GraphicManager.h"
+#include "../../PTC.h"
+
 EditorCurrentBlockBar::EditorCurrentBlockBar() {
 }
 
 void EditorCurrentBlockBar::Init(GameObject *owner) {
-	printf("EditorCurrentBlock created!\n");
+	PTC::sayCreated("EditorCurrentBlock");
 }
 
 void EditorCurrentBlockBar::Update() {
@@ -30,8 +34,7 @@ void EditorCurrentBlockBar::Draw() {
 }
 
 void EditorCurrentBlockBar::Destroy() {
-	printf("EditorCurrentBlockBar destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("EditorCurrentBlockBar");
 }
 
 EditorCurrentBlockBar::~EditorCurrentBlockBar() {

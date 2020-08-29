@@ -1,8 +1,8 @@
 #include "EditorDeleteButton.h"
 
 #include <cstdio>
-#include <iostream>
 
+#include "../../PTC.h"
 #include "../../Scenes/LevelEditorScene.h"
 #include "../../Textures.h"
 
@@ -59,13 +59,12 @@ void EditorDeleteButton::disfocusReact()
 
 void EditorDeleteButton::Destroy()
 {
-	printf("EditorDeleteButton destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("EditorDeleteButton");
 }
 
 void EditorDeleteButton::Init(GameObject *owner)
 {
-	printf("EditorDeleteButton created!\n");
+	PTC::sayCreated("EditorDeleteButton");
 }
 
 EditorDeleteButton::~EditorDeleteButton() {}

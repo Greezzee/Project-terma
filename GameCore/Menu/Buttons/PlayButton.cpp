@@ -2,8 +2,10 @@
 
 #include <cstdio>
 
-#include "../../../Engine/AllEngine.h"
+#include "../../../Engine/SceneManagment/SceneManager.h"
+#include "../../PTC.h"
 #include "../../Scenes/GameplayScene.h"
+#include "../../Scenes/MenuScene.h"
 #include "../../Textures.h"
 
 PlayButton::PlayButton() {}
@@ -21,7 +23,7 @@ void PlayButton::focusReact()
 
 void PlayButton::Init(GameObject* owner)
 {
-	printf("PlayButton created!\n");
+	PTC::sayCreated("PlayButton");
 }
 
 void PlayButton::disfocusReact()
@@ -36,7 +38,7 @@ void PlayButton::rightClickReact()
 
 void PlayButton::Destroy()
 {
-	printf("PlayButton destroyed!\n");
+	PTC::sayDestroyed("PlayButton");
 }
 
 

@@ -3,9 +3,11 @@
 #include <cstdio>
 #include <iostream>
 
+#include "../../../Engine/Graphics/GraphicManager.h"
+#include "../../../Engine/Utility/Coordinate.h"
+#include "../../PTC.h"
 #include "../../Textures.h"
 #include "../../Views.h"
-#include "../../ProjectTerma.h"
 
 ResolutionButton::ResolutionButton() {
 	resolution = 0;
@@ -51,8 +53,7 @@ void ResolutionButton::disfocusReact() {
 }
 
 void ResolutionButton::Destroy() {
-	printf("ResolutionButton destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("ResolutionButton");
 }
 
 void ResolutionButton::Init(GameObject *owner) {
@@ -69,7 +70,7 @@ void ResolutionButton::Init(GameObject *owner) {
 		sprite_id = Textures::RES1920x1080;
 	}
 
-	printf("ResolutionButton created!\n");
+	PTC::sayCreated("ResolutionButton");
 }
 
 ResolutionButton::~ResolutionButton() {

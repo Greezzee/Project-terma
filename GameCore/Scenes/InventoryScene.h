@@ -13,6 +13,10 @@ const Vector2F itemStartPos = { 117, 610 };
 const unsigned maxColumns = 9;
 const unsigned maxRows = 7;
 
+const unsigned INV_BG_LAYER = 5;
+const unsigned INV_BARS_LAYER = 6;
+const unsigned INV_WIDGETS_LAYER = 7;
+
 class InventoryScene: public MenuScene {
 	// Current map
 	Map *gamefield;

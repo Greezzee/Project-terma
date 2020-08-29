@@ -1,8 +1,8 @@
 #include "QuitButton.h"
 
 #include <cstdio>
-#include <iostream>
 
+#include "../../PTC.h"
 #include "../../Scenes/MainMenuScene.h"
 
 QuitButton::QuitButton() {}
@@ -19,7 +19,7 @@ void QuitButton::focusReact() {
 }
 
 void QuitButton::Init(GameObject *owner) {
-	printf("QuitButton created!\n");
+	PTC::sayCreated("QuitButton");
 }
 
 void QuitButton::disfocusReact()
@@ -33,6 +33,5 @@ void QuitButton::rightClickReact()
 }
 
 void QuitButton::Destroy() {
-	printf("QuitButton destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("QuitButton");
 }

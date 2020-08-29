@@ -1,11 +1,14 @@
 #include "Settings.h"
 
-//#include <bits/types/FILE.h>
+#include <bits/types/FILE.h>
 #include <cstdio>
 #include <iostream>
+#include <string>
 
+#include "../Engine/Control/InputManager.h"
 #include "../Engine/Graphics/GraphicManager.h"
 #include "../Engine/Utility/Coordinate.h"
+#include "PTC.h"
 #include "Views.h"
 
 Vector2U Settings::resolution = { 0, 0 };
@@ -18,15 +21,14 @@ void Settings::LOAD_SETTINGS() {
 	FILE *settings_file = freopen("./settings.cfg", "r", stdin);
 
 	if (settings_file == nullptr) {
-		std::cerr << "Failed to open the settings.cfg file" << std::endl;
+		PTC::say("Failed to open the settings.cfg file", error, high);
 		return;
 	}
 
 	// RESOLUTION SETTINGS
 	if (scanf("RESOLUTION=%ux%u\n", &resolution.x, &resolution.y) != 2) {
 		// ERROR
-		std::cerr << "Error loading resolution! Loading default settings...\n"
-				<< std::endl;
+		PTC::say("Error loading resolution! Loading default settings...\n", error, high);
 		LOAD_DEFAULT();
 		return;
 	}
@@ -44,8 +46,7 @@ void Settings::LOAD_SETTINGS() {
 
 		if (scanf("%[^(](%u:=%u)\n", junk, &game_key, &keyboard_key) != 3) {
 			// ERROR
-			std::cerr << "Error loading controls! Loading default settings...\n"
-					<< std::endl;
+			PTC::say("Error loading controls! Loading default settings...\n", error, high);
 			LOAD_DEFAULT();
 			return;
 		}
@@ -61,7 +62,7 @@ void Settings::SAVE_SETTINGS() {
 	FILE *settings_file = fopen("./settings.cfg", "w");
 
 	if (settings_file == nullptr) {
-		std::cerr << "Failed to open the settings.cfg file" << std::endl;
+		PTC::say("Failed to open the settings.cfg file", error, high);
 		return;
 	}
 
@@ -89,5 +90,4 @@ void Settings::LOAD_DEFAULT() {
 	}
 }
 
-Settings::~Settings() {
-}
+Settings::~Settings() {}

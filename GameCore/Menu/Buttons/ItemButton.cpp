@@ -2,15 +2,20 @@
 
 #include <cstdio>
 #include <iostream>
+#include <vector>
 
 #include "../../../Engine/Control/InputManager.h"
+#include "../../../Engine/Graphics/DrawData.h"
 #include "../../../Engine/Graphics/GraphicManager.h"
 #include "../../../Engine/Utility/Coordinate.h"
 #include "../../Items/Equippable.h"
 #include "../../Map/Map.h"
+#include "../../Player/Inventory.h"
 #include "../../Player/Player.h"
+#include "../../PTC.h"
 #include "../../Scenes/InventoryScene.h"
 #include "../../Views.h"
+#include "../Cell.h"
 #include "../ImageWidgets/ItemFocus.h"
 
 ItemButton::ItemButton(Item *_item) {
@@ -61,12 +66,11 @@ void ItemButton::disfocusReact() {
 }
 
 void ItemButton::Destroy() {
-	printf("ItemButton destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("ItemButton");
 }
 
 void ItemButton::Init(GameObject *owner) {
-	printf("ItemButton created!\n");
+	PTC::sayCreated("ItemButton");
 }
 
 void ItemButton::setOriginalPos(Vector2F original) {

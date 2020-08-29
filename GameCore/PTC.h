@@ -36,6 +36,8 @@ public:
 
 	//---------------------------------------------------------------------
 	static void say(std::string mes, PTCMT type = info, PTCMP prior = medium);
+	static void sayCreated(std::string mes, PTCMT type = info, PTCMP prior = medium);
+	static void sayDestroyed(std::string mes, PTCMT type = info, PTCMP prior = medium);
 	static void shutUpDebug();
 	//---------------------------------------------------------------------
 };

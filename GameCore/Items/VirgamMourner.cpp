@@ -1,5 +1,8 @@
 #include "VirgamMourner.h"
 
+#include "../Entities/Entity.h"
+#include "../PTC.h"
+
 VirgamMourner::VirgamMourner(Entity* _missile)
 {
 	missile = _missile;
@@ -23,11 +26,14 @@ void VirgamMourner::Draw()
 void VirgamMourner::Destroy()
 {
 	// TODO Destroy it and all missiles
+	PTC::sayDestroyed("VirgamMourner");
 }
 
 void VirgamMourner::Init(GameObject *owner)
 {
 	attack_speed = VIRGAM_MOURNER_ATTACK_SPEED;
+
+	PTC::sayCreated("VirgamMourner");
 }
 
 void VirgamMourner::Update()

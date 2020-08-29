@@ -1,7 +1,5 @@
 #include "Player.h"
 
-#include <cstdio>
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -13,6 +11,7 @@
 #include "../Items/Item.h"
 #include "../Items/LimbSword.h"
 #include "../Map/Map.h"
+#include "../PTC.h"
 #include "../Textures.h"
 #include "../Views.h"
 
@@ -82,8 +81,9 @@ void Player::Init(GameObject *owner) {
 		inventory->items->at(i) = limb_sword;
 	}
 
-	printf("Player created!\n");
-	printf("%d item(s) in the inventory!\n", inventory->getItemsNumber());
+	PTC::sayCreated("Player");
+	std::string _str = std::to_string(inventory->getItemsNumber()) + " item(s) in the inventory!";
+	PTC::say( _str, debug, medium);
 }
 
 void Player::Destroy() {
@@ -98,8 +98,7 @@ void Player::Destroy() {
 	inventory->Destroy();
 	delete inventory;
 
-	printf("Player destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("Player");
 }
 
 void Player::drawHealthBar() {

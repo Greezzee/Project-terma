@@ -3,8 +3,10 @@
 #include <cstdio>
 #include <iostream>
 
-#include "../../Blocks/Block.h"
+#include "../../../Engine/Graphics/DrawData.h"
+#include "../../../Engine/Graphics/GraphicManager.h"
 #include "../../Blocks/MultiblockStructures/Multiblock.h"
+#include "../../PTC.h"
 
 EditorCurrentBlock::EditorCurrentBlock() {
 	current_block = nullptr;
@@ -12,7 +14,7 @@ EditorCurrentBlock::EditorCurrentBlock() {
 }
 
 void EditorCurrentBlock::Init(GameObject *owner) {
-	printf("EditorCurrentBlock created!\n");
+	PTC::sayCreated("EditorCurrentBlock");
 }
 
 void EditorCurrentBlock::Update() {
@@ -36,8 +38,7 @@ void EditorCurrentBlock::Draw() {
 }
 
 void EditorCurrentBlock::Destroy() {
-	printf("EditorCurrentBlock destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("EditorCurrentBlock");
 }
 
 void EditorCurrentBlock::setBlock(Block *_block) {

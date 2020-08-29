@@ -1,6 +1,7 @@
 #include "EditorLight.h"
 
 #include "../../Map/Map.h"
+#include "../../PTC.h"
 #include "../../Scenes/LevelEditorScene.h"
 
 EditorLight::EditorLight() {
@@ -22,10 +23,14 @@ void EditorLight::focusReact() {
 void EditorLight::disfocusReact() {
 }
 
-void EditorLight::Destroy() {
+void EditorLight::Destroy()
+{
+	PTC::sayDestroyed("EditorLight");
 }
 
-void EditorLight::Init(GameObject *owner) {
+void EditorLight::Init(GameObject *owner)
+{
+	PTC::sayCreated("EditorLight");
 }
 
 EditorLight::~EditorLight() {

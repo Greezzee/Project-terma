@@ -14,8 +14,10 @@
 #include "../Menu/Buttons/ItemButton.h"
 #include "../Menu/ImageWidgets/Background.h"
 #include "../Menu/ImageWidgets/ItemFocus.h"
+#include "../Menu/MenuWidget.h"
 #include "../Player/Inventory.h"
 #include "../Player/Player.h"
+#include "../PTC.h"
 #include "../Textures.h"
 #include "../Views.h"
 
@@ -35,7 +37,7 @@ void InventoryScene::Init() {
 	background->setScene(this);
 	background->setSpriteID(Textures::INVENTORY);
 	background->SetView(Views::MAIN_MENU);
-	background->setLayer(2);
+	background->setLayer(INV_BG_LAYER);
 	background->SetPos( { 800, 450 });
 	background->SetSize( { 1600, 900 });
 	widgets->push_back(background);
@@ -57,7 +59,7 @@ void InventoryScene::Init() {
 					{ itemStartPos.x + column * itemIconSize.x, itemStartPos.y
 							- row * itemIconSize.y });
 			items->at(i)->SetPos(_button->GetPos());
-			_button->setLayer(2);
+			_button->setLayer(INV_WIDGETS_LAYER);
 			_button->setOriginalPos(_button->GetPos());
 			_button->SetSize(itemIconSize);
 			_button->SetView(Views::MAIN_MENU);
@@ -73,8 +75,8 @@ void InventoryScene::Init() {
 			column++;
 		}
 
-		if (row >= maxRows || column >= maxColumns) {
-			printf("Error! Too many items!\n");
+		if ( column >= maxColumns) {
+			PTC::say("Error! Too many items!", error, high);
 			break;
 		}
 	}
@@ -86,12 +88,12 @@ void InventoryScene::Init() {
 	item_focus->setSpriteID(Textures::ITEM_FOCUS);
 	item_focus->SetPos( { 0, 0 });
 	item_focus->SetSize(itemIconSize);
-	item_focus->setLayer(3);
+	item_focus->setLayer(INV_WIDGETS_LAYER + 1);
 	item_focus->SetView(Views::MAIN_MENU);
 	this->focused_item = item_focus;
 	widgets->push_back(item_focus);
 
-	printf("InventoryScene created!\n");
+	PTC::sayCreated("InventoryScene");
 }
 
 void InventoryScene::Update() {
@@ -109,8 +111,7 @@ void InventoryScene::Update() {
 void InventoryScene::Destroy() {
 	destroyWidgets();
 
-	printf("InventoryScene destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("InventoryScene");
 }
 
 void InventoryScene::setItemFocus(ItemFocus *_item) {

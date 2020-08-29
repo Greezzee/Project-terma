@@ -68,7 +68,8 @@ void Map::Init() {
 	genTestStuff();
 	setPlayersView(Views::PLAYER_CAM);
 	LightManager::SetGlobalLight(Color(0, 0, 0));
-	printf("Map created!\n");
+
+	PTC::sayCreated("Map");
 }
 
 void Map::Update() {
@@ -117,6 +118,8 @@ void Map::Destroy() {
 	for (int i = 1; i < MAX_LAYER; i++) {
 		GraphicManager::SetLayerShader(i, NULL);
 	}
+
+	PTC::sayDestroyed("Destroyed");
 }
 
 void Map::addEntity(Vector2F pos, Entity *entity) {

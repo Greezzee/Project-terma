@@ -8,28 +8,29 @@
 #include "../Engine/SceneManagment/SceneManager.h"
 #include "Blocks/Blocks.h"
 #include "Controls.h"
+#include "PTC.h"
 #include "Scenes/MainMenuScene.h"
 #include "Views.h"
 
 class MainMenuScene;
 
 void ProjectTerma::Init() {
-	printf("Game started!\n");
-	printf("Loading resources!\n");
+	PTC::say("Game started!");
+	PTC::say("Loading resources!");
 	Textures::LOAD_ALL_TEXTURES();
-	printf("Textures loaded!\n");
-	printf("Loading views!\n");
+	PTC::say("Textures loaded!");
+	PTC::say("Loading views!");
 	Views::LOAD_ALL_VIEWS();
-	printf("Views loaded!\n");
-	printf("Loading settings!\n");
+	PTC::say("Views loaded!");
+	PTC::say("Loading settings!");
 	Settings::LOAD_SETTINGS();
-	printf("Settings loaded!\n");
-	printf("Loading controls!\n");
+	PTC::say("Settings loaded!");
+	PTC::say("Loading controls!");
 	Controls::LOAD_ALL_GAMEKEYS();
-	printf("Controls loaded!\n");
-	printf("Loading blocks!\n");
+	PTC::say("Controls loaded!");
+	PTC::say("Loading blocks!");
 	Blocks::LOAD_ALL_BLOCKS();
-	printf("Blocks loaded!\n");
+	PTC::say("Blocks loaded!");
 }
 
 void ProjectTerma::Update() {
@@ -38,7 +39,7 @@ void ProjectTerma::Update() {
 }
 
 void ProjectTerma::Destroy() {
-	printf("Start scene is terminated!\n");
+	PTC::say("Start scene is terminated!");
 }
 
 void ProjectTerma::report_error(std::string mes) {

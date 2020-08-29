@@ -1,6 +1,7 @@
 #include "EditorColliders.h"
 
 #include "../../Map/Map.h"
+#include "../../PTC.h"
 #include "../../Scenes/LevelEditorScene.h"
 
 EditorColliders::EditorColliders() {
@@ -21,10 +22,14 @@ void EditorColliders::focusReact() {
 void EditorColliders::disfocusReact() {
 }
 
-void EditorColliders::Destroy() {
+void EditorColliders::Destroy()
+{
+	PTC::sayDestroyed("EditorColliders");
 }
 
-void EditorColliders::Init(GameObject *owner) {
+void EditorColliders::Init(GameObject *owner)
+{
+	PTC::sayCreated("EditorColliders");
 }
 
 EditorColliders::~EditorColliders() {

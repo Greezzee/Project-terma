@@ -19,8 +19,8 @@
 #include "../Menu/Buttons/EditorCross.h"
 #include "../Menu/Buttons/EditorGrid.h"
 #include "../Menu/Buttons/EditorLight.h"
-#include "../Menu/ImageWidgets/Background.h"
 #include "../Menu/MenuWidget.h"
+#include "../PTC.h"
 #include "../Textures.h"
 #include "../Views.h"
 #include "MainMenuScene.h"
@@ -53,7 +53,8 @@ void LevelEditorScene::Init() {
 	currentMap->setMayDrawColliders(true);
 	currentMap->Update();
 	currentMap->pauseGame();
-	printf("LevelEditorScene created!\n");
+
+	PTC::sayCreated("LevelEditorScene");
 }
 
 void LevelEditorScene::Update() {
@@ -182,8 +183,7 @@ void LevelEditorScene::Destroy() {
 
 	destroyWidgets();
 
-	printf("LevelEditorScene destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("LevelEditorScene");
 }
 
 LevelEditorScene::~LevelEditorScene() {

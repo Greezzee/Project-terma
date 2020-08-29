@@ -6,11 +6,11 @@
 #include "../../../Engine/Graphics/DrawData.h"
 #include "../../../Engine/Graphics/GraphicManager.h"
 #include "../../../Engine/Utility/Coordinate.h"
-#include "../../Items/Item.h"
+#include "../../PTC.h"
 #include "../../Views.h"
 
 void ItemFocus::Init(GameObject *owner) {
-	printf("ItemFocus created!\n");
+	PTC::sayCreated("ItemFocus");
 }
 
 void ItemFocus::Update() {
@@ -40,8 +40,7 @@ ItemFocus::ItemFocus() {
 }
 
 void ItemFocus::Destroy() {
-	printf("ItemFocus destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("ItemFocus");
 }
 
 void ItemFocus::focusItem(Item *_item) {

@@ -1,7 +1,6 @@
 #include "MainMenuScene.h"
 
 #include <cstdio>
-#include <iostream>
 #include <vector>
 
 #include "../../Engine/Control/InputManager.h"
@@ -14,6 +13,7 @@
 #include "../Menu/Buttons/PlayButton.h"
 #include "../Menu/Buttons/QuitButton.h"
 #include "../Menu/ImageWidgets/Background.h"
+#include "../PTC.h"
 #include "../Settings.h"
 #include "../Textures.h"
 #include "../Views.h"
@@ -75,6 +75,8 @@ void MainMenuScene::Init() {
 	menu_level_editor_button->SetSize( { 330, 130 });
 	menu_level_editor_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(menu_level_editor_button);
+
+	PTC::sayCreated("MainMenuScene");
 }
 
 void MainMenuScene::Update() {
@@ -101,15 +103,14 @@ void MainMenuScene::Update() {
 void MainMenuScene::Destroy() {
 	destroyWidgets();
 
-	printf("MainMenuScene destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("MainMenuScene");
 }
 
 void MainMenuScene::quitGame() {
-	printf("Saving settings!\n");
+	PTC::say("Saving settings!");
 	Settings::SAVE_SETTINGS();
-	printf("Settings are saved!\n");
-	printf("Destroying all objects!\n");
+	PTC::say("Settings are saved!");
+	PTC::say("Destroying all objects!");
 	Blocks::DELETE_ALL_BLOCKS();
-	printf("Blocks are deleted!\n");
+	PTC::say("Blocks are deleted!");
 }

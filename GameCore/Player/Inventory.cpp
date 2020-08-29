@@ -1,7 +1,9 @@
-#include "../Player/Inventory.h"
+#include "Inventory.h"
 
 #include <cstdio>
 #include <iostream>
+
+#include "../PTC.h"
 
 Inventory::Inventory()
 {
@@ -19,7 +21,7 @@ void Inventory::Init()
 	items = new std::vector<Item*>;
 	items->resize(inventorySize, nullptr);
 
-	printf("Inventory created!\n");
+	PTC::sayCreated("Inventory");
 }
 
 void Inventory::Update()
@@ -31,8 +33,7 @@ void Inventory::Destroy()
 {
 	delete items;
 
-	printf("Inventory destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("Inventory");
 }
 
 void Inventory::addItem(Item *_item)

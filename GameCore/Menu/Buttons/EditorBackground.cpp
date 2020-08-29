@@ -1,6 +1,6 @@
 #include "EditorBackground.h"
 
-#include "../../Map/Map.h"
+#include "../../PTC.h"
 #include "../../Scenes/LevelEditorScene.h"
 
 EditorBackground::EditorBackground() {}
@@ -18,8 +18,14 @@ void EditorBackground::focusReact() {}
 
 void EditorBackground::disfocusReact() {}
 
-void EditorBackground::Destroy() {}
+void EditorBackground::Destroy()
+{
+	PTC::sayDestroyed("EditorBackground");
+}
 
-void EditorBackground::Init(GameObject *owner) {}
+void EditorBackground::Init(GameObject *owner)
+{
+	PTC::sayCreated("EditorBackground");
+}
 
 EditorBackground::~EditorBackground() {}

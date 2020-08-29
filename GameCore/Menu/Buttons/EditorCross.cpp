@@ -1,6 +1,7 @@
 #include "EditorCross.h"
 
 #include "../../Map/Map.h"
+#include "../../PTC.h"
 #include "../../Scenes/LevelEditorScene.h"
 
 EditorCross::EditorCross() {
@@ -21,10 +22,14 @@ void EditorCross::focusReact() {
 void EditorCross::disfocusReact() {
 }
 
-void EditorCross::Destroy() {
+void EditorCross::Destroy()
+{
+	PTC::sayDestroyed("EditorCross");
 }
 
-void EditorCross::Init(GameObject *owner) {
+void EditorCross::Init(GameObject *owner)
+{
+	PTC::sayCreated("EditorCross");
 }
 
 EditorCross::~EditorCross() {

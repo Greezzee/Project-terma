@@ -2,11 +2,15 @@
 
 #include <cstdio>
 
+#include "../../../Engine/Graphics/DrawData.h"
+#include "../../../Engine/Graphics/GraphicManager.h"
+#include "../../PTC.h"
+
 ResolutionImage::ResolutionImage() {
 }
 
 void ResolutionImage::Init(GameObject *owner) {
-	printf("ResolutionImage created!\n");
+	PTC::sayCreated("ResolutionImage");
 }
 
 void ResolutionImage::Update() {
@@ -30,7 +34,7 @@ void ResolutionImage::Draw() {
 }
 
 void ResolutionImage::Destroy() {
-	printf("ResolutionImage destroyed!\n");
+	PTC::sayDestroyed("ResolutionImage");
 }
 
 ResolutionImage::~ResolutionImage() {

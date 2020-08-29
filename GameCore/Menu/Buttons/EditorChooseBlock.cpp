@@ -3,10 +3,9 @@
 #include <cstdio>
 #include <iostream>
 
-#include "../../Blocks/Blocks.h"
+#include "../../PTC.h"
 
-EditorChooseBlock::EditorChooseBlock(EditorCurrentBlock* _block)
-{
+EditorChooseBlock::EditorChooseBlock(EditorCurrentBlock *_block) {
 	block = nullptr;
 	current_block = _block;
 }
@@ -26,45 +25,38 @@ void EditorChooseBlock::Update() {
 		leftClickReact();
 }
 
-void EditorChooseBlock::rightClickReact()
-{
+void EditorChooseBlock::rightClickReact() {
 	// Nothing for now
 }
 
-void EditorChooseBlock::leftClickReact()
-{
+void EditorChooseBlock::leftClickReact() {
 	// !!
 	if (block == nullptr)
-		return ;
+		return;
 
 	current_block->setBlock(block);
 }
 
-void EditorChooseBlock::focusReact()
-{
+void EditorChooseBlock::focusReact() {
 	// Nothing for now
 }
 
-void EditorChooseBlock::disfocusReact()
-{
+void EditorChooseBlock::disfocusReact() {
 	// Nothing for now
 }
 
-void EditorChooseBlock::Destroy()
-{
+void EditorChooseBlock::Destroy() {
 	if (block != nullptr) {
 		block->Destroy();
 		delete block;
 		block = nullptr;
 	}
 
-	printf("EditorChooseBlock destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("EditorChooseBlock");
 }
 
-void EditorChooseBlock::Init(GameObject *owner)
-{
-	printf("EditorChooseBlock created!\n");
+void EditorChooseBlock::Init(GameObject *owner) {
+	PTC::sayCreated("EditorChooseBlock");
 }
 
 Block* EditorChooseBlock::getBlock() {

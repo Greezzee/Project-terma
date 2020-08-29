@@ -1,8 +1,9 @@
-#include "../Textures.h"
+#include "LimbSword.h"
 
 #include <cstdio>
-#include <iostream>
-#include "LimbSword.h"
+
+#include "../PTC.h"
+#include "../Textures.h"
 
 void LimbSword::Draw()
 {
@@ -11,15 +12,14 @@ void LimbSword::Draw()
 
 void LimbSword::Destroy()
 {
-	printf("Sword destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("LimbSword");
 }
 
 void LimbSword::Init(GameObject *owner)
 {
 	setIconID(Textures::SWORD);
 
-	printf("Sword created!\n");
+	PTC::sayCreated("LimbSword");
 }
 
 void LimbSword::Update()

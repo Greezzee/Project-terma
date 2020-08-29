@@ -5,11 +5,12 @@
 
 #include "../../../Engine/Graphics/DrawData.h"
 #include "../../../Engine/Graphics/GraphicManager.h"
+#include "../../PTC.h"
 
 EditorPanel::EditorPanel() {}
 
 void EditorPanel::Init(GameObject *owner) {
-	printf("EditorPanel created!\n");
+	PTC::sayCreated("EditorPanel");
 }
 
 void EditorPanel::Update() {}
@@ -32,9 +33,7 @@ void EditorPanel::Draw() {
 
 void EditorPanel::Destroy()
 {
-	printf("EditorPanel destroyed!\n");
-	std::cout.flush();
-
+	PTC::sayCreated("EditorPanel");
 }
 
 EditorPanel::~EditorPanel() {}

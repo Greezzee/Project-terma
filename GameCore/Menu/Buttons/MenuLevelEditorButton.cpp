@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "../../../Engine/SceneManagment/SceneManager.h"
+#include "../../PTC.h"
 #include "../../Scenes/LevelEditorScene.h"
 
 MenuLevelEditorButton::MenuLevelEditorButton() {}
@@ -26,13 +27,12 @@ void MenuLevelEditorButton::disfocusReact()
 
 void MenuLevelEditorButton::Destroy()
 {
-	printf("MenuLevelEditorButton destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("MenuLevelEditorButton");
 }
 
 void MenuLevelEditorButton::Init(GameObject *owner)
 {
-	printf("MenuLevelEditorButton created!\n");
+	PTC::sayCreated("MenuLevelEditorButton");
 }
 
 void MenuLevelEditorButton::rightClickReact()

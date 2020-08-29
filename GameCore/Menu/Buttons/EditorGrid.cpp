@@ -1,6 +1,7 @@
 #include "EditorGrid.h"
 
 #include "../../Map/Map.h"
+#include "../../PTC.h"
 #include "../../Scenes/LevelEditorScene.h"
 
 EditorGrid::EditorGrid() {
@@ -21,10 +22,14 @@ void EditorGrid::focusReact() {
 void EditorGrid::disfocusReact() {
 }
 
-void EditorGrid::Destroy() {
+void EditorGrid::Destroy()
+{
+	PTC::sayDestroyed("EditorGrid");
 }
 
-void EditorGrid::Init(GameObject *owner) {
+void EditorGrid::Init(GameObject *owner)
+{
+	PTC::sayCreated("EditorGrid");
 }
 
 EditorGrid::~EditorGrid() {

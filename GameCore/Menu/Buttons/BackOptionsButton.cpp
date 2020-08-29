@@ -1,10 +1,10 @@
 #include "BackOptionsButton.h"
 
-#include "../../../Engine/AllEngine.h"
-#include "../../../GameCore/Textures.h"
-#include "../../Scenes/MainMenuScene.h"
+#include <cstdio>
 
-#include "../../../GameCore/Scenes/MainOptionsScene.h"
+#include "../../../Engine/SceneManagment/SceneManager.h"
+#include "../../PTC.h"
+#include "../../Scenes/MainMenuScene.h"
 
 BackOptionsButton::BackOptionsButton() {
 }
@@ -14,7 +14,7 @@ void BackOptionsButton::focusReact() {
 }
 
 void BackOptionsButton::Init(GameObject *owner) {
-	printf("BackOptionsButton created!\n");
+	PTC::sayCreated("BackOptionsButton");
 }
 
 void BackOptionsButton::disfocusReact() {
@@ -32,5 +32,5 @@ void BackOptionsButton::leftClickReact() {
 }
 
 void BackOptionsButton::Destroy() {
-	printf("BackOptionsButton destroyed!\n");
+	PTC::sayDestroyed("BackOptionsButton");
 }

@@ -1,9 +1,10 @@
 #include "OptionsButton.h"
 
-#include "../../../Engine/AllEngine.h"
-#include "../../../GameCore/Textures.h"
+#include <cstdio>
 
-#include "../../../GameCore/Scenes/MainOptionsScene.h"
+#include "../../../Engine/SceneManagment/SceneManager.h"
+#include "../../PTC.h"
+#include "../../Scenes/MainOptionsScene.h"
 
 OptionsButton::OptionsButton() {}
 
@@ -24,7 +25,7 @@ void OptionsButton::rightClickReact()
 
 void OptionsButton::Init(GameObject *owner)
 {
-	printf("OptionsButton created!\n");
+	PTC::sayCreated("OptionsButton");
 }
 
 void OptionsButton::disfocusReact()
@@ -34,5 +35,5 @@ void OptionsButton::disfocusReact()
 
 void OptionsButton::Destroy()
 {
-	printf("OptionsButton destroyed!\n");
+	PTC::sayCreated("OptionsButton");
 }

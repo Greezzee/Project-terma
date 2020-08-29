@@ -1,8 +1,8 @@
 #include "EditorModeButton.h"
 
 #include <cstdio>
-#include <iostream>
 
+#include "../../PTC.h"
 #include "../../Scenes/LevelEditorScene.h"
 #include "../../Textures.h"
 
@@ -26,12 +26,11 @@ void EditorModeButton::disfocusReact() {
 }
 
 void EditorModeButton::Destroy() {
-	printf("EditorModeButton destroyed!\n");
-	std::cout.flush();
+	PTC::sayDestroyed("EditorModeButton");
 }
 
 void EditorModeButton::Init(GameObject *owner) {
-	printf("EditorModeButton created!\n");
+	PTC::sayCreated("EditorModeButton");
 }
 
 void EditorModeButton::changeMode() {

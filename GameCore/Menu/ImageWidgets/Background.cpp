@@ -1,12 +1,15 @@
 #include "Background.h"
 
+#include <cstdio>
+
 #include "../../../Engine/Graphics/DrawData.h"
 #include "../../../Engine/Graphics/GraphicManager.h"
+#include "../../PTC.h"
 
 Background::Background() {}
 
 void Background::Init(GameObject *owner) {
-	printf("Background created!\n");
+	PTC::sayCreated("Background");
 }
 
 void Background::Update() {
@@ -37,7 +40,7 @@ unsigned Background::GetView()
 }
 
 void Background::Destroy() {
-	printf("Background destroyed!\n");
+	PTC::sayCreated("Background");
 }
 
 bool Background::isToDraw() const {
