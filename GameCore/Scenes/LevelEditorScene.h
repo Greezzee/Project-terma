@@ -30,7 +30,7 @@ class LevelEditorScene : public MenuScene {
 	EditorCurrentBlock *block_button;
 	enum BLOCK_SITUATION mode;
 	enum BLOCK_DELETE to_delete;
-
+	bool draw_background;
 public:
 	// Constructor and destructor
 	//----------------------------------------------
@@ -53,6 +53,9 @@ public:
 	void toDelete();
 	void toAdd();
 	enum BLOCK_DELETE isDelete();
+	bool isDrawBackground() const;
+	void setDrawBackground(bool drawBackground);
+	void drawBackground();
 
 	//----------------------------------------------
 

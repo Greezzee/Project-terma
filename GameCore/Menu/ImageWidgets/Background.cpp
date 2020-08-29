@@ -40,4 +40,12 @@ void Background::Destroy() {
 	printf("Background destroyed!\n");
 }
 
+bool Background::isToDraw() const {
+	return to_draw;
+}
+
+void Background::setToDraw(bool toDraw) {
+	to_draw = toDraw;
+}
+
 Background::~Background() {}

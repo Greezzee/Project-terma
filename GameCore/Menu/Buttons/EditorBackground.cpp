@@ -11,7 +11,7 @@ void EditorBackground::leftClickReact()
 {
 	LevelEditorScene *_scene = dynamic_cast<LevelEditorScene*>(current_scene);
 
-	_scene->currentMap->setMayDrawBackground(!_scene->currentMap->isMayDrawBackground());
+	_scene->setDrawBackground(!_scene->isDrawBackground());
 }
 
 void EditorBackground::focusReact() {}

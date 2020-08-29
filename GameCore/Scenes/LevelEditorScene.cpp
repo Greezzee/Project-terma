@@ -19,6 +19,7 @@
 #include "../Menu/Buttons/EditorCross.h"
 #include "../Menu/Buttons/EditorGrid.h"
 #include "../Menu/Buttons/EditorLight.h"
+#include "../Menu/ImageWidgets/Background.h"
 #include "../Menu/MenuWidget.h"
 #include "../Textures.h"
 #include "../Views.h"
@@ -32,6 +33,7 @@ LevelEditorScene::LevelEditorScene() {
 	currentBlock = nullptr;
 	mode = FRONT;
 	to_delete = NO;
+	draw_background = false;
 }
 
 void LevelEditorScene::Init() {
@@ -56,6 +58,7 @@ void LevelEditorScene::Init() {
 void LevelEditorScene::Update() {
 	updateWidgets();
 	drawWidgets();
+	drawBackground();
 
 	currentMap->Update();
 	currentBlock = block_button->getBlock();
@@ -307,7 +310,7 @@ void LevelEditorScene::createWidgets() {
 	b_cross->Init(nullptr);
 	b_cross->setScene(this);
 	b_cross->SetView(Views::MAIN_MENU);
-	b_cross->SetPos( { 1530, EDITOR_MODE_START - 80 * 3});
+	b_cross->SetPos( { 1530, EDITOR_MODE_START - 80 * 3 });
 	b_cross->SetSize( { 76, 76 });
 	b_cross->setLayer(EDITOR_BUTTONS_LAYER);
 	b_cross->setSpriteID(Textures::EDITOR_CROSS);
@@ -366,4 +369,30 @@ void LevelEditorScene::createWidgets() {
 
 	// CURRENT BLOCK HERE
 	cur_block->setBlock(currentBlock);
+}
+
+bool LevelEditorScene::isDrawBackground() const {
+	return draw_background;
+}
+
+void LevelEditorScene::setDrawBackground(bool drawBackground) {
+	draw_background = drawBackground;
+}
+
+void LevelEditorScene::drawBackground() {
+	if (draw_background) {
+
+		DrawData info = { };
+		info.position = { 800, 450 };
+
+		info.size = { 1600, 900 };
+
+		info.origin = { 0.5, 0.5 };
+
+		info.frame = 0;
+		info.layer = BACKGROUND_LAYER;
+
+		info.spriteID = Textures::TEST_BACKGROUND;
+		GraphicManager::Draw(info, Views::MAIN_MENU);
+	}
 }
