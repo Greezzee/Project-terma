@@ -31,6 +31,7 @@ class LevelEditorScene : public MenuScene {
 	enum BLOCK_SITUATION mode;
 	enum BLOCK_DELETE to_delete;
 	bool draw_background;
+	unsigned _delay;
 public:
 	// Constructor and destructor
 	//----------------------------------------------

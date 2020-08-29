@@ -34,6 +34,7 @@ LevelEditorScene::LevelEditorScene() {
 	mode = FRONT;
 	to_delete = NO;
 	draw_background = false;
+	_delay = 0;
 }
 
 void LevelEditorScene::Init() {
@@ -109,6 +110,11 @@ void LevelEditorScene::Update() {
 				* GraphicManager::GetView(Views::EDITOR_CAM)->virtual_size.y
 				* TimeManager::GetDeltaTime();
 		;
+	}
+
+	if (_delay <= 1 * 100000) {
+		_delay += TimeManager::GetDeltaTime();
+		return;
 	}
 
 	if (InputManager::IsDown(MouseKey::Mouse_Left)) {
@@ -335,7 +341,7 @@ void LevelEditorScene::createWidgets() {
 		EditorChooseBlock *_block = new EditorChooseBlock(cur_block);
 		_block->Init(nullptr);
 		_block->setScene(this);
-		_block->setBlock(block);
+		_block->setBlock((Block*) block->Clone());
 		_block->SetView(Views::MAIN_MENU);
 		_block->setLayer(EDITOR_BUTTONS_LAYER);
 
