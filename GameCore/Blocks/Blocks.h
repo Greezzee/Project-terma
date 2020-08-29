@@ -36,6 +36,11 @@ public:
 	static Block* createBlock(int id); //! Создает новый блок по заданному id
 	//-----------------------------------------------------
 
+	// DELETE ALL BLOCKS
+	//-----------------------------------------------------
+	static void DELETE_ALL_BLOCKS();
+	//-----------------------------------------------------
+
 	static std::map<int, Block*> ALL_BLOCKS;
 
 private:

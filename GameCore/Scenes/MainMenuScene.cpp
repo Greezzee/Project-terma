@@ -8,11 +8,13 @@
 #include "../../Engine/SceneManagment/SceneManager.h"
 #include "../../Engine/Time/TimeManager.h"
 #include "../../Engine/Utility/Coordinate.h"
+#include "../Blocks/Blocks.h"
 #include "../Menu/Buttons/MenuLevelEditorButton.h"
 #include "../Menu/Buttons/OptionsButton.h"
 #include "../Menu/Buttons/PlayButton.h"
 #include "../Menu/Buttons/QuitButton.h"
 #include "../Menu/ImageWidgets/Background.h"
+#include "../Settings.h"
 #include "../Textures.h"
 #include "../Views.h"
 
@@ -82,23 +84,32 @@ void MainMenuScene::Update() {
 	drawWidgets();
 
 	if (InputManager::IsPressed(KeyboardKey::BACK) && _delay > 1000000) {
+		this->quitGame();
 		SceneManager::CloseScene(this);
+
 		return;
 	}
 
 	// It is in the end of this function for gentle change of scene
 	if (!is_active) {
 		SceneManager::CloseScene(this);
+
 		return;
 	}
 }
 
 void MainMenuScene::Destroy() {
 	destroyWidgets();
-	printf("Saving settings!\n");
-	Settings::SAVE_SETTINGS();
-	printf("Settings are saved!\n");
 
 	printf("MainMenuScene destroyed!\n");
 	std::cout.flush();
+}
+
+void MainMenuScene::quitGame() {
+	printf("Saving settings!\n");
+	Settings::SAVE_SETTINGS();
+	printf("Settings are saved!\n");
+	printf("Destroying all objects!\n");
+	Blocks::DELETE_ALL_BLOCKS();
+	printf("Blocks are deleted!\n");
 }

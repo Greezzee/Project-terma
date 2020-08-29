@@ -1,16 +1,17 @@
 #include "QuitButton.h"
 
+#include <cstdio>
 #include <iostream>
 
-#include "../../../Engine/AllEngine.h"
-#include "../../../GameCore/Textures.h"
-
-#include "../../../GameCore/Scenes/GameplayScene.h"
+#include "../../Scenes/MainMenuScene.h"
 
 QuitButton::QuitButton() {}
 
 void QuitButton::leftClickReact() {
-	current_scene->disableScene();
+	MainMenuScene* _scene = dynamic_cast<MainMenuScene*>(current_scene);
+
+	_scene->quitGame();
+	_scene->disableScene();
 }
 
 void QuitButton::focusReact() {
