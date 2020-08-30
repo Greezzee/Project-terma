@@ -113,11 +113,7 @@ public:
 	friend class InventoryScene;
 	friend class ItemButton;
 
-	friend class EditorBackground;
-	friend class EditorLight;
-	friend class EditorGrid;
-	friend class EditorCross;
-	friend class EditorColliders;
+	friend class LevelCoder;
 private:
 	// UTILITIES
 	//------------------------

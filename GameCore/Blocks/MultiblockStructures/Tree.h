@@ -15,6 +15,13 @@ public:
 		setPassable(1);
 	}
 
+	void code(char *&buffer) override {
+
+	}
+	void decode(char *&buffer) override {
+
+	}
+
 	GameObject* Clone() const {
 		return new Tree();
 	}

@@ -10,6 +10,7 @@
 #include "../Menu/Buttons/EditorModeButton.h"
 #include "../Menu/Buttons/EditorDeleteButton.h"
 #include "../Menu/Buttons/EditorBackground.h"
+#include "../LevelCoder/LevelCoder.h"
 
 class Block;
 class Map;

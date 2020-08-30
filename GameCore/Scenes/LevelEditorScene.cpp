@@ -1,6 +1,5 @@
 #include "LevelEditorScene.h"
 
-#include <cstdio>
 #include <iostream>
 #include <vector>
 
@@ -113,7 +112,7 @@ void LevelEditorScene::Update() {
 		;
 	}
 
-	if (_delay <= 1 * 100000) {
+	if (_delay <= 1 * 500000) {
 		_delay += TimeManager::GetDeltaTime();
 		return;
 	}
@@ -176,6 +175,8 @@ void LevelEditorScene::Update() {
 }
 
 void LevelEditorScene::Destroy() {
+	LevelCoder::CODE("TestLevel/testLevel.PTRoom", currentMap);
+
 	delete currentMap->getLevel();
 
 	currentMap->Destroy();

@@ -1,10 +1,9 @@
 #include "OptionsButton.h"
 
-#include <cstdio>
-
 #include "../../../Engine/SceneManagment/SceneManager.h"
 #include "../../PTC.h"
 #include "../../Scenes/MainOptionsScene.h"
+#include "../../Textures.h"
 
 OptionsButton::OptionsButton() {}
 
@@ -15,7 +14,7 @@ void OptionsButton::leftClickReact() {
 
 void OptionsButton::focusReact()
 {
-	//! Nothing for now
+	sprite_id = Textures::MAIN_MENU_OPTIONS_BUTTON_FOCUS;
 }
 
 void OptionsButton::rightClickReact()
@@ -30,7 +29,7 @@ void OptionsButton::Init(GameObject *owner)
 
 void OptionsButton::disfocusReact()
 {
-	// Nothing for now
+	sprite_id = Textures::MAIN_MENU_OPTIONS_BUTTON;
 }
 
 void OptionsButton::Destroy()

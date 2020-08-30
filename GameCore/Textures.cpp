@@ -41,6 +41,7 @@ int Textures::EDITOR_CROSS = -1;
 int Textures::EDITOR_BACKGROUND = -1;
 int Textures::EDITOR_GRID = -1;
 int Textures::EDITOR_LIGHT = -1;
+int Textures::MAIN_MENU_OPTIONS_BUTTON_FOCUS = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
 	Textures::LANTERN = GraphicManager::LoadSprite(
@@ -78,16 +79,19 @@ void Textures::LOAD_ALL_TEXTURES() {
 
 	Textures::MAIN_MENU_OPTIONS_BUTTON = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/options_button.png",
-					Vector2F(620, 130), 1));
+					Vector2F(160, 43), 1));
+	Textures::MAIN_MENU_OPTIONS_BUTTON_FOCUS = GraphicManager::LoadSprite(
+				GraphicPrefabData("./Resources/options_button_focus.png",
+						Vector2F(160, 43), 1));
 	Textures::MAIN_OPTIONS_MENU_BACK_BUTTON = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/back_button.png", Vector2F(280, 280),
 					1));
 	Textures::MAIN_MENU_PLAY_BUTTON = GraphicManager::LoadSprite(
-			GraphicPrefabData("./Resources/play_button.png", Vector2F(128, 32),
+			GraphicPrefabData("./Resources/play_button.png", Vector2F(137, 43),
 					1));
 	Textures::MAIN_MENU_PLAY_BUTTON_FOCUS = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/play_button_focus.png",
-					Vector2F(128, 32), 1));
+					Vector2F(137, 43), 1));
 	Textures::MAIN_MENU_QUIT_BUTTON = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/quit_button.png", Vector2F(470, 170),
 					1));

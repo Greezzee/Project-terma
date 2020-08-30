@@ -11,7 +11,4 @@ public:
 	virtual ~Level() {};
 
 	virtual void generate(Map * map) = 0;
-
-protected:
-	void loadBlocksFromFile(Map * map, FILE * from);
 };

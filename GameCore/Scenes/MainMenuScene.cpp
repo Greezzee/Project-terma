@@ -41,7 +41,7 @@ void MainMenuScene::Init() {
 	play_button->setScene(this);
 	play_button->setSpriteID(Textures::MAIN_MENU_PLAY_BUTTON);
 	play_button->SetPos( { 800, 600 });
-	play_button->SetSize( { 512, 128 });
+	play_button->SetSize( { 548, 172 });
 	play_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(play_button);
 
@@ -61,7 +61,7 @@ void MainMenuScene::Init() {
 	options_button->setScene(this);
 	options_button->setSpriteID(Textures::MAIN_MENU_OPTIONS_BUTTON);
 	options_button->SetPos( { 800, 400 });
-	options_button->SetSize( { 620, 130 });
+	options_button->SetSize( { 640, 172 });
 	options_button->SetView(Views::MAIN_MENU);
 	widgets->push_back(options_button);
 

@@ -14,6 +14,8 @@
 #include "../LightSource.h"
 #include "Multiblock.h"
 
+const unsigned LANTERTN_LIGHT_RADIUS = 8;
+
 class Lantern: public Multiblock, public LightSource {
 public:
 	Lantern() :
@@ -22,7 +24,14 @@ public:
 		setID(334);
 		setSpriteId(Textures::LANTERN);
 		setPassable(1);
-		setLightRadius(8);
+		setLightRadius(LANTERTN_LIGHT_RADIUS);
+	}
+
+	void code(char *&buffer) override {
+
+	}
+	void decode(char *&buffer) override {
+
 	}
 
 	GameObject* Clone() const {

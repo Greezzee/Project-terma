@@ -65,7 +65,7 @@ void Map::Init() {
 		}
 	}
 
-	genTestStuff();
+	// genTestStuff();
 	setPlayersView(Views::PLAYER_CAM);
 	LightManager::SetGlobalLight(Color(0, 0, 0));
 

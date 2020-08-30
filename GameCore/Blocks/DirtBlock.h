@@ -15,6 +15,13 @@ public:
 	~DirtBlock() {
 	}
 
+	void code(char*& buffer) override {
+
+	}
+	void decode(char*& buffer) override {
+
+	}
+
 	GameObject* Clone() const {
 		return new DirtBlock();
 	}

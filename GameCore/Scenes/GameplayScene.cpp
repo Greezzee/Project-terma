@@ -1,11 +1,9 @@
 #include "GameplayScene.h"
 
-#include <cstdio>
-#include <iostream>
-
 #include "../../Engine/Control/InputManager.h"
 #include "../../Engine/SceneManagment/SceneManager.h"
 #include "../Controls.h"
+#include "../Map/LoadableLevel.h"
 #include "../Map/Map.h"
 #include "../PTC.h"
 #include "../Testing/TestLevel.h"
@@ -18,9 +16,9 @@ GameplayScene::GameplayScene() {
 void GameplayScene::Init() {
 	gamefield = new Map();
 
+	LoadableLevel* _level = new LoadableLevel("TestLevel");
 	// TODO в будущем нужно, чтобы значение этого поля приходило из gui (после выбора игроком)
-	gamefield->setLevel(currentLevel = new TestLevel());//TODO fix mem
-	//
+	gamefield->setLevel((Level*) _level);//TODO fix mem
 
 	gamefield->Init();
 

@@ -3,11 +3,11 @@
 #include <string>
 
 #include "../../Engine/Gameplay/GameObject.h"
-#include "../../Engine/Gameplay/ObjectsArray.h"
+#include "../LevelCoder/Encodable.h"
 
 class SquareCollider;
 
-class Block : public GameObject {
+class Block : public GameObject, public Encodable {
 protected:
 	int id = 0;
 public:
