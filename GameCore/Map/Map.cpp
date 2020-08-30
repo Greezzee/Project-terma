@@ -220,7 +220,7 @@ void Map::drawEntities() {
 		SolidEntity *sent = NULL;
 		if (mayDrawColliders && (sent = dynamic_cast<SolidEntity*>(ent)) != NULL) {
 			Debugger::DrawCollider(*sent->getCollider(), 2, 2,
-					player->getCamera(), Color(0, 255, 0), COLLIDERS_LAYER);
+					player->getCamera(), Color(0, 0, 200), COLLIDERS_LAYER);
 		}
 	}
 }
