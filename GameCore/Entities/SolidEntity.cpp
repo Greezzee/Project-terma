@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 
 #include "../../Engine/Colliders/SquareCollider.h"
 #include "../../Engine/Time/TimeManager.h"
@@ -37,7 +38,7 @@ void SolidEntity::Update() {
 
 	// POSITION UPDATE
 	//------------------------------------------------------------------
-	float dt = TimeManager::GetDeltaTimeF() * 2.0f;
+	float dt = TimeManager::GetDeltaTimeF();
 
 	speed += acceleration * dt;
 	Vector2F ds = speed * dt;
@@ -56,6 +57,7 @@ void SolidEntity::Update() {
 	problem_dist = std::max(0.0f, problem_dist - epsilon);
 	if (problem_dist < dsx_len) {
 		dsx = dsx.Normalized() * problem_dist;
+		speed.x = 0;
 	}
 	_pos += dsx;
 
@@ -64,10 +66,11 @@ void SolidEntity::Update() {
 	problem_dist = std::max(0.0f, problem_dist - epsilon);
 	if (problem_dist < dsy_len) {
 		dsy = dsy.Normalized() * problem_dist;
+		speed.y = 0;
 	}
 	_pos += dsy;
 
-	speed = (dsx + dsy) / dt;
+	//speed = (dsx + dsy) / dt;
 	//------------------------------------------------------------------
 
 	// FLUSH
@@ -88,7 +91,7 @@ SolidEntity::SolidEntity() {
 }
 
 bool SolidEntity::standsOnTheGround() {
-	return getMap()->testCollision(collider, { 0, -10.0f }) < epsilon;
+	return getMap()->testCollision(collider, { 0, -epsilon * 2 }, 0) < epsilon * 2;
 }
 
 SolidEntity::~SolidEntity() {

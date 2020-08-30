@@ -103,7 +103,7 @@ public:
 
 	// COLLISIONS
 	//------------------------
-	float testCollision(SquareCollider *col, Vector2F dir);
+	float testCollision(SquareCollider *col, Vector2F dir, bool debug = 1);
 	bool isMayDrawWallBlockCrosses() const;
 	void setMayDrawWallBlockCrosses(bool mayDrawWallBlockCrosses = 0);
 

@@ -2,6 +2,7 @@
 
 #include "../../Engine/Time/TimeManager.h"
 #include "../../Engine/Utility/Coordinate.h"
+#include "../PTC.h"
 
 void Entity::Destroy() {
 }
