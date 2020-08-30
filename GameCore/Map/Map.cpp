@@ -75,6 +75,7 @@ void Map::Init() {
 void Map::Update() {
 	if (!ignoreLight) {
 		LightManager::ClearLightSource();
+		LightManager::SetGlobalLight(Color(0, 0, 0));
 	} else {
 		LightManager::SetGlobalLight(Color(255, 255, 255));
 	}
