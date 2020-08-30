@@ -104,6 +104,7 @@ void ItemButton::Update() {
 			item->SetPos(getOriginalPos());
 		}
 	}
+
 	if (isFocused())
 		focusReact();
 	else

@@ -28,7 +28,7 @@ void ItemFocus::Draw() {
 		info.origin = { 0.5, 0.5 };
 
 		info.frame = 0;
-		info.layer = 2;
+		info.layer = layer;
 
 		info.spriteID = this->sprite_id;
 		GraphicManager::Draw(info, Views::MAIN_MENU);
