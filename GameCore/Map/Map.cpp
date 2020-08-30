@@ -60,8 +60,9 @@ void Map::Init() {
 	for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
 			colliders_wireframe[x][y] = new SquareCollider();
-			colliders_wireframe[x][y]->Init(Vector2F(x, y) * BLOCK_SIZE,
-					Vector2F(1, 1) * BLOCK_SIZE);
+			colliders_wireframe[x][y]->Init(
+					Vector2F(x + 0.5f, y + 0.5f) * BLOCK_SIZE,
+					Vector2F(1, 1) * BLOCK_SIZE * 0.5f);
 		}
 	}
 
@@ -302,6 +303,11 @@ void Map::genTestStuff() {
 			placeWallblock(Vector2I(x, y), new DirtBlock());
 		}
 	}
+	for (int x = 0; x < MAX_LEVEL_SIZE; x += 10) {
+		for (int y = 0; y < MAX_LEVEL_SIZE; y++) {
+			placeBlock(Vector2I(x, y), new GrassBlock());
+		}
+	}
 	for (int y = 0; y < 14; y++) {
 		for (int x = 0; x < MAX_LEVEL_SIZE; x++) {
 			placeBlock(Vector2I(x, y), new DirtBlock());
@@ -332,11 +338,11 @@ void Map::genTestStuff() {
 	}
 }
 
-float Map::testCollision(SquareCollider *col, Vector2F dir) {
+float Map::testCollision(SquareCollider *col, Vector2F dir, bool debug) {
 	float dir_len = dir.Magnitude();
 	float result = 10000000.0f;
 
-	if (mayDrawColliders) {
+	if (mayDrawColliders && debug) {
 		Debugger::DrawLine(player->GetPos(),
 				player->GetPos() + dir.Normalized() * 4 * BLOCK_SIZE, 5,
 				player->getCamera(), Color(0, 0, 255), COLLIDERS_LAYER);
@@ -346,7 +352,7 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 			- 1;
 			y
 					< (col->GetPos().y + 1 * col->GetSize().y + dir_len)
-							/ BLOCK_SIZE + 1; y++) {
+							/ BLOCK_SIZE + 3; y++) {
 		for (int x = (col->GetPos().x - 1 * col->GetSize().x - dir_len)
 				/ BLOCK_SIZE - 1;
 				x
@@ -365,19 +371,32 @@ float Map::testCollision(SquareCollider *col, Vector2F dir) {
 			}
 
 			float dist = Collider::DistanceBetween(col,
-					colliders_wireframe[x][y], dir);
+					colliders_wireframe[x][y], dir.Normalized());
+
+			// DEBUG
+			//-------------------------------------------------------------------
+			if (mayDrawColliders && debug) {
+				if (!std::isnan(dist)) {
+					if (dist >= 0) {
+						Debugger::DrawCollider(*colliders_wireframe[x][y], 10,
+								4, this->player->getCamera(), Color(255, 0, 0),
+								COLLIDERS_LAYER);
+					} else {
+						Debugger::DrawCollider(*colliders_wireframe[x][y], 10,
+								4, this->player->getCamera(), Color(0, 255, 0),
+								COLLIDERS_LAYER);
+					}
+				} else {
+					Debugger::DrawCollider(*colliders_wireframe[x][y], 10, 4,
+							this->player->getCamera(), Color(0, 0, 255),
+							COLLIDERS_LAYER);
+				}
+			}
+			//-------------------------------------------------------------------
 
 			if (!std::isnan(dist)) {
 				if (dist >= 0.0f) {
 					result = std::min(result, dist);
-					// DEBUG
-					//------------------------------
-					if (mayDrawColliders) {
-						Debugger::DrawCollider(*colliders_wireframe[x][y], 10,
-								4, this->player->getCamera(), Color(255, 0, 0),
-								COLLIDERS_LAYER);
-					}
-					//------------------------------
 				}
 			}
 		}
@@ -526,8 +545,16 @@ void Map::drawWallblocks() {
 
 			if (mayDrawWallBlockCrosses) {
 
-				Debugger::DrawLine(info.position - Vector2F(BLOCK_SIZE, BLOCK_SIZE) * 0.4, info.position + Vector2F(BLOCK_SIZE, BLOCK_SIZE) * 0.4, 2, player->getCamera(), Color(0, 255, 0), WALLBLOCKS_CROSSES_LAYER);
-				Debugger::DrawLine(info.position - Vector2F(-BLOCK_SIZE, BLOCK_SIZE) * 0.4, info.position + Vector2F(-BLOCK_SIZE, BLOCK_SIZE) * 0.4, 2, player->getCamera(), Color(0, 255, 0), WALLBLOCKS_CROSSES_LAYER);
+				Debugger::DrawLine(
+						info.position - Vector2F(BLOCK_SIZE, BLOCK_SIZE) * 0.4,
+						info.position + Vector2F(BLOCK_SIZE, BLOCK_SIZE) * 0.4,
+						2, player->getCamera(), Color(0, 255, 0),
+						WALLBLOCKS_CROSSES_LAYER);
+				Debugger::DrawLine(
+						info.position - Vector2F(-BLOCK_SIZE, BLOCK_SIZE) * 0.4,
+						info.position + Vector2F(-BLOCK_SIZE, BLOCK_SIZE) * 0.4,
+						2, player->getCamera(), Color(0, 255, 0),
+						WALLBLOCKS_CROSSES_LAYER);
 
 			}
 
