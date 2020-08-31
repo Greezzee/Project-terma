@@ -55,7 +55,7 @@ void Player::Update() {
 		externalForce.x -= base_acceleration;
 		lookingRight = 0;
 	} else if (standsOnTheGround()) {
-		externalForce.x -= speed.x * BLOCK_SIZE;
+	//	externalForce.x -= speed.x * BLOCK_SIZE;
 	}
 
 	// JUMPS

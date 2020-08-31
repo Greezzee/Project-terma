@@ -2,14 +2,13 @@
 
 #include <algorithm>
 #include <cmath>
-#include <iostream>
 
 #include "../../Engine/Colliders/SquareCollider.h"
 #include "../../Engine/Time/TimeManager.h"
 #include "../../Engine/Utility/Coordinate.h"
 #include "../Map/Map.h"
 
-const float epsilon = 1.0f;
+const float epsilon = 0.1f;
 const float k = 4.0f;
 const float g = 5000;
 //!
@@ -51,26 +50,38 @@ void SolidEntity::Update() {
 
 	// MAP
 	Map *map = getMap();
+	/*
+	float posible_dist = map->testCollision(collider, ds);
+	posible_dist = std::max(posible_dist - epsilon, 0.0f);
+	if (posible_dist < ds.Magnitude()) {
+		ds = ds.Normalized() * posible_dist;
+	}
+	speed = ds / dt;
+	_pos += ds;
+	*/
 
 	// X
-	float problem_dist = map->testCollision(collider, dsx);
-	problem_dist = std::max(0.0f, problem_dist - epsilon);
-	if (problem_dist < dsx_len) {
-		dsx = dsx.Normalized() * problem_dist;
-		speed.x = 0;
+	float posible_dist = map->testCollision(collider, dsx);
+	posible_dist = std::max(0.0f, posible_dist - epsilon);
+	if (posible_dist < dsx_len) {
+		dsx = dsx.Normalized() * posible_dist;
+		//speed.x = 0;
 	}
 	_pos += dsx;
+	collider->Init(this->_pos, this->collider_size * 0.5);
 
 	// Y
-	problem_dist = map->testCollision(collider, dsy);
-	problem_dist = std::max(0.0f, problem_dist - epsilon);
-	if (problem_dist < dsy_len) {
-		dsy = dsy.Normalized() * problem_dist;
-		speed.y = 0;
+	posible_dist = map->testCollision(collider, dsy);
+	posible_dist = std::max(0.0f, posible_dist - epsilon);
+	if (posible_dist < dsy_len) {
+		dsy = dsy.Normalized() * posible_dist;
+		//speed.y = 0;
 	}
 	_pos += dsy;
 
-	//speed = (dsx + dsy) / dt;
+	speed = (dsx + dsy) / dt;
+	collider->Init(this->_pos, this->collider_size * 0.5);
+
 	//------------------------------------------------------------------
 
 	// FLUSH

@@ -2,17 +2,15 @@
 
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
 #include <cstdlib>
+#include <iostream>
 #include <iterator>
 
 #include "../../Engine/Colliders/Collider.h"
-#include "../../Engine/Colliders/SquareCollider.h"
 #include "../../Engine/Debugger/Debugger.h"
 #include "../../Engine/Graphics/DrawData.h"
 #include "../../Engine/Graphics/GraphicManager.h"
 #include "../../Engine/Graphics/ShaderManagment/LightManager/LightManager.h"
-#include "../../Engine/Utility/Coordinate.h"
 #include "../Blocks/DirtBlock.h"
 #include "../Blocks/GrassBlock.h"
 #include "../Blocks/MultiblockStructures/Lantern.h"
@@ -23,7 +21,6 @@
 #include "../ProjectTerma.h"
 #include "../PTC.h"
 #include "../Textures.h"
-#include "../Views.h"
 #include "Level.h"
 
 class Multiblock;
