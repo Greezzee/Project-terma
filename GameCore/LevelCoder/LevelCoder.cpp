@@ -41,9 +41,6 @@ void LevelCoder::CODE(std::string _name, Map *_map) {
 
 	for (int i = 0; i < header->blockHeight; i++)
 		for (int j = 0; j < header->blockWidth; j++) {
-			std::cerr << "BLOCK NUMBER " << (i * header->blockWidth + j)
-					<< "\n";
-
 			Block *_block = _map->blocks[j][i];
 
 			if (_block == nullptr) {
@@ -102,9 +99,6 @@ void LevelCoder::DECODE(std::string _name, Map *_map, Vector2I start_pos) {
 				// Structure block
 				continue;
 			}
-
-			std::cerr << "ID IS " << _id << std::endl;
-
 			Block *_block = Blocks::createBlock(_id);
 
 			if (dynamic_cast<Multiblock*>(_block)) {
