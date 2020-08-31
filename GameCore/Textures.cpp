@@ -42,6 +42,7 @@ int Textures::EDITOR_BACKGROUND = -1;
 int Textures::EDITOR_GRID = -1;
 int Textures::EDITOR_LIGHT = -1;
 int Textures::MAIN_MENU_OPTIONS_BUTTON_FOCUS = -1;
+int Textures::EDITOR_SAVE = -1;
 
 void Textures::LOAD_ALL_TEXTURES() {
 	Textures::LANTERN = GraphicManager::LoadSprite(
@@ -167,4 +168,7 @@ void Textures::LOAD_ALL_TEXTURES() {
 	Textures::EDITOR_LIGHT = GraphicManager::LoadSprite(
 			GraphicPrefabData("./Resources/editor_light.png", Vector2F(10, 10),
 					1));
+	Textures::EDITOR_SAVE = GraphicManager::LoadSprite(
+				GraphicPrefabData("./Resources/editor_save.png", Vector2F(17, 17),
+						1));
 }

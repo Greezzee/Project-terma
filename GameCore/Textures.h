@@ -60,6 +60,7 @@ public:
 	static int EDITOR_BACKGROUND;
 	static int EDITOR_GRID;
 	static int EDITOR_LIGHT;
+	static int EDITOR_SAVE;
 
 	//! Texture loader. LOAD EVERY TEXTURE HERE!!! BUT FIRST DEFINE IT IN THIS CLASS!!!
 	static void LOAD_ALL_TEXTURES();

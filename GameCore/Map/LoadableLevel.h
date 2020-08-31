@@ -4,7 +4,7 @@
 
 #include "Level.h"
 
-const std::string TEST_ROOM = "testLevel.PTRoom";
+const std::string TEST_ROOM = "new_level.PTRoom";
 
 class LoadableLevel : public Level {
 	std::string level_directory;

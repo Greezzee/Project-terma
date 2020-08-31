@@ -18,6 +18,7 @@
 #include "../Menu/Buttons/EditorCross.h"
 #include "../Menu/Buttons/EditorGrid.h"
 #include "../Menu/Buttons/EditorLight.h"
+#include "../Menu/Buttons/EditorSave.h"
 #include "../Menu/MenuWidget.h"
 #include "../PTC.h"
 #include "../Textures.h"
@@ -32,7 +33,7 @@ LevelEditorScene::LevelEditorScene() {
 	currentBlock = nullptr;
 	mode = FRONT;
 	to_delete = NO;
-	draw_background = false;
+	draw_background = true;
 	_delay = 0;
 }
 
@@ -175,8 +176,6 @@ void LevelEditorScene::Update() {
 }
 
 void LevelEditorScene::Destroy() {
-	LevelCoder::CODE("TestLevel/testLevel.PTRoom", currentMap);
-
 	delete currentMap->getLevel();
 
 	currentMap->Destroy();
@@ -332,6 +331,16 @@ void LevelEditorScene::createWidgets() {
 	b_colliders->setLayer(EDITOR_BUTTONS_LAYER);
 	b_colliders->setSpriteID(Textures::EDITOR_COLLIDERS);
 	widgets->push_back(b_colliders);
+
+	EditorSave* save = new EditorSave(currentMap);
+	save->Init(nullptr);
+	save->setScene(this);
+	save->SetView(Views::MAIN_MENU);
+	save->setSpriteID(Textures::EDITOR_SAVE);
+	save->setLayer(EDITOR_BUTTONS_LAYER);
+	save->SetPos({1530, 110});
+	save->SetSize({119, 119});
+	widgets->push_back(save);
 
 	// CYCLE HIT
 	unsigned column_block = 0;
