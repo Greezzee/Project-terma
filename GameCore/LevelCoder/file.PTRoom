@@ -1,6 +1,0 @@
-blockWidth blockHeight blocksPtr wallblocksPtr entitiesPtr entitiesCount
-
-wallblocksPtr, blocksPtr:
-id [info], ...
-entitiesPtr:
-id x y [info]
