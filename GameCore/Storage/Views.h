@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../Engine/AllEngine.h"
-#include "Settings.h"
+struct Vector2U;
 
 //! Class Views. Usage:
 //! 1) Add static unsigned variable in class declaration
@@ -13,9 +12,7 @@ class Views {
 public:
 	Views() {};
 
-	static unsigned MAIN_MENU;
-	static unsigned PLAYER_CAM;
-	static unsigned EDITOR_CAM;
+	static unsigned BASE_VIEW;
 
 	// Change the resolution of all views (DO IT YOURSELF)
 	static void SET_RESOLUTION(Vector2U new_size);

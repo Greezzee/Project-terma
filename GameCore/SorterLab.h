@@ -1,13 +1,16 @@
 #pragma once
 
-#include "Textures.h"
-#include "Settings.h"
-#include "../Engine/AllEngine.h"
-/*
- * ���� ���� �������� �������� ��� �������� �������� �������
- * 
- * 	������ ��� �����, ������� ����������� ������. ������ �������� � Main.cpp
- */
+#include <string>
+
+#include "../Engine/SceneManagment/Scene.h"
+
+#define TOTAL_POINTS 300
+#define MAX_ACTIONS 8000
+
+struct sortResult {
+	int total_swaps;
+	int total_compars;
+};
 
 class SorterLab: public Scene {
 
@@ -18,6 +21,11 @@ class SorterLab: public Scene {
 	void Destroy();
 
 public:
+
+	// ALGOS
+	static sortResult result[TOTAL_POINTS];
+
+	static void recalculatePoints(sortResult (*sort_func)(int * arr, int sz));
 
 	static void report_error(std::string mes);
 

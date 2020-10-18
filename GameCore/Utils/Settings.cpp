@@ -2,14 +2,11 @@
 
 #include <bits/types/FILE.h>
 #include <cstdio>
-#include <iostream>
 #include <string>
 
-#include "../Engine/Control/InputManager.h"
-#include "../Engine/Graphics/GraphicManager.h"
-#include "../Engine/Utility/Coordinate.h"
+#include "../../Engine/Graphics/GraphicManager.h"
+#include "../Storage/Views.h"
 #include "PTC.h"
-#include "Views.h"
 
 Vector2U Settings::resolution = { 0, 0 };
 

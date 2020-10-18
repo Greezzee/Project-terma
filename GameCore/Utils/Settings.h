@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../Engine/AllEngine.h"
+#include "../../Engine/Control/InputManager.h"
+#include "../../Engine/Utility/Coordinate.h"
 #include "Controls.h"
 
 //! settings.cfg documentation:

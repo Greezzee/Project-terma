@@ -5,9 +5,9 @@ int max(int a, int b) {
 }
 
 MouseData InputManager::_mouse_info;
-sf::Keyboard::Key InputManager::_keys[KeysCount]; //Связь KeybordKey с SFML
-KeyboardKey InputManager::_virtual_keys[255]; // Связь кодов с KeyboardKey
-KeyData InputManager::_key_data[KeysCount]; //! Информация о клавишах
+sf::Keyboard::Key InputManager::_keys[KeysCount]; //пїЅпїЅпїЅпїЅпїЅ KeybordKey пїЅ SFML
+KeyboardKey InputManager::_virtual_keys[255]; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ KeyboardKey
+KeyData InputManager::_key_data[KeysCount]; //! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 void InputManager::Init()
 {

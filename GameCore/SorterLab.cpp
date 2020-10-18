@@ -2,15 +2,19 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <string>
 
 #include "../Engine/SceneManagment/SceneManager.h"
-#include "Controls.h"
-#include "PTC.h"
 #include "Scenes/SLScene.h"
-#include "Views.h"
+#include "Storage/Algoses.h"
+#include "Storage/Textures.h"
+#include "Storage/Views.h"
+#include "Utils/Controls.h"
+#include "Utils/PTC.h"
+#include "Utils/Settings.h"
 
 class MainMenuScene;
+
+sortResult SorterLab::result[TOTAL_POINTS];
 
 void SorterLab::Init() {
 	PTC::say("Sorter lab started!");
@@ -26,6 +30,8 @@ void SorterLab::Init() {
 	PTC::say("Loading controls!");
 	Controls::LOAD_ALL_GAMEKEYS();
 	PTC::say("Controls loaded!");
+
+	SorterLab::recalculatePoints(Algoses::n2_sort);
 }
 
 void SorterLab::Update() {
@@ -41,4 +47,20 @@ void SorterLab::report_error(std::string mes) {
 	std::cout << "Error reported!\n";
 	std::cout << mes << "\n";
 	exit(-2);
+}
+
+void SorterLab::recalculatePoints(sortResult (*sort_func)(int * arr, int sz)) {
+	if (sort_func == NULL) {
+		report_error("sorting function is null!");
+	}
+
+	int arr[TOTAL_POINTS];
+
+	for (int n = 1; n < TOTAL_POINTS; n++) {
+		for (int i = 0; i < n; i++) {
+			arr[i] = (rand() % n);
+		}
+
+		result[n] = sort_func(arr, n);
+	}
 }
